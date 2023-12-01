@@ -7,7 +7,7 @@ package txscript
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	"reflect"
 	"testing"
 )

@@ -1,17 +1,17 @@
 package rpc
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/protocol"
-	"github.com/kaspanet/kaspad/app/rpc/rpccontext"
-	"github.com/kaspanet/kaspad/domain"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/utxoindex"
-	"github.com/kaspanet/kaspad/infrastructure/config"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/infrastructure/network/addressmanager"
-	"github.com/kaspanet/kaspad/infrastructure/network/connmanager"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/protocol"
+	"github.com/Kash-Protocol/kashd/app/rpc/rpccontext"
+	"github.com/Kash-Protocol/kashd/domain"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/utxoindex"
+	"github.com/Kash-Protocol/kashd/infrastructure/config"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/addressmanager"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/connmanager"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter"
 	"github.com/pkg/errors"
 )
 

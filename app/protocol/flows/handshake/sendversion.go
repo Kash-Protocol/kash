@@ -1,19 +1,19 @@
 package handshake
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/protocol/common"
-	peerpkg "github.com/kaspanet/kaspad/app/protocol/peer"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
-	"github.com/kaspanet/kaspad/version"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/protocol/common"
+	peerpkg "github.com/Kash-Protocol/kashd/app/protocol/peer"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
+	"github.com/Kash-Protocol/kashd/version"
 	"github.com/pkg/errors"
 )
 
 var (
 	// userAgentName is the user agent name and is used to help identify
 	// ourselves to other kaspa peers.
-	userAgentName = "kaspad"
+	userAgentName = "kashd"
 
 	// userAgentVersion is the user agent version and is used to help
 	// identify ourselves to other kaspa peers.

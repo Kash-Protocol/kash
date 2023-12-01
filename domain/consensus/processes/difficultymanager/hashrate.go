@@ -3,9 +3,9 @@ package difficultymanager
 import (
 	"math/big"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
 	"github.com/pkg/errors"
 )
 

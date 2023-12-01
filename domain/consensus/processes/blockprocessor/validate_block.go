@@ -1,11 +1,11 @@
 package blockprocessor
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/util/staging"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/ruleerrors"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
+	"github.com/Kash-Protocol/kashd/util/staging"
 	"github.com/pkg/errors"
 )
 

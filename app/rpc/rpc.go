@@ -1,11 +1,11 @@
 package rpc
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/rpc/rpccontext"
-	"github.com/kaspanet/kaspad/app/rpc/rpchandlers"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/rpc/rpccontext"
+	"github.com/Kash-Protocol/kashd/app/rpc/rpchandlers"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 	"github.com/pkg/errors"
 )
 

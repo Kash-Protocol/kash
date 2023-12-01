@@ -5,13 +5,13 @@
 package txscript
 
 import (
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
 	"github.com/kaspanet/go-secp256k1"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
 	"github.com/pkg/errors"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Kash-Protocol/kashd/domain/dagconfig"
+	"github.com/Kash-Protocol/kashd/util"
 )
 
 // RawTxInSignature returns the serialized Schnorr signature for the input idx of

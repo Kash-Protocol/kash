@@ -1,14 +1,14 @@
-ARG KASPAD_IMAGE
-ARG KASPAMINER_IMAGE
+ARG KASHD_IMAGE
+ARG KASHMINER_IMAGE
 
-FROM ${KASPAD_IMAGE} as kaspad
-FROM ${KASPAMINER_IMAGE} as kaspaminer
+FROM ${KASHD_IMAGE} as kashd
+FROM ${KASHMINER_IMAGE} as kashminer
 
 FROM golang:1.19-alpine
 
-RUN mkdir -p /go/src/github.com/kaspanet/kaspad
+RUN mkdir -p /go/src/github.com/Kash-Protocol/kashd
 
-WORKDIR /go/src/github.com/kaspanet/kaspad
+WORKDIR /go/src/github.com/Kash-Protocol/kashd
 
 RUN apk add bash build-base git
 
@@ -19,11 +19,11 @@ RUN go mod download
 
 COPY . .
 
-COPY --from=kaspad /app/ /app/
-COPY --from=kaspaminer /app/ /app/
+COPY --from=kashd /app/ /app/
+COPY --from=kashminer /app/ /app/
 ENV PATH="/app:${PATH}"
 
-WORKDIR /go/src/github.com/kaspanet/kaspad/stability-tests
+WORKDIR /go/src/github.com/Kash-Protocol/kashd/stability-tests
 
 RUN go install ./...
 

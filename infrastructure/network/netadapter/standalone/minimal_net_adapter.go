@@ -3,16 +3,16 @@ package standalone
 import (
 	"sync"
 
-	"github.com/kaspanet/kaspad/app/protocol/common"
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Kash-Protocol/kashd/app/protocol/common"
+	"github.com/Kash-Protocol/kashd/util/mstime"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/id"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/id"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 
-	"github.com/kaspanet/kaspad/infrastructure/config"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
+	"github.com/Kash-Protocol/kashd/infrastructure/config"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter"
 
 	"github.com/pkg/errors"
 )

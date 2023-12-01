@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus"
-	"github.com/kaspanet/kaspad/stability-tests/common"
-	"github.com/kaspanet/kaspad/stability-tests/common/mine"
-	"github.com/kaspanet/kaspad/stability-tests/common/rpc"
-	"github.com/kaspanet/kaspad/util/panics"
-	"github.com/kaspanet/kaspad/util/profiling"
+	"github.com/Kash-Protocol/kashd/domain/consensus"
+	"github.com/Kash-Protocol/kashd/stability-tests/common"
+	"github.com/Kash-Protocol/kashd/stability-tests/common/mine"
+	"github.com/Kash-Protocol/kashd/stability-tests/common/rpc"
+	"github.com/Kash-Protocol/kashd/util/panics"
+	"github.com/Kash-Protocol/kashd/util/profiling"
 	"github.com/pkg/errors"
 )
 

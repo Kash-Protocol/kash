@@ -3,11 +3,11 @@ package mempool
 import (
 	"time"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/constants"
 
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Kash-Protocol/kashd/util"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Kash-Protocol/kashd/domain/dagconfig"
 )
 
 const (

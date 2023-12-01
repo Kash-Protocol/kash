@@ -1,7 +1,7 @@
 package serialization
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
 )
 
 // DomainBlockRelationsToDbBlockRelations converts model.BlockRelations to DbBlockRelations

@@ -1,9 +1,9 @@
 package mempool
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionhelper"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/transactionhelper"
 )
 
 func (mp *mempool) handleNewBlockTransactions(blockTransactions []*externalapi.DomainTransaction) (

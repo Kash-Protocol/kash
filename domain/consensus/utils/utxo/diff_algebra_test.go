@@ -4,9 +4,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionid"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/transactionid"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 func (mud *mutableUTXODiff) equal(other *mutableUTXODiff) bool {

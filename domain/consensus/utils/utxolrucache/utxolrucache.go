@@ -1,7 +1,7 @@
 package utxolrucache
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 // LRUCache is a least-recently-used cache for UTXO entries

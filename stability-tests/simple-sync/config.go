@@ -3,9 +3,9 @@ package main
 import (
 	"path/filepath"
 
+	"github.com/Kash-Protocol/kashd/infrastructure/config"
+	"github.com/Kash-Protocol/kashd/stability-tests/common"
 	"github.com/jessevdk/go-flags"
-	"github.com/kaspanet/kaspad/infrastructure/config"
-	"github.com/kaspanet/kaspad/stability-tests/common"
 )
 
 const (

@@ -1,14 +1,14 @@
 package mempool
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/constants"
 	"sync"
 
-	"github.com/kaspanet/kaspad/domain/consensusreference"
+	"github.com/Kash-Protocol/kashd/domain/consensusreference"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	miningmanagermodel "github.com/kaspanet/kaspad/domain/miningmanager/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	miningmanagermodel "github.com/Kash-Protocol/kashd/domain/miningmanager/model"
 )
 
 type mempool struct {

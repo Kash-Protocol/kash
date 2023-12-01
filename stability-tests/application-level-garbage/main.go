@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kaspanet/kaspad/infrastructure/config"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/standalone"
-	"github.com/kaspanet/kaspad/stability-tests/common"
-	"github.com/kaspanet/kaspad/util/panics"
-	"github.com/kaspanet/kaspad/util/profiling"
+	"github.com/Kash-Protocol/kashd/infrastructure/config"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/standalone"
+	"github.com/Kash-Protocol/kashd/stability-tests/common"
+	"github.com/Kash-Protocol/kashd/util/panics"
+	"github.com/Kash-Protocol/kashd/util/profiling"
 )
 
 func main() {
@@ -25,10 +25,10 @@ func main() {
 		profiling.Start(cfg.Profile, log)
 	}
 
-	kaspadConfig := config.DefaultConfig()
-	kaspadConfig.NetworkFlags = cfg.NetworkFlags
+	kashdConfig := config.DefaultConfig()
+	kashdConfig.NetworkFlags = cfg.NetworkFlags
 
-	minimalNetAdapter, err := standalone.NewMinimalNetAdapter(kaspadConfig)
+	minimalNetAdapter, err := standalone.NewMinimalNetAdapter(kashdConfig)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error creating minimalNetAdapter: %+v", err)
 		backendLog.Close()

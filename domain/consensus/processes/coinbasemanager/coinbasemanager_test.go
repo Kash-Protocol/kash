@@ -1,9 +1,9 @@
 package coinbasemanager
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/constants"
+	"github.com/Kash-Protocol/kashd/domain/dagconfig"
 	"strconv"
 	"testing"
 )

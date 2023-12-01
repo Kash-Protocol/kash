@@ -3,12 +3,12 @@ package ghostdag2
 import (
 	"sort"
 
-	"github.com/kaspanet/kaspad/util/difficulty"
+	"github.com/Kash-Protocol/kashd/util/difficulty"
 
 	"math/big"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 type ghostdagHelper struct {

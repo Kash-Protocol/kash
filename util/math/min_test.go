@@ -1,7 +1,7 @@
 package math_test
 
 import (
-	utilMath "github.com/kaspanet/kaspad/util/math"
+	utilMath "github.com/Kash-Protocol/kashd/util/math"
 	"math"
 	"testing"
 )

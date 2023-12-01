@@ -12,15 +12,15 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	pb2 "github.com/kaspanet/kaspad/infrastructure/network/dnsseed/pb"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	pb2 "github.com/Kash-Protocol/kashd/infrastructure/network/dnsseed/pb"
 	"google.golang.org/grpc"
 
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Kash-Protocol/kashd/util/mstime"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Kash-Protocol/kashd/domain/dagconfig"
 )
 
 const (

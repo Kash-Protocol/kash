@@ -1,8 +1,8 @@
 package testapi
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 // TestConsensusStateManager  adds to the main ConsensusStateManager methods required by tests

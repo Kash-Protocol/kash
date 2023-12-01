@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 // DifficultyManager provides a method to resolve the

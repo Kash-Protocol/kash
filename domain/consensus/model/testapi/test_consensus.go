@@ -3,10 +3,10 @@ package testapi
 import (
 	"io"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/dagconfig"
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/dagconfig"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database"
 )
 
 // MineJSONBlockType indicates which type of blocks MineJSON mines

@@ -1,7 +1,7 @@
 package reachabilitymanager
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
 )
 
 var log = logger.RegisterSubSystem("REAC")

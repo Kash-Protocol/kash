@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
-	"github.com/kaspanet/kaspad/infrastructure/db/database/ldb"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database/ldb"
 )
 
 type databasePrepareFunc func(t *testing.T, testName string) (db database.Database, name string, teardownFunc func())

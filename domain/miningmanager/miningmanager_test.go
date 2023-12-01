@@ -1,28 +1,28 @@
 package miningmanager_test
 
 import (
-	"github.com/kaspanet/kaspad/cmd/kaspawallet/libkaspawallet"
-	"github.com/kaspanet/kaspad/domain/consensusreference"
-	"github.com/kaspanet/kaspad/domain/miningmanager/model"
-	"github.com/kaspanet/kaspad/util"
-	"github.com/kaspanet/kaspad/version"
+	"github.com/Kash-Protocol/kashd/cmd/kashwallet/libkashwallet"
+	"github.com/Kash-Protocol/kashd/domain/consensusreference"
+	"github.com/Kash-Protocol/kashd/domain/miningmanager/model"
+	"github.com/Kash-Protocol/kashd/util"
+	"github.com/Kash-Protocol/kashd/version"
 	"reflect"
 	"strings"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/miningmanager/mempool"
+	"github.com/Kash-Protocol/kashd/domain/miningmanager/mempool"
 
-	"github.com/kaspanet/kaspad/domain/consensus"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/model/testapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/subnetworks"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/testutils"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionhelper"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/txscript"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/utxo"
-	"github.com/kaspanet/kaspad/domain/miningmanager"
+	"github.com/Kash-Protocol/kashd/domain/consensus"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/testapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/constants"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/subnetworks"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/testutils"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/transactionhelper"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/txscript"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/utxo"
+	"github.com/Kash-Protocol/kashd/domain/miningmanager"
 	"github.com/pkg/errors"
 )
 
@@ -819,7 +819,7 @@ func generateNewCoinbase(addressPrefix util.Bech32Prefix, op opType) (*externala
 			ExtraData:       nil,
 		}, nil
 	}
-	_, publicKey, err := libkaspawallet.CreateKeyPair(op == opECDSA)
+	_, publicKey, err := libkashwallet.CreateKeyPair(op == opECDSA)
 	if err != nil {
 		return nil, err
 	}

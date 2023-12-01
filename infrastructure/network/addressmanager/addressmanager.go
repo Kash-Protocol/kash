@@ -5,13 +5,13 @@
 package addressmanager
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database"
+	"github.com/Kash-Protocol/kashd/util/mstime"
 	"net"
 	"sync"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
 	"github.com/pkg/errors"
 )
 

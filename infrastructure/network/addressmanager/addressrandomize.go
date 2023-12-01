@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
 )
 
 // AddressRandomize implement addressRandomizer interface

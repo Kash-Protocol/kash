@@ -1,16 +1,16 @@
 package ping
 
 import (
-	"github.com/kaspanet/kaspad/app/protocol/common"
-	"github.com/kaspanet/kaspad/app/protocol/flowcontext"
+	"github.com/Kash-Protocol/kashd/app/protocol/common"
+	"github.com/Kash-Protocol/kashd/app/protocol/flowcontext"
 	"github.com/pkg/errors"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	peerpkg "github.com/kaspanet/kaspad/app/protocol/peer"
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
-	"github.com/kaspanet/kaspad/util/random"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	peerpkg "github.com/Kash-Protocol/kashd/app/protocol/peer"
+	"github.com/Kash-Protocol/kashd/app/protocol/protocolerrors"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
+	"github.com/Kash-Protocol/kashd/util/random"
 )
 
 // SendPingsContext is the interface for the context needed for the SendPings flow.

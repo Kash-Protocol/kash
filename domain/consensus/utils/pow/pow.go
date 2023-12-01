@@ -1,23 +1,23 @@
 package pow
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/hashes"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/serialization"
-	"github.com/kaspanet/kaspad/util/difficulty"
-
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/hashes"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/serialization"
+	"github.com/Kash-Protocol/kashd/util/difficulty"
+	"github.com/Kash-Protocol/kashd/util/randomx"
 	"github.com/pkg/errors"
 	"math/big"
 )
 
 // State is an intermediate data structure with pre-computed values to speed up mining.
 type State struct {
-	mat        matrix
 	Timestamp  int64
 	Nonce      uint64
 	Target     big.Int
 	prePowHash externalapi.DomainHash
+	vm         *randomx.RxVM
 }
 
 // NewState creates a new state with pre-computed values to speed up mining
@@ -32,12 +32,23 @@ func NewState(header externalapi.MutableBlockHeader) *State {
 	header.SetTimeInMilliseconds(timestamp)
 	header.SetNonce(nonce)
 
+	// Initialize RandomX dataset and VM
+	rxDataset, err := randomx.NewRxDataset(randomx.FlagDefault)
+	if err != nil {
+		panic(errors.Wrap(err, "failed to create RandomX dataset"))
+	}
+
+	rxVM, err := randomx.NewRxVM(rxDataset, randomx.FlagDefault)
+	if err != nil {
+		panic(errors.Wrap(err, "failed to create RandomX VM"))
+	}
+
 	return &State{
 		Target:     *target,
 		prePowHash: *prePowHash,
-		mat:        *generateMatrix(prePowHash),
 		Timestamp:  timestamp,
 		Nonce:      nonce,
+		vm:         rxVM,
 	}
 }
 
@@ -57,8 +68,16 @@ func (state *State) CalculateProofOfWorkValue() *big.Int {
 		panic(errors.Wrap(err, "this should never happen. Hash digest should never return an error"))
 	}
 	powHash := writer.Finalize()
-	heavyHash := state.mat.HeavyHash(powHash)
-	return toBig(heavyHash)
+
+	// Use RandomX to calculate the hash
+	randomxHash := state.vm.CalcHash(powHash.ByteSlice())
+
+	domainHash, err := externalapi.NewDomainHashFromByteSlice(randomxHash)
+	if err != nil {
+		panic(errors.Wrap(err, "this should never happen. Hash digest should never return an error"))
+	}
+
+	return toBig(domainHash)
 }
 
 // IncrementNonce the nonce in State by 1

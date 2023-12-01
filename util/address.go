@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/blake2b"
 
-	"github.com/kaspanet/kaspad/util/bech32"
+	"github.com/Kash-Protocol/kashd/util/bech32"
 )
 
 var (
@@ -40,24 +40,24 @@ const (
 	Bech32PrefixUnknown Bech32Prefix = iota
 
 	// Prefix for the main network.
-	Bech32PrefixKaspa
+	Bech32PrefixKash
 
 	// Prefix for the dev network.
-	Bech32PrefixKaspaDev
+	Bech32PrefixKashDev
 
 	// Prefix for the test network.
-	Bech32PrefixKaspaTest
+	Bech32PrefixKashTest
 
 	// Prefix for the simulation network.
-	Bech32PrefixKaspaSim
+	Bech32PrefixKashSim
 )
 
 // Map from strings to Bech32 address prefix constants for parsing purposes.
 var stringsToBech32Prefixes = map[string]Bech32Prefix{
-	"kaspa":     Bech32PrefixKaspa,
-	"kaspadev":  Bech32PrefixKaspaDev,
-	"kaspatest": Bech32PrefixKaspaTest,
-	"kaspasim":  Bech32PrefixKaspaSim,
+	"kash":     Bech32PrefixKash,
+	"kashdev":  Bech32PrefixKashDev,
+	"kashtest": Bech32PrefixKashTest,
+	"kashsim":  Bech32PrefixKashSim,
 }
 
 // ParsePrefix attempts to parse a Bech32 address prefix.

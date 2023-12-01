@@ -1,6 +1,6 @@
 package model
 
-import "github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+import "github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 
 // BlockHeaderStore represents a store of block headers
 type BlockHeaderStore interface {

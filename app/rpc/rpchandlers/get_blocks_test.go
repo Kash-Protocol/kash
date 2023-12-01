@@ -5,18 +5,18 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/rpc/rpccontext"
-	"github.com/kaspanet/kaspad/app/rpc/rpchandlers"
-	"github.com/kaspanet/kaspad/domain/consensus"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/model/testapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/hashes"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/testutils"
-	"github.com/kaspanet/kaspad/domain/miningmanager"
-	"github.com/kaspanet/kaspad/infrastructure/config"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/rpc/rpccontext"
+	"github.com/Kash-Protocol/kashd/app/rpc/rpchandlers"
+	"github.com/Kash-Protocol/kashd/domain/consensus"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/testapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/hashes"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/testutils"
+	"github.com/Kash-Protocol/kashd/domain/miningmanager"
+	"github.com/Kash-Protocol/kashd/infrastructure/config"
 )
 
 type fakeDomain struct {

@@ -1,8 +1,8 @@
 package rpc
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/util/panics"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/util/panics"
 )
 
 // log is a logger that is initialized with no output filters. This

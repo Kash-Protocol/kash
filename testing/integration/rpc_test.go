@@ -1,12 +1,12 @@
 package integration
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/config"
+	"github.com/Kash-Protocol/kashd/infrastructure/config"
 	"runtime"
 	"testing"
 	"time"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/rpcclient"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/rpcclient"
 )
 
 const rpcTimeout = 10 * time.Second

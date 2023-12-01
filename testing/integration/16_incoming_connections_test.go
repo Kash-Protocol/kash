@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
 )
 
 func Test16IncomingConnections(t *testing.T) {

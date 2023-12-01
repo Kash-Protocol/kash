@@ -3,8 +3,8 @@ package serialization
 import (
 	"io"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/util/binaryserializer"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/util/binaryserializer"
 	"github.com/pkg/errors"
 )
 

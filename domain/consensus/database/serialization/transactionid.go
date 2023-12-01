@@ -1,8 +1,8 @@
 package serialization
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionid"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/transactionid"
 )
 
 // DbTransactionIDToDomainTransactionID converts DbTransactionId to DomainTransactionID

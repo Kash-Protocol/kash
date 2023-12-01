@@ -1,13 +1,13 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_Addresses) toAppMessage() (appmessage.Message, error) {
+func (x *KashdMessage_Addresses) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrap(errorNil, "KaspadMessage_Addresses is nil")
+		return nil, errors.Wrap(errorNil, "KashdMessage_Addresses is nil")
 	}
 	addressList, err := x.Addresses.toAppMessage()
 	if err != nil {
@@ -38,7 +38,7 @@ func (x *AddressesMessage) toAppMessage() ([]*appmessage.NetAddress, error) {
 	return addressList, nil
 }
 
-func (x *KaspadMessage_Addresses) fromAppMessage(msgAddresses *appmessage.MsgAddresses) error {
+func (x *KashdMessage_Addresses) fromAppMessage(msgAddresses *appmessage.MsgAddresses) error {
 	if len(msgAddresses.AddressList) > appmessage.MaxAddressesPerMsg {
 		return errors.Errorf("too many addresses for message "+
 			"[count %d, max %d]", len(msgAddresses.AddressList), appmessage.MaxAddressesPerMsg)

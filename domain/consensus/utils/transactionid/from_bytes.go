@@ -1,7 +1,7 @@
 package transactionid
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 // FromBytes creates a DomainTransactionID from the given byte slice

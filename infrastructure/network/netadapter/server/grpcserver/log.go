@@ -5,8 +5,8 @@
 package grpcserver
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/util/panics"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/util/panics"
 )
 
 var log = logger.RegisterSubSystem("TXMP")

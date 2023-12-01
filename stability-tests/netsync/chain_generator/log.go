@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/stability-tests/common"
-	"github.com/kaspanet/kaspad/util/panics"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/stability-tests/common"
+	"github.com/Kash-Protocol/kashd/util/panics"
 )
 
 var (

@@ -2,7 +2,7 @@ package panics
 
 import (
 	"fmt"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
 	"os"
 	"runtime/debug"
 	"sync/atomic"

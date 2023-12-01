@@ -1,16 +1,16 @@
 package v5
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/protocol/common"
-	"github.com/kaspanet/kaspad/app/protocol/flowcontext"
-	"github.com/kaspanet/kaspad/app/protocol/flows/v5/addressexchange"
-	"github.com/kaspanet/kaspad/app/protocol/flows/v5/blockrelay"
-	"github.com/kaspanet/kaspad/app/protocol/flows/v5/ping"
-	"github.com/kaspanet/kaspad/app/protocol/flows/v5/rejects"
-	"github.com/kaspanet/kaspad/app/protocol/flows/v5/transactionrelay"
-	peerpkg "github.com/kaspanet/kaspad/app/protocol/peer"
-	routerpkg "github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/protocol/common"
+	"github.com/Kash-Protocol/kashd/app/protocol/flowcontext"
+	"github.com/Kash-Protocol/kashd/app/protocol/flows/v5/addressexchange"
+	"github.com/Kash-Protocol/kashd/app/protocol/flows/v5/blockrelay"
+	"github.com/Kash-Protocol/kashd/app/protocol/flows/v5/ping"
+	"github.com/Kash-Protocol/kashd/app/protocol/flows/v5/rejects"
+	"github.com/Kash-Protocol/kashd/app/protocol/flows/v5/transactionrelay"
+	peerpkg "github.com/Kash-Protocol/kashd/app/protocol/peer"
+	routerpkg "github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 )
 
 type protocolManager interface {

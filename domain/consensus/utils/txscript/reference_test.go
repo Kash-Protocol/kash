@@ -13,12 +13,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/constants"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
 	"github.com/pkg/errors"
 )
 

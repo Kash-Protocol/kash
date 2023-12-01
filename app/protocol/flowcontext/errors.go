@@ -5,9 +5,9 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
+	"github.com/Kash-Protocol/kashd/app/protocol/protocolerrors"
 )
 
 var (

@@ -1,13 +1,13 @@
 package ready
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/protocol/common"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/protocol/common"
 	"sync/atomic"
 
-	peerpkg "github.com/kaspanet/kaspad/app/protocol/peer"
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
-	routerpkg "github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	peerpkg "github.com/Kash-Protocol/kashd/app/protocol/peer"
+	"github.com/Kash-Protocol/kashd/app/protocol/protocolerrors"
+	routerpkg "github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 	"github.com/pkg/errors"
 )
 

@@ -1,12 +1,12 @@
 package blockvalidator
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionhelper"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/virtual"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/ruleerrors"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/transactionhelper"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/virtual"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
 	"github.com/pkg/errors"
 )
 

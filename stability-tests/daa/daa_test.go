@@ -1,12 +1,12 @@
 package daa
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/pow"
-	"github.com/kaspanet/kaspad/domain/dagconfig"
-	"github.com/kaspanet/kaspad/infrastructure/network/rpcclient"
-	"github.com/kaspanet/kaspad/stability-tests/common"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/pow"
+	"github.com/Kash-Protocol/kashd/domain/dagconfig"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/rpcclient"
+	"github.com/Kash-Protocol/kashd/stability-tests/common"
 	"math"
 	"math/rand"
 	"os"
@@ -15,7 +15,7 @@ import (
 )
 
 const rpcAddress = "localhost:9000"
-const miningAddress = "kaspadev:qrcqat6l9zcjsu7swnaztqzrv0s7hu04skpaezxk43y4etj8ncwfkuhy0zmax"
+const miningAddress = "kashdev:qrcqat6l9zcjsu7swnaztqzrv0s7hu04skpaezxk43y4etj8ncwfkuhy0zmax"
 const blockRateDeviationThreshold = 0.5
 const averageBlockRateSampleSize = 60
 const averageHashRateSampleSize = 100_000
@@ -180,8 +180,8 @@ func runDAATest(t *testing.T, testName string, runDuration time.Duration,
 	t.Logf("DAA TEST STARTED: %s", testName)
 	defer t.Logf("DAA TEST FINISHED: %s", testName)
 
-	tearDownKaspad := common.RunKaspadForTesting(t, "kaspad-daa-test", rpcAddress)
-	defer tearDownKaspad()
+	tearDownKashd := common.RunKashdForTesting(t, "kashd-daa-test", rpcAddress)
+	defer tearDownKashd()
 
 	rpcClient, err := rpcclient.NewRPCClient(rpcAddress)
 	if err != nil {

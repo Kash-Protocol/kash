@@ -1,8 +1,8 @@
 package transactionrelay
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 )
 
 type handleRequestedTransactionsFlow struct {

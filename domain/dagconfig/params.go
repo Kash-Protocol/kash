@@ -8,14 +8,14 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/util/network"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/util/network"
 
 	"github.com/pkg/errors"
 
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Kash-Protocol/kashd/util"
 )
 
 // These variables are the DAG proof-of-work limit parameters for each default
@@ -211,28 +211,9 @@ var MainnetParams = Params{
 	K:           defaultGHOSTDAGK,
 	Name:        "kaspa-mainnet",
 	Net:         appmessage.Mainnet,
-	RPCPort:     "16110",
-	DefaultPort: "16111",
-	DNSSeeds: []string{
-		// This DNS seeder is run by Wolfie
-		"mainnet-dnsseed.kas.pa",
-		// This DNS seeder is run by Denis Mashkevich
-		"mainnet-dnsseed-1.kaspanet.org",
-		// This DNS seeder is run by Denis Mashkevich
-		"mainnet-dnsseed-2.kaspanet.org",
-		// This DNS seeder is run by Constantine Bytensky
-		"dnsseed.cbytensky.org",
-		// This DNS seeder is run by Georges Künzli
-		"seeder1.kaspad.net",
-		// This DNS seeder is run by Georges Künzli
-		"seeder2.kaspad.net",
-		// This DNS seeder is run by Georges Künzli
-		"seeder3.kaspad.net",
-		// This DNS seeder is run by Georges Künzli
-		"seeder4.kaspad.net",
-		// This DNS seeder is run by Tim
-		"kaspadns.kaspacalc.net",
-	},
+	RPCPort:     "17110",
+	DefaultPort: "17111",
+	DNSSeeds:    []string{},
 
 	// DAG parameters
 	GenesisBlock:                    &genesisBlock,
@@ -262,7 +243,7 @@ var MainnetParams = Params{
 	AcceptUnroutable: false,
 
 	// Human-readable part for Bech32 encoded addresses
-	Prefix: util.Bech32PrefixKaspa,
+	Prefix: util.Bech32PrefixKash,
 
 	// Address encoding magics
 	PrivateKeyID: 0x80, // starts with 5 (uncompressed) or K (compressed)
@@ -297,11 +278,7 @@ var TestnetParams = Params{
 	Net:         appmessage.Testnet,
 	RPCPort:     "16210",
 	DefaultPort: "16211",
-	DNSSeeds: []string{
-		"testnet-10-dnsseed.kas.pa",
-		// This DNS seeder is run by Tiram
-		"seeder1-testnet.kaspad.net",
-	},
+	DNSSeeds:    []string{},
 
 	// DAG parameters
 	GenesisBlock:                    &testnetGenesisBlock,
@@ -331,7 +308,7 @@ var TestnetParams = Params{
 	AcceptUnroutable: false,
 
 	// Human-readable part for Bech32 encoded addresses
-	Prefix: util.Bech32PrefixKaspaTest,
+	Prefix: util.Bech32PrefixKashTest,
 
 	// Address encoding magics
 	PrivateKeyID: 0xef, // starts with 9 (uncompressed) or c (compressed)
@@ -400,7 +377,7 @@ var SimnetParams = Params{
 
 	PrivateKeyID: 0x64, // starts with 4 (uncompressed) or F (compressed)
 	// Human-readable part for Bech32 encoded addresses
-	Prefix: util.Bech32PrefixKaspaSim,
+	Prefix: util.Bech32PrefixKashSim,
 
 	// EnableNonNativeSubnetworks enables non-native/coinbase transactions
 	EnableNonNativeSubnetworks: false,
@@ -459,7 +436,7 @@ var DevnetParams = Params{
 	AcceptUnroutable: true,
 
 	// Human-readable part for Bech32 encoded addresses
-	Prefix: util.Bech32PrefixKaspaDev,
+	Prefix: util.Bech32PrefixKashDev,
 
 	// Address encoding magics
 	PrivateKeyID: 0xef, // starts with 9 (uncompressed) or c (compressed)

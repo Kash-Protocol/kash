@@ -1,10 +1,10 @@
 package rpchandlers
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/rpc/rpccontext"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/hashes"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/rpc/rpccontext"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/hashes"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 )
 
 // HandleGetBlockDAGInfo handles the respectively named RPC command

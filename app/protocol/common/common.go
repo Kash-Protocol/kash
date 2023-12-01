@@ -1,8 +1,8 @@
 package common
 
 import (
-	peerpkg "github.com/kaspanet/kaspad/app/protocol/peer"
-	routerpkg "github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	peerpkg "github.com/Kash-Protocol/kashd/app/protocol/peer"
+	routerpkg "github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 	"time"
 
 	"github.com/pkg/errors"

@@ -2,12 +2,12 @@ package rpccontext
 
 import (
 	"encoding/hex"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/txscript"
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/txscript"
+	"github.com/Kash-Protocol/kashd/util"
 	"github.com/pkg/errors"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/domain/utxoindex"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/domain/utxoindex"
 )
 
 // ConvertUTXOOutpointEntryPairsToUTXOsByAddressesEntries converts

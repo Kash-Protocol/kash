@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/mining"
+	"github.com/Kash-Protocol/kashd/util"
 	"github.com/kaspanet/go-secp256k1"
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/mining"
-	"github.com/kaspanet/kaspad/util"
 	"math/rand"
 	"os"
 	"os/exec"
@@ -15,10 +15,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/kaspanet/kaspad/stability-tests/common"
-	"github.com/kaspanet/kaspad/stability-tests/common/rpc"
-	"github.com/kaspanet/kaspad/util/panics"
-	"github.com/kaspanet/kaspad/util/profiling"
+	"github.com/Kash-Protocol/kashd/stability-tests/common"
+	"github.com/Kash-Protocol/kashd/stability-tests/common/rpc"
+	"github.com/Kash-Protocol/kashd/util/panics"
+	"github.com/Kash-Protocol/kashd/util/profiling"
 	"github.com/pkg/errors"
 )
 
@@ -102,14 +102,14 @@ func realMain() error {
 
 func startNode() (teardown func(), err error) {
 	log.Infof("Starting node")
-	dataDir, err := common.TempDir("kaspad-datadir")
+	dataDir, err := common.TempDir("kashd-datadir")
 	if err != nil {
 		panic(errors.Wrapf(err, "Error in Tempdir"))
 	}
-	log.Infof("kaspad datadir: %s", dataDir)
+	log.Infof("kashd datadir: %s", dataDir)
 
-	kaspadCmd, err := common.StartCmd("KASPAD",
-		"kaspad",
+	kashdCmd, err := common.StartCmd("KASHD",
+		"kashd",
 		common.NetworkCliArgumentFromNetParams(activeConfig().NetParams()),
 		"--appdir", dataDir,
 		"--logdir", dataDir,
@@ -124,15 +124,15 @@ func startNode() (teardown func(), err error) {
 
 	processesStoppedWg := sync.WaitGroup{}
 	processesStoppedWg.Add(1)
-	spawn("startNode-kaspadCmd.Wait", func() {
-		err := kaspadCmd.Wait()
+	spawn("startNode-kashdCmd.Wait", func() {
+		err := kashdCmd.Wait()
 		if err != nil {
 			if atomic.LoadUint64(&shutdown) == 0 {
-				panics.Exit(log, fmt.Sprintf("kaspadCmd closed unexpectedly: %s. See logs at: %s", err, dataDir))
+				panics.Exit(log, fmt.Sprintf("kashdCmd closed unexpectedly: %s. See logs at: %s", err, dataDir))
 			}
 			if !strings.Contains(err.Error(), "signal: killed") {
-				// TODO: Panic here and check why sometimes kaspad closes ungracefully
-				log.Errorf("kaspadCmd closed with an error: %s. See logs at: %s", err, dataDir)
+				// TODO: Panic here and check why sometimes kashd closes ungracefully
+				log.Errorf("kashdCmd closed with an error: %s. See logs at: %s", err, dataDir)
 			}
 		}
 		processesStoppedWg.Done()
@@ -140,7 +140,7 @@ func startNode() (teardown func(), err error) {
 	return func() {
 		log.Infof("defer start-node")
 		atomic.StoreUint64(&shutdown, 1)
-		killWithSigterm(kaspadCmd, "kaspadCmd")
+		killWithSigterm(kashdCmd, "kashdCmd")
 
 		processesStoppedChan := make(chan struct{})
 		spawn("startNode-processStoppedWg.Wait", func() {
@@ -227,7 +227,7 @@ func mineLoopUntilHavingOnlyOneTipInDAG(rpcClient *rpc.Client, miningAddress uti
 	numOfBlocksBeforeMining := dagInfo.BlockCount
 
 	kaspaMinerCmd, err := common.StartCmd("MINER",
-		"kaspaminer",
+		"kashminer",
 		common.NetworkCliArgumentFromNetParams(activeConfig().NetParams()),
 		"-s", rpcAddress,
 		"--mine-when-not-synced",

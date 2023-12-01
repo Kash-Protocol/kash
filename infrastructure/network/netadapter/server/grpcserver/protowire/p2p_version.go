@@ -1,15 +1,15 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/id"
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/id"
+	"github.com/Kash-Protocol/kashd/util/mstime"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_Version) toAppMessage() (appmessage.Message, error) {
+func (x *KashdMessage_Version) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_Version is nil")
+		return nil, errors.Wrapf(errorNil, "KashdMessage_Version is nil")
 	}
 	return x.Version.toAppMessage()
 }
@@ -57,7 +57,7 @@ func (x *VersionMessage) toAppMessage() (appmessage.Message, error) {
 	}, nil
 }
 
-func (x *KaspadMessage_Version) fromAppMessage(msgVersion *appmessage.MsgVersion) error {
+func (x *KashdMessage_Version) fromAppMessage(msgVersion *appmessage.MsgVersion) error {
 	err := appmessage.ValidateUserAgent(msgVersion.UserAgent)
 	if err != nil {
 		return err

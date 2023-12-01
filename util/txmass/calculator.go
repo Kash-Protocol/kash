@@ -1,8 +1,8 @@
 package txmass
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionhelper"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/transactionhelper"
 )
 
 // Calculator exposes methods to calculate the mass of a transaction

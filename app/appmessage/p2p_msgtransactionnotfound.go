@@ -5,7 +5,7 @@
 package appmessage
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 // MsgTransactionNotFound defines a kaspa TransactionNotFound message which is sent in response to

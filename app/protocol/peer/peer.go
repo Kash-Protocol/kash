@@ -4,13 +4,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/id"
-	mathUtil "github.com/kaspanet/kaspad/util/math"
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/id"
+	mathUtil "github.com/Kash-Protocol/kashd/util/math"
+	"github.com/Kash-Protocol/kashd/util/mstime"
 )
 
 // Peer holds data about a peer.

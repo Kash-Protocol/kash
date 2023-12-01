@@ -3,10 +3,10 @@ package consensusstatemanager_test
 import (
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus"
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/testutils"
+	"github.com/Kash-Protocol/kashd/domain/consensus"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/testutils"
 )
 
 func TestCalculateChainPath(t *testing.T) {

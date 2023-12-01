@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/utxo"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/utxo"
 )
 
 func initTestTransactionAcceptanceDataForClone() []*externalapi.TransactionAcceptanceData {

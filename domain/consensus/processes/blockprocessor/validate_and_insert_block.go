@@ -4,16 +4,16 @@ import (
 	// we need to embed the utxoset of mainnet genesis here
 	_ "embed"
 	"fmt"
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/multiset"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/utxo"
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/util/difficulty"
-	"github.com/kaspanet/kaspad/util/staging"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/ruleerrors"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/multiset"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/utxo"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database"
+	"github.com/Kash-Protocol/kashd/infrastructure/logger"
+	"github.com/Kash-Protocol/kashd/util/difficulty"
+	"github.com/Kash-Protocol/kashd/util/staging"
 	"github.com/pkg/errors"
 )
 
@@ -232,7 +232,7 @@ func (bp *blockProcessor) loadUTXODataForGenesis(stagingArea *model.StagingArea,
 	// pruning point.
 	// The actual UTXO set that fits Mainnet's genesis' UTXO commitment was removed from the codebase in order
 	// to make reduce the consensus initialization time and the compiled binary size, but can be still
-	// found here for anyone to verify: https://github.com/kaspanet/kaspad/blob/dbf18d8052f000ba0079be9e79b2d6f5a98b74ca/domain/consensus/processes/blockprocessor/resources/utxos.gz
+	// found here for anyone to verify: https://github.com/Kash-Protocol/kashd/blob/dbf18d8052f000ba0079be9e79b2d6f5a98b74ca/domain/consensus/processes/blockprocessor/resources/utxos.gz
 	bp.consensusStateStore.StageVirtualUTXODiff(stagingArea, utxo.NewUTXODiff())
 	bp.utxoDiffStore.Stage(stagingArea, blockHash, utxo.NewUTXODiff(), nil)
 	bp.multisetStore.Stage(stagingArea, blockHash, multiset.New())

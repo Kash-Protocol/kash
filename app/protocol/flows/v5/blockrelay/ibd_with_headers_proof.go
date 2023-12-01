@@ -2,12 +2,12 @@ package blockrelay
 
 import (
 	"fmt"
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/protocol/common"
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/protocol/common"
+	"github.com/Kash-Protocol/kashd/app/protocol/protocolerrors"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/ruleerrors"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
 	"github.com/pkg/errors"
 	"time"
 )

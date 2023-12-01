@@ -9,10 +9,10 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/config"
-	"github.com/kaspanet/kaspad/infrastructure/db/database/ldb"
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/infrastructure/config"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database/ldb"
+	"github.com/Kash-Protocol/kashd/util/mstime"
 )
 
 func newAddressManagerForTest(t *testing.T, testName string) (addressManager *AddressManager, teardown func()) {

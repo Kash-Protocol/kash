@@ -1,7 +1,7 @@
 package ldb
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database"
 	"github.com/pkg/errors"
 	"github.com/syndtr/goleveldb/leveldb"
 	ldbErrors "github.com/syndtr/goleveldb/leveldb/errors"

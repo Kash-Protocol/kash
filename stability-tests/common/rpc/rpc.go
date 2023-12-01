@@ -3,10 +3,10 @@ package rpc
 import (
 	"time"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/network/rpcclient"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/rpcclient"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Kash-Protocol/kashd/domain/dagconfig"
 )
 
 const defaultRPCServer = "localhost"

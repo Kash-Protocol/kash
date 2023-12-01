@@ -4,14 +4,14 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Kash-Protocol/kashd/domain/dagconfig"
 
-	"github.com/kaspanet/kaspad/infrastructure/db/database/ldb"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database/ldb"
 
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database"
 
-	"github.com/kaspanet/kaspad/app"
-	"github.com/kaspanet/kaspad/infrastructure/config"
+	"github.com/Kash-Protocol/kashd/app"
+	"github.com/Kash-Protocol/kashd/infrastructure/config"
 )
 
 type appHarness struct {

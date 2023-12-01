@@ -13,6 +13,11 @@ jobs:
       matrix:
         branch: [ master, latest ]
     name: Race detection on ${{ matrix.branch }}
+    env:
+      CGO_ENABLED: 1
+      CGO_LDFLAGS: "-L${{ github.workspace }}/util/randomx/lib -lrandomx -lm"
+      GOFLAGS: '-ldflags=-extldflags="-static"'
+
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
@@ -23,6 +28,10 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.19
+
+      - name: Compile RandomX
+        working-directory: util/randomx
+        run: build.sh
 
       - name: Set scheduled branch name
         shell: bash

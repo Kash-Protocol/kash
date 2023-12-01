@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/infrastructure/db/database"
 )
 
 type dbManager struct {

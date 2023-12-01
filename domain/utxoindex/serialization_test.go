@@ -2,7 +2,7 @@ package utxoindex
 
 import (
 	"encoding/binary"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	"github.com/pkg/errors"
 	"io"
 	"math/rand"

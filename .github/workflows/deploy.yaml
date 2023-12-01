@@ -11,6 +11,11 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     name: Building, ${{ matrix.os }}
+    env:
+      CGO_ENABLED: 1
+      CGO_LDFLAGS: "-L${{ github.workspace }}/util/randomx/lib -lrandomx -lm"
+      GOFLAGS: '-ldflags=-extldflags="-static"'
+
     steps:
       - name: Fix CRLF on Windows
         if: runner.os == 'Windows'
@@ -19,11 +24,14 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
-
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.19
+
+      - name: Compile RandomX
+        working-directory: util/randomx
+        run: build.sh
 
       - name: Build on Linux
         if: runner.os == 'Linux'
@@ -32,8 +40,8 @@ jobs:
         # `-s -w` strips the binary to produce smaller size binaries
         run: |
           go build -v -ldflags="-s -w -extldflags=-static" -tags netgo,osusergo -o ./bin/ . ./cmd/...
-          archive="bin/kaspad-${{ github.event.release.tag_name }}-linux.zip"
-          asset_name="kaspad-${{ github.event.release.tag_name }}-linux.zip"
+          archive="bin/kashd-${{ github.event.release.tag_name }}-linux.zip"
+          asset_name="kashd-${{ github.event.release.tag_name }}-linux.zip"
           zip -r "${archive}" ./bin/*
           echo "archive=${archive}" >> $GITHUB_ENV
           echo "asset_name=${asset_name}" >> $GITHUB_ENV
@@ -43,8 +51,8 @@ jobs:
         shell: bash
         run: |
           go build -v -ldflags="-s -w" -o bin/ . ./cmd/...
-          archive="bin/kaspad-${{ github.event.release.tag_name }}-win64.zip"
-          asset_name="kaspad-${{ github.event.release.tag_name }}-win64.zip"
+          archive="bin/kashd-${{ github.event.release.tag_name }}-win64.zip"
+          asset_name="kashd-${{ github.event.release.tag_name }}-win64.zip"
           powershell "Compress-Archive bin/* \"${archive}\""
           echo "archive=${archive}" >> $GITHUB_ENV
           echo "asset_name=${asset_name}" >> $GITHUB_ENV
@@ -53,8 +61,8 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           go build -v -ldflags="-s -w" -o ./bin/ . ./cmd/...
-          archive="bin/kaspad-${{ github.event.release.tag_name }}-osx.zip"
-          asset_name="kaspad-${{ github.event.release.tag_name }}-osx.zip"
+          archive="bin/kashd-${{ github.event.release.tag_name }}-osx.zip"
+          asset_name="kashd-${{ github.event.release.tag_name }}-osx.zip"
           zip -r "${archive}" ./bin/*
           echo "archive=${archive}" >> $GITHUB_ENV
           echo "asset_name=${asset_name}" >> $GITHUB_ENV

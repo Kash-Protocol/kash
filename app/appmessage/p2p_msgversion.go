@@ -8,11 +8,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/version"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/version"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/id"
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/id"
+	"github.com/Kash-Protocol/kashd/util/mstime"
 )
 
 // MaxUserAgentLen is the maximum allowed length for the user agent field in a
@@ -20,7 +20,7 @@ import (
 const MaxUserAgentLen = 256
 
 // DefaultUserAgent for appmessage in the stack
-var DefaultUserAgent = fmt.Sprintf("/kaspad:%s/", version.Version())
+var DefaultUserAgent = fmt.Sprintf("/kashd:%s/", version.Version())
 
 // MsgVersion implements the Message interface and represents a kaspa version
 // message. It is used for a peer to advertise itself as soon as an outbound

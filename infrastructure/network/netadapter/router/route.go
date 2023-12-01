@@ -4,9 +4,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
+	"github.com/Kash-Protocol/kashd/app/protocol/protocolerrors"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
 	"github.com/pkg/errors"
 )
 

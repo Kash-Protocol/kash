@@ -1,7 +1,7 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Kash-Protocol/kashd/app/appmessage"
 	"github.com/pkg/errors"
 )
 

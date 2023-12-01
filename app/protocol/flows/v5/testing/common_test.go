@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
+	"github.com/Kash-Protocol/kashd/app/protocol/protocolerrors"
 	"github.com/pkg/errors"
 )
 

@@ -14,8 +14,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, macos-latest ]
+        os: [ ubuntu-latest ]
     name: Tests, ${{ matrix.os }}
+    env:
+      CGO_ENABLED: 1
+      CGO_LDFLAGS: "-L${{ github.workspace }}/util/randomx/lib -lrandomx -lm"
+      GOFLAGS: '-ldflags=-extldflags="-static"'
+
     steps:
 
       - name: Fix CRLF on Windows
@@ -35,6 +40,9 @@ jobs:
         with:
           go-version: 1.19
 
+      - name: Compile RandomX
+        working-directory: util/randomx
+        run: build.sh
 
       # Source: https://github.com/actions/cache/blob/main/examples.md#go---modules
       - name: Go Cache
@@ -52,7 +60,12 @@ jobs:
 
   stability-test-fast:
     runs-on: ubuntu-latest
-    name: Fast stability tests, ${{ github.head_ref }}
+    name: Fast stability tests
+    env:
+      CGO_ENABLED: 1
+      CGO_LDFLAGS: "-L${{ github.workspace }}/util/randomx/lib -lrandomx -lm"
+      GOFLAGS: '-ldflags=-extldflags="-static"'
+
     steps:
 
       - name: Setup Go
@@ -65,7 +78,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install kaspad
+      - name: Compile RandomX
+        working-directory: util/randomx
+        run: build.sh
+
+      - name: Install kashd
         run: go install ./...
 
       - name: Install golint
@@ -79,6 +96,11 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
     name: Produce code coverage
+    env:
+      CGO_ENABLED: 1
+      CGO_LDFLAGS: "-L${{ github.workspace }}/util/randomx/lib -lrandomx -lm"
+      GOFLAGS: '-ldflags=-extldflags="-static"'
+
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
@@ -87,6 +109,10 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.19
+
+      - name: Compile RandomX
+        working-directory: util/randomx
+        run: build.sh
 
       - name: Delete the stability tests from coverage
         run: rm -r stability-tests

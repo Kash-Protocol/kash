@@ -3,9 +3,9 @@ package finalitymanager
 import (
 	"errors"
 
-	"github.com/kaspanet/kaspad/domain/consensus/database"
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/database"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 type finalityManager struct {

@@ -7,11 +7,11 @@ package txscript_test
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/txscript"
-	"github.com/kaspanet/kaspad/domain/dagconfig"
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Kash-Protocol/kashd/domain/consensus/utils/txscript"
+	"github.com/Kash-Protocol/kashd/domain/dagconfig"
+	"github.com/Kash-Protocol/kashd/util"
 )
 
 // This example demonstrates creating a script which pays to a kaspa address.
@@ -22,8 +22,8 @@ func ExamplePayToAddrScript() {
 	// which is useful to ensure the accuracy of the address and determine
 	// the address type. It is also required for the upcoming call to
 	// PayToAddrScript.
-	addressStr := "kaspa:qqj9fg59mptxkr9j0y53j5mwurcmda5mtza9n6v9pm9uj8h0wgk6uma5pvumr"
-	address, err := util.DecodeAddress(addressStr, util.Bech32PrefixKaspa)
+	addressStr := "kash:qqj9fg59mptxkr9j0y53j5mwurcmda5mtza9n6v9pm9uj8h0wgk6uma5pvumr"
+	address, err := util.DecodeAddress(addressStr, util.Bech32PrefixKash)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -75,5 +75,5 @@ func ExampleExtractScriptPubKeyAddress() {
 
 	// Output:
 	// Script Class: pubkey
-	// Address: kaspa:qzy6cf82zzah2xh5jwtz8nx9u4gdj6zzke8gljs0v055ksmnl424u6fv7ajrs
+	// Address: kash:qzy6cf82zzah2xh5jwtz8nx9u4gdj6zzke8gljs0v055ksmnl424u6fv7ajrs
 }

@@ -2,7 +2,7 @@ package subnetworks
 
 import (
 	"bytes"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 // Less returns true iff id a is less than id b
