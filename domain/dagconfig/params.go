@@ -90,7 +90,7 @@ type Params struct {
 
 	// SubsidyGenesisReward SubsidyMergeSetRewardMultiplier, and
 	// SubsidyPastRewardMultiplier are part of the block subsidy equation.
-	// Further details: https://hashdag.medium.com/kaspa-launch-plan-9a63f4d754a6
+	// Further details: https://hashdag.medium.com/kash-launch-plan-9a63f4d754a6
 	SubsidyGenesisReward            uint64
 	PreDeflationaryPhaseBaseSubsidy uint64
 	DeflationaryPhaseBaseSubsidy    uint64
@@ -209,7 +209,7 @@ func (p *Params) PruningDepth() uint64 {
 // MainnetParams defines the network parameters for the main Kaspa network.
 var MainnetParams = Params{
 	K:           defaultGHOSTDAGK,
-	Name:        "kaspa-mainnet",
+	Name:        "kash-mainnet",
 	Net:         appmessage.Mainnet,
 	RPCPort:     "17110",
 	DefaultPort: "17111",
@@ -274,7 +274,7 @@ var MainnetParams = Params{
 // TestnetParams defines the network parameters for the test Kaspa network.
 var TestnetParams = Params{
 	K:           defaultGHOSTDAGK,
-	Name:        "kaspa-testnet-10",
+	Name:        "kash-testnet-10",
 	Net:         appmessage.Testnet,
 	RPCPort:     "16210",
 	DefaultPort: "16211",
@@ -342,7 +342,7 @@ var TestnetParams = Params{
 // just turn into another public testnet.
 var SimnetParams = Params{
 	K:           defaultGHOSTDAGK,
-	Name:        "kaspa-simnet",
+	Name:        "kash-simnet",
 	Net:         appmessage.Simnet,
 	RPCPort:     "16510",
 	DefaultPort: "16511",
@@ -402,7 +402,7 @@ var SimnetParams = Params{
 // DevnetParams defines the network parameters for the development Kaspa network.
 var DevnetParams = Params{
 	K:           defaultGHOSTDAGK,
-	Name:        "kaspa-devnet",
+	Name:        "kash-devnet",
 	Net:         appmessage.Devnet,
 	RPCPort:     "16610",
 	DefaultPort: "16611",

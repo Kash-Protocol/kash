@@ -1,10 +1,11 @@
 package testutils
 
 import (
-	"testing"
-
 	"github.com/Kash-Protocol/kashd/domain/consensus"
+	// Importing for the side effect of initializing the RandomX VM in the pow package
+	_ "github.com/Kash-Protocol/kashd/domain/consensus/utils/pow"
 	"github.com/Kash-Protocol/kashd/domain/dagconfig"
+	"testing"
 )
 
 // ForAllNets runs the passed testFunc with all available networks

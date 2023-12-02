@@ -337,7 +337,7 @@ func generateTxs() (nativeTx, subnetworkTx *externalapi.DomainTransaction, err e
 	genesisCoinbase := dagconfig.SimnetParams.GenesisBlock.Transactions[0]
 	genesisCoinbaseTransactionID := consensushashing.TransactionID(genesisCoinbase)
 
-	address1Str := "kashsim:qzpj2cfa9m40w9m2cmr8pvfuqpp32mzzwsuw6ukhfduqpp32mzzws59e8fapc"
+	address1Str := "kashsim:qzpj2cfa9m40w9m2cmr8pvfuqpp32mzzwsuw6ukhfduqpp32mzzwspct3jlha"
 	address1, err := util.DecodeAddress(address1Str, util.Bech32PrefixKashSim)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error decoding address1: %+v", err)
@@ -347,7 +347,7 @@ func generateTxs() (nativeTx, subnetworkTx *externalapi.DomainTransaction, err e
 		return nil, nil, fmt.Errorf("error generating script: %+v", err)
 	}
 
-	address2Str := "kashsim:qr7w7nqsdnc3zddm6u8s9fex4ysk95hm3v30q353ymuqpp32mzzws59e8fapc"
+	address2Str := "kashsim:qr7w7nqsdnc3zddm6u8s9fex4ysk95hm3v30q353ymuqpp32mzzwspct3jlha"
 	address2, err := util.DecodeAddress(address2Str, util.Bech32PrefixKashSim)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error decoding address2: %+v", err)

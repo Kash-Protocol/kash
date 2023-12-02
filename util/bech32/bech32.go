@@ -52,6 +52,27 @@ func Decode(encoded string) (string, []byte, byte, error) {
 	return prefix, payload, version, nil
 }
 
+// UpdateAddressChecksum updates the checksum of a Bech32 encoded address.
+func UpdateAddressChecksum(prefix, oldAddress string) (string, error) {
+	sepIndex := strings.LastIndex(oldAddress, ":")
+	if sepIndex == -1 {
+		return "", errors.New("invalid address format")
+	}
+
+	dataPart := oldAddress[sepIndex+1 : len(oldAddress)-checksumLength]
+
+	dataBytes, err := decodeFromBase32(dataPart)
+	if err != nil {
+		return "", err
+	}
+
+	newChecksum := calculateChecksum(prefix, dataBytes)
+	newChecksumBase32 := encodeToBase32(newChecksum)
+
+	newAddress := prefix + ":" + dataPart + newChecksumBase32
+	return newAddress, nil
+}
+
 // Decode decodes a Bech32 encoded string, returning the prefix
 // and the data part excluding the checksum.
 func decode(encoded string) (string, []byte, error) {

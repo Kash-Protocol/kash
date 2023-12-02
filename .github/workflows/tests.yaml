@@ -42,7 +42,7 @@ jobs:
 
       - name: Compile RandomX
         working-directory: util/randomx
-        run: build.sh
+        run: ./build.sh
 
       # Source: https://github.com/actions/cache/blob/main/examples.md#go---modules
       - name: Go Cache
@@ -80,7 +80,7 @@ jobs:
 
       - name: Compile RandomX
         working-directory: util/randomx
-        run: build.sh
+        run: ./build.sh
 
       - name: Install kashd
         run: go install ./...
@@ -112,7 +112,7 @@ jobs:
 
       - name: Compile RandomX
         working-directory: util/randomx
-        run: build.sh
+        run: ./build.sh
 
       - name: Delete the stability tests from coverage
         run: rm -r stability-tests

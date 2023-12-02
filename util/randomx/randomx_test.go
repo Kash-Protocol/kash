@@ -56,7 +56,7 @@ func TestAllocDataset(t *testing.T) {
 
 func TestCreateVM(t *testing.T) {
 	runtime.GOMAXPROCS(runtime.NumCPU())
-	var tp = testPairs[1]
+	var tp = testPairs[0]
 	cache, _ := AllocCache(FlagDefault)
 	log.Println("alloc cache mem finished")
 	seed := tp[0]
@@ -96,7 +96,7 @@ func TestCreateVM(t *testing.T) {
 func TestNewRxVM(t *testing.T) {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	start := time.Now()
-	pair := testPairs[1]
+	pair := testPairs[0]
 	workerNum := uint32(runtime.NumCPU())
 
 	seed := pair[0]
@@ -128,7 +128,7 @@ func TestNewRxVM(t *testing.T) {
 func TestCalculateHashFirst(t *testing.T) {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	start := time.Now()
-	pair := testPairs[1]
+	pair := testPairs[0]
 	workerNum := uint32(runtime.NumCPU())
 
 	seed := pair[0]

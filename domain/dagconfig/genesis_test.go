@@ -5,6 +5,10 @@
 package dagconfig
 
 import (
+	"encoding/hex"
+	"fmt"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"log"
 	"testing"
 
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
@@ -54,5 +58,48 @@ func TestDevnetGenesisBlock(t *testing.T) {
 		t.Fatalf("TestDevnetGenesisBlock: Genesis block hash does "+
 			"not appear valid - got %v, want %v", hash,
 			DevnetParams.GenesisHash)
+	}
+}
+
+// TestPrintMerkleHash is a scratchpad for printing the genesis merkle root hash
+func TestPrintMerkleHash(t *testing.T) {
+	//// Check hash of the block against expected hash.
+	//hash := consensushashing.BlockHash(MainnetParams.GenesisBlock)
+	//t.Logf("TestPrintHash: Genesis block hash: %v", hash)
+	//
+	//hash = consensushashing.BlockHash(TestnetParams.GenesisBlock)
+	//t.Logf(Logf"TestPrintHash: Genesis block hash: %v", hash)
+
+	// Replace with the actual transactions for genesis and testnet blocks
+	genesisTransactions := []*externalapi.DomainTransaction{genesisCoinbaseTx}
+	testnetTransactions := []*externalapi.DomainTransaction{testnetGenesisCoinbaseTx}
+
+	fmt.Printf("Genesis Merkle Root: %s\n", consensushashing.TransactionHash(genesisTransactions[0]))
+	fmt.Printf("Testnet Merkle Root: %s\n", consensushashing.TransactionHash(testnetTransactions[0]))
+}
+
+// TestPrintsHashStrToReadableBytes is a scratchpad for printing the genesis block hash
+func TestPrintsHashStrToReadableBytes(t *testing.T) {
+	hashStr := "3b31b3e29af1c9675dd148a48a9174d46b1a3aeda5732b0c6df7d2b11f54522a"
+
+	hashBytes, err := hex.DecodeString(hashStr)
+	if err != nil {
+		log.Fatalf("Failed to decode hash: %v", err)
+	}
+
+	domainHashSize := 32
+
+	if len(hashBytes) != domainHashSize {
+		log.Fatalf("Hash size (%d) does not match DomainHashSize (%d)", len(hashBytes), domainHashSize)
+	}
+
+	for i, b := range hashBytes {
+		fmt.Printf("0x%02x", b)
+		if i < len(hashBytes)-1 {
+			fmt.Print(", ")
+		}
+		if (i+1)%8 == 0 {
+			fmt.Println()
+		}
 	}
 }

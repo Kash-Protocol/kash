@@ -31,7 +31,7 @@ jobs:
 
       - name: Compile RandomX
         working-directory: util/randomx
-        run: build.sh
+        run: ./build.sh
 
       - name: Build on Linux
         if: runner.os == 'Linux'

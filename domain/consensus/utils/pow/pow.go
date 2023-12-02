@@ -6,7 +6,6 @@ import (
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/hashes"
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/serialization"
 	"github.com/Kash-Protocol/kashd/util/difficulty"
-	"github.com/Kash-Protocol/kashd/util/randomx"
 	"github.com/pkg/errors"
 	"math/big"
 )
@@ -17,7 +16,6 @@ type State struct {
 	Nonce      uint64
 	Target     big.Int
 	prePowHash externalapi.DomainHash
-	vm         *randomx.RxVM
 }
 
 // NewState creates a new state with pre-computed values to speed up mining
@@ -32,23 +30,11 @@ func NewState(header externalapi.MutableBlockHeader) *State {
 	header.SetTimeInMilliseconds(timestamp)
 	header.SetNonce(nonce)
 
-	// Initialize RandomX dataset and VM
-	rxDataset, err := randomx.NewRxDataset(randomx.FlagDefault)
-	if err != nil {
-		panic(errors.Wrap(err, "failed to create RandomX dataset"))
-	}
-
-	rxVM, err := randomx.NewRxVM(rxDataset, randomx.FlagDefault)
-	if err != nil {
-		panic(errors.Wrap(err, "failed to create RandomX VM"))
-	}
-
 	return &State{
 		Target:     *target,
 		prePowHash: *prePowHash,
 		Timestamp:  timestamp,
 		Nonce:      nonce,
-		vm:         rxVM,
 	}
 }
 
@@ -70,7 +56,7 @@ func (state *State) CalculateProofOfWorkValue() *big.Int {
 	powHash := writer.Finalize()
 
 	// Use RandomX to calculate the hash
-	randomxHash := state.vm.CalcHash(powHash.ByteSlice())
+	randomxHash := CalcGlobalVMHash(powHash.ByteSlice())
 
 	domainHash, err := externalapi.NewDomainHashFromByteSlice(randomxHash)
 	if err != nil {

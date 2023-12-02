@@ -31,7 +31,7 @@ jobs:
 
       - name: Compile RandomX
         working-directory: util/randomx
-        run: build.sh
+        run: ./build.sh
 
       - name: Set scheduled branch name
         shell: bash

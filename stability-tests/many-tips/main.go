@@ -240,7 +240,7 @@ func mineLoopUntilHavingOnlyOneTipInDAG(rpcClient *rpc.Client, miningAddress uti
 	startMiningTime := time.Now()
 	shutdown := uint64(0)
 
-	spawn("kaspa-miner-Cmd.Wait", func() {
+	spawn("kash-miner-Cmd.Wait", func() {
 		err := kaspaMinerCmd.Wait()
 		if err != nil {
 			if atomic.LoadUint64(&shutdown) == 0 {

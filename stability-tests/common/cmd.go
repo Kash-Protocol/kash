@@ -28,5 +28,5 @@ func StartCmd(name string, args ...string) (*exec.Cmd, error) {
 
 // NetworkCliArgumentFromNetParams returns the kashd command line argument that starts the given network.
 func NetworkCliArgumentFromNetParams(params *dagconfig.Params) string {
-	return fmt.Sprintf("--%s", strings.TrimPrefix(params.Name, "kaspa-"))
+	return fmt.Sprintf("--%s", strings.TrimPrefix(params.Name, "kash-"))
 }
