@@ -8,7 +8,7 @@ Kashd
 
 Kashd is the reference full node implementation of Kash, a groundbreaking cryptocurrency that aims to establish the most pure form of decentralized stablecoin payments. Building upon the rapid and efficient Kaspa protocol, Kash integrates the Djed stablecoin protocol to create a robust and versatile digital currency ecosystem.
 
-### Core Features of Kash
+### Core Features of Kash (KSH)
 
 - **A Vision for Decentralized Stability**: Kash's primary goal is to revolutionize the stablecoin market by introducing KUSD – a stable digital currency envisioned to be the epitome of decentralized stability.
 

@@ -13,7 +13,7 @@ func TestPruningDepth(t *testing.T) {
 		dagconfig.MainnetParams.Name: 185798,
 		dagconfig.TestnetParams.Name: 185798,
 		dagconfig.DevnetParams.Name:  185798,
-		dagconfig.SimnetParams.Name:  132998,
+		dagconfig.SimnetParams.Name:  14198,
 	}
 	testutils.ForAllNets(t, true, func(t *testing.T, consensusConfig *consensus.Config) {
 		expected, found := expectedResult[consensusConfig.Name]

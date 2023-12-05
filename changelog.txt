@@ -150,7 +150,7 @@ Breaking changes:
     * Using separate depth than finality depth for merge set calculations (#2013)
     * Not counting the header size as part of the block mass (#2013)
     * Increasing block version to 1 (#2013)
-    * Removing the limit on amount of KAS that can be sent in one transaction (#2013)
+    * Removing the limit on amount of KSH that can be sent in one transaction (#2013)
 
 Bug fixes:
 * Making a workaround for the UTXO diff child bug (#2020)

@@ -50,7 +50,7 @@ func RawTxInSignatureECDSA(tx *externalapi.DomainTransaction, idx int, hashType 
 	return append(signature.Serialize()[:], byte(hashType)), nil
 }
 
-// SignatureScript creates an input signature script for tx to spend KAS sent
+// SignatureScript creates an input signature script for tx to spend KSH sent
 // from a previous output to the owner of a Schnorr private key. tx must include all
 // transaction inputs and outputs, however txin scripts are allowed to be filled
 // or empty. The returned script is calculated to be used as the idx'th txin
@@ -69,7 +69,7 @@ func SignatureScript(tx *externalapi.DomainTransaction, idx int, hashType consen
 	return NewScriptBuilder().AddData(sig).Script()
 }
 
-// SignatureScriptECDSA creates an input signature script for tx to spend KAS sent
+// SignatureScriptECDSA creates an input signature script for tx to spend KSH sent
 // from a previous output to the owner of an ECDSA private key. tx must include all
 // transaction inputs and outputs, however txin scripts are allowed to be filled
 // or empty. The returned script is calculated to be used as the idx'th txin

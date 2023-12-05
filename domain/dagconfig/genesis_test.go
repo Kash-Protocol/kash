@@ -80,26 +80,32 @@ func TestPrintMerkleHash(t *testing.T) {
 
 // TestPrintsHashStrToReadableBytes is a scratchpad for printing the genesis block hash
 func TestPrintsHashStrToReadableBytes(t *testing.T) {
-	hashStr := "3b31b3e29af1c9675dd148a48a9174d46b1a3aeda5732b0c6df7d2b11f54522a"
+	mainhashStr := consensushashing.BlockHash(MainnetParams.GenesisBlock).String()
+	testhashStr := consensushashing.BlockHash(TestnetParams.GenesisBlock).String()
+	simhashStr := consensushashing.BlockHash(SimnetParams.GenesisBlock).String()
+	devhashStr := consensushashing.BlockHash(DevnetParams.GenesisBlock).String()
 
-	hashBytes, err := hex.DecodeString(hashStr)
-	if err != nil {
-		log.Fatalf("Failed to decode hash: %v", err)
-	}
-
-	domainHashSize := 32
-
-	if len(hashBytes) != domainHashSize {
-		log.Fatalf("Hash size (%d) does not match DomainHashSize (%d)", len(hashBytes), domainHashSize)
-	}
-
-	for i, b := range hashBytes {
-		fmt.Printf("0x%02x", b)
-		if i < len(hashBytes)-1 {
-			fmt.Print(", ")
+	for _, hashStr := range []string{mainhashStr, testhashStr, simhashStr, devhashStr} {
+		hashBytes, err := hex.DecodeString(hashStr)
+		if err != nil {
+			log.Fatalf("Failed to decode hash: %v", err)
 		}
-		if (i+1)%8 == 0 {
-			fmt.Println()
+
+		domainHashSize := 32
+
+		if len(hashBytes) != domainHashSize {
+			log.Fatalf("Hash size (%d) does not match DomainHashSize (%d)", len(hashBytes), domainHashSize)
+		}
+
+		fmt.Println("Hash bytes:")
+		for i, b := range hashBytes {
+			fmt.Printf("0x%02x", b)
+			if i < len(hashBytes)-1 {
+				fmt.Print(", ")
+			}
+			if (i+1)%8 == 0 {
+				fmt.Println()
+			}
 		}
 	}
 }
