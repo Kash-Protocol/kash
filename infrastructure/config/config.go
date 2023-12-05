@@ -110,7 +110,7 @@ type Flags struct {
 	Profile                         string        `long:"profile" description:"Enable HTTP profiling on given port -- NOTE port must be between 1024 and 65536"`
 	LogLevel                        string        `short:"d" long:"loglevel" description:"Logging level for all subsystems {trace, debug, info, warn, error, critical} -- You may also specify <subsystem>=<level>,<subsystem2>=<level>,... to set the log level for individual subsystems -- Use show to list available subsystems"`
 	Upnp                            bool          `long:"upnp" description:"Use UPnP to map our listening port outside of NAT"`
-	MinRelayTxFee                   float64       `long:"minrelaytxfee" description:"The minimum transaction fee in KAS/kB to be considered a non-zero fee."`
+	MinRelayTxFee                   float64       `long:"minrelaytxfee" description:"The minimum transaction fee in KSH/kB to be considered a non-zero fee."`
 	MaxOrphanTxs                    uint64        `long:"maxorphantx" description:"Max number of orphan transactions to keep in memory"`
 	BlockMaxMass                    uint64        `long:"blockmaxmass" description:"Maximum transaction mass to be used when creating a block"`
 	UserAgentComments               []string      `long:"uacomment" description:"Comment to add to the user agent -- See BIP 14 for more information."`

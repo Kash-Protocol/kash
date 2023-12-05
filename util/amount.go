@@ -20,33 +20,33 @@ type AmountUnit int
 // These constants define various units used when describing a kaspa
 // monetary amount.
 const (
-	AmountMegaKAS  AmountUnit = 6
-	AmountKiloKAS  AmountUnit = 3
-	AmountKAS      AmountUnit = 0
-	AmountMilliKAS AmountUnit = -3
-	AmountMicroKAS AmountUnit = -6
+	AmountMegaKSH  AmountUnit = 6
+	AmountKiloKSH  AmountUnit = 3
+	AmountKSH      AmountUnit = 0
+	AmountMilliKSH AmountUnit = -3
+	AmountMicroKSH AmountUnit = -6
 	AmountSompi    AmountUnit = -8
 )
 
 // String returns the unit as a string. For recognized units, the SI
 // prefix is used, or "Sompi" for the base unit. For all unrecognized
-// units, "1eN KAS" is returned, where N is the AmountUnit.
+// units, "1eN KSH" is returned, where N is the AmountUnit.
 func (u AmountUnit) String() string {
 	switch u {
-	case AmountMegaKAS:
-		return "MKAS"
-	case AmountKiloKAS:
-		return "kKAS"
-	case AmountKAS:
-		return "KAS"
-	case AmountMilliKAS:
-		return "mKAS"
-	case AmountMicroKAS:
-		return "μKAS"
+	case AmountMegaKSH:
+		return "MKSH"
+	case AmountKiloKSH:
+		return "kKSH"
+	case AmountKSH:
+		return "KSH"
+	case AmountMilliKSH:
+		return "mKSH"
+	case AmountMicroKSH:
+		return "μKSH"
 	case AmountSompi:
 		return "Sompi"
 	default:
-		return "1e" + strconv.FormatInt(int64(u), 10) + " KAS"
+		return "1e" + strconv.FormatInt(int64(u), 10) + " KSH"
 	}
 }
 
@@ -70,10 +70,10 @@ func round(f float64) Amount {
 // does not check that the amount is within the total amount of kaspa
 // producible as f may not refer to an amount at a single moment in time.
 //
-// NewAmount is for specifically for converting KAS to Sompi.
+// NewAmount is for specifically for converting KSH to Sompi.
 // For creating a new Amount with an int64 value which denotes a quantity of Sompi,
 // do a simple type conversion from type int64 to Amount.
-// TODO: Refactor NewAmount. When amounts are more than 1e9 KAS, the precision
+// TODO: Refactor NewAmount. When amounts are more than 1e9 KSH, the precision
 // can be higher than one sompi (1e9 and 1e9+1e-8 will result as the same number)
 func NewAmount(f float64) (Amount, error) {
 	// The amount is only considered invalid if it cannot be represented
@@ -96,9 +96,9 @@ func (a Amount) ToUnit(u AmountUnit) float64 {
 	return float64(a) / math.Pow10(int(u+8))
 }
 
-// ToKAS is the equivalent of calling ToUnit with AmountKAS.
-func (a Amount) ToKAS() float64 {
-	return a.ToUnit(AmountKAS)
+// ToKSH is the equivalent of calling ToUnit with AmountKSH.
+func (a Amount) ToKSH() float64 {
+	return a.ToUnit(AmountKSH)
 }
 
 // Format formats a monetary amount counted in kaspa base units as a
@@ -110,9 +110,9 @@ func (a Amount) Format(u AmountUnit) string {
 	return strconv.FormatFloat(a.ToUnit(u), 'f', -int(u+8), 64) + units
 }
 
-// String is the equivalent of calling Format with AmountKAS.
+// String is the equivalent of calling Format with AmountKSH.
 func (a Amount) String() string {
-	return a.Format(AmountKAS)
+	return a.Format(AmountKSH)
 }
 
 // MulF64 multiplies an Amount by a floating point value. While this is not
