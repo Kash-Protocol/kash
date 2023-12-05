@@ -130,11 +130,11 @@ func TestDifficulty(t *testing.T) {
 		var expectedBits uint32
 		switch consensusConfig.Name {
 		case dagconfig.TestnetParams.Name:
-			expectedBits = uint32(0x1e7f1441)
+			expectedBits = uint32(0x2001618e)
 		case dagconfig.DevnetParams.Name:
-			expectedBits = uint32(0x1f4e54ab)
+			expectedBits = uint32(0x200b0c74)
 		case dagconfig.MainnetParams.Name:
-			expectedBits = uint32(0x1d02c50f)
+			expectedBits = uint32(0x1f2c31d1)
 		}
 
 		if tip.Header.Bits() != expectedBits {

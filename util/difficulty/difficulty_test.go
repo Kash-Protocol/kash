@@ -14,10 +14,10 @@ import (
 
 func TestGetHashrateString(t *testing.T) {
 	var results = map[string]string{
-		dagconfig.MainnetParams.Name: "1.53 GH/s",
-		dagconfig.TestnetParams.Name: "131.07 KH/s",
-		dagconfig.DevnetParams.Name:  "830 H/s",
-		dagconfig.SimnetParams.Name:  "2.00 KH/s",
+		dagconfig.MainnetParams.Name: "1.47 KH/s",
+		dagconfig.TestnetParams.Name: "184 H/s",
+		dagconfig.DevnetParams.Name:  "23 H/s",
+		dagconfig.SimnetParams.Name:  "23 H/s",
 	}
 	testutils.ForAllNets(t, false, func(t *testing.T, consensusConfig *consensus.Config) {
 		targetGenesis := difficulty.CompactToBig(consensusConfig.GenesisBlock.Header.Bits())
@@ -111,4 +111,18 @@ func TestCompactToBig(t *testing.T) {
 			t.Errorf("TestCompactToBig test #%d failed: got: 0x%08x want 0x%08x input: 0x%08x", i, convertBack, test.after, test.before)
 		}
 	}
+}
+
+// TesTestBitsScratchPad is a scratch pad for testing bits.
+func TestBitsScratchPad(t *testing.T) {
+	fmt.Println("Bits Scratch Pad")
+	var gBits uint32 = 0x200b20f3
+	gTarget := difficulty.CompactToBig(gBits)
+	fmt.Printf("g_target: %064x\n", gTarget)
+
+	gTarget = gTarget.Mul(gTarget, big.NewInt(10))
+	fmt.Printf("g_target: %064x\n", gTarget)
+	newBits := difficulty.BigToCompact(gTarget)
+	fmt.Printf("newBits: %08x\n", newBits)
+	fmt.Printf("newHashRate: %s\n", difficulty.GetHashrateString(gTarget, dagconfig.SimnetParams.TargetTimePerBlock))
 }
