@@ -9,6 +9,7 @@ import (
 // RxVMPool represents a pool of RandomX VMs.
 type RxVMPool struct {
 	vmChan chan *randomx.RxVM
+	size   int
 }
 
 var (
@@ -44,7 +45,7 @@ func NewRxVMPool(poolSize int) (*RxVMPool, error) {
 		vmChan <- vm
 	}
 
-	return &RxVMPool{vmChan: vmChan}, nil
+	return &RxVMPool{vmChan: vmChan, size: poolSize}, nil
 }
 
 // createRxVM creates a new RandomX VM instance.
@@ -68,6 +69,66 @@ func (p *RxVMPool) CalcHash(data []byte) []byte {
 	hash := vm.CalcHash(data)
 	p.vmChan <- vm // Return the VM back to the pool
 	return hash
+}
+
+// ResizePool adjusts the size of the RxVMPool to the specified size.
+// This function increases the pool size by creating new RandomX VM instances
+// and transferring existing ones to a new channel with the desired size.
+//
+// Note:
+//   - This function is not thread-safe and should not be called concurrently.
+//   - It does not support shrinking the pool size; attempting to do so will return an error.
+//   - The pool can only be resized when it's not in use (i.e., when the current pool size
+//     equals the number of VMs in the channel). Attempting to resize while the pool is in use
+//     will result in an error.
+//
+// Parameters:
+// - newSize: The desired size of the pool after resizing.
+//
+// Returns an error if shrinking is attempted, the pool is in use, or if there is an issue
+// creating new RandomX VM instances.
+func (p *RxVMPool) ResizePool(newSize int) error {
+	currentSize := p.size
+	if newSize < currentSize {
+		return errors.New("shrinking the pool size is not supported")
+	}
+
+	if currentSize != len(p.vmChan) {
+		return errors.New("cannot resize the pool while it is in use")
+	}
+
+	// Create a new channel with the desired size
+	newVmChan := make(chan *randomx.RxVM, newSize)
+
+	// Transfer existing VMs to the new channel
+	for i := 0; i < currentSize; i++ {
+		if vm, ok := <-p.vmChan; ok {
+			newVmChan <- vm
+		}
+	}
+
+	// Calculate the number of VMs to add
+	diff := newSize - currentSize
+
+	// Add new VMs to the pool
+	for i := 0; i < diff; i++ {
+		vm, err := createRxVM()
+		if err != nil {
+			return errors.Wrap(err, "failed to create RandomX VM during pool resize")
+		}
+		newVmChan <- vm
+	}
+
+	// Replace the old channel with the new one
+	p.vmChan = newVmChan
+	p.size = newSize
+
+	return nil
+}
+
+// ResizeGlobalPool adjusts the size of the global RxVMPool to the specified size.
+func ResizeGlobalPool(newSize int) error {
+	return globalRxVMPool.ResizePool(newSize)
 }
 
 // Cleanup safely destroys all RandomX VMs in the pool.
