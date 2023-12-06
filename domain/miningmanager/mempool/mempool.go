@@ -1,6 +1,7 @@
 package mempool
 
 import (
+	"github.com/Kash-Protocol/kashd/domain/consensus/ruleerrors"
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/consensushashing"
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/constants"
 	"sync"
@@ -203,11 +204,29 @@ func (mp *mempool) RevalidateHighPriorityTransactions() (validTransactions []*ex
 	return mp.revalidateHighPriorityTransactions()
 }
 
-func (mp *mempool) RemoveTransactions(transactions []*externalapi.DomainTransaction, removeRedeemers bool) error {
+func (mp *mempool) RemoveInvalidTransactions(err *ruleerrors.ErrInvalidTransactionsInNewBlock) error {
 	mp.mtx.Lock()
 	defer mp.mtx.Unlock()
 
-	return mp.removeTransactions(transactions, removeRedeemers)
+	for _, tx := range err.InvalidTransactions {
+		ruleErr, success := tx.Error.(ruleerrors.RuleError)
+		if !success {
+			continue
+		}
+
+		inner := ruleErr.Unwrap()
+		removeRedeemers := true
+		if _, ok := inner.(ruleerrors.ErrMissingTxOut); ok {
+			removeRedeemers = false
+		}
+
+		err := mp.removeTransaction(consensushashing.TransactionID(tx.Transaction), removeRedeemers)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (mp *mempool) RemoveTransaction(transactionID *externalapi.DomainTransactionID, removeRedeemers bool) error {
