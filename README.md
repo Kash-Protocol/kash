@@ -82,7 +82,7 @@ $ kashd
 
 ## Community and Support
 
-Join our Discord server for community discussions, support, and updates: https://discord.gg/YNYnNN5Pf2
+Join our Discord server for community discussions, support, and updates: https://discord.gg/yx46racf
 
 ## Issue Tracker
 
