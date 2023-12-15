@@ -54,7 +54,7 @@ func (mp *mempool) validateTransactionInContext(transaction *externalapi.DomainT
 	}
 
 	numExtraOuts := len(transaction.Outputs) - len(transaction.Inputs)
-	if !hasCoinbaseInput && numExtraOuts > 2 && transaction.Fee < uint64(numExtraOuts)*constants.SompiPerKaspa {
+	if !hasCoinbaseInput && numExtraOuts > 2 && transaction.Fee < uint64(numExtraOuts)*constants.SompiPerKash {
 		log.Warnf("Rejected spam tx %s from mempool (%d outputs)", consensushashing.TransactionID(transaction), len(transaction.Outputs))
 		return transactionRuleError(RejectSpamTx, fmt.Sprintf("Rejected spam tx %s from mempool", consensushashing.TransactionID(transaction)))
 	}

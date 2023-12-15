@@ -86,14 +86,18 @@ func (x *BalancesByAddressEntry) toAppMessage() (*appmessage.BalancesByAddresses
 		return nil, errors.Wrapf(errorNil, "BalancesByAddressesEntry is nil")
 	}
 	return &appmessage.BalancesByAddressesEntry{
-		Address: x.Address,
-		Balance: x.Balance,
+		Address:     x.Address,
+		KSHBalance:  x.KshBalance,
+		KUSDBalance: x.KusdBalance,
+		KRVBalance:  x.KrvBalance,
 	}, nil
 }
 
 func (x *BalancesByAddressEntry) fromAppMessage(message *appmessage.BalancesByAddressesEntry) {
 	*x = BalancesByAddressEntry{
-		Address: message.Address,
-		Balance: message.Balance,
+		Address:     message.Address,
+		KshBalance:  message.KSHBalance,
+		KusdBalance: message.KUSDBalance,
+		KrvBalance:  message.KRVBalance,
 	}
 }

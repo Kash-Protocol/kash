@@ -45,7 +45,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Failed to generate p2pk address: %v", err)
 		}
-		scriptPublicKey, err := txscript.PayToAddrScript(addr)
+		scriptPublicKey, err := txscript.PayToAddrScript(addr, externalapi.KSH)
 		if err != nil {
 			t.Fatalf("PayToAddrScript: unexpected error: %v", err)
 		}
@@ -294,7 +294,7 @@ func TestSigningTwoInputs(t *testing.T) {
 			t.Fatalf("Failed to generate p2pk address: %v", err)
 		}
 
-		scriptPublicKey, err := txscript.PayToAddrScript(addr)
+		scriptPublicKey, err := txscript.PayToAddrScript(addr, externalapi.KSH)
 		if err != nil {
 			t.Fatalf("PayToAddrScript: unexpected error: %v", err)
 		}
@@ -420,7 +420,7 @@ func TestSigningTwoInputsECDSA(t *testing.T) {
 			t.Fatalf("Failed to generate p2pk address: %v", err)
 		}
 
-		scriptPublicKey, err := txscript.PayToAddrScript(addr)
+		scriptPublicKey, err := txscript.PayToAddrScript(addr, externalapi.KSH)
 		if err != nil {
 			t.Fatalf("PayToAddrScript: unexpected error: %v", err)
 		}

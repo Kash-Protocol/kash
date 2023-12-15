@@ -13,8 +13,9 @@ import (
 
 // Payment contains a recipient payment details
 type Payment struct {
-	Address util.Address
-	Amount  uint64
+	Address   util.Address
+	AssetType externalapi.AssetType
+	Amount    uint64
 }
 
 // UTXO is a type that stores a UTXO and meta data
@@ -134,7 +135,7 @@ func createUnsignedTransaction(
 
 	outputs := make([]*externalapi.DomainTransactionOutput, len(payments))
 	for i, payment := range payments {
-		scriptPublicKey, err := txscript.PayToAddrScript(payment.Address)
+		scriptPublicKey, err := txscript.PayToAddrScript(payment.Address, payment.AssetType)
 		if err != nil {
 			return nil, err
 		}

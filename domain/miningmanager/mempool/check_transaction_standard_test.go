@@ -210,7 +210,7 @@ func TestCheckTransactionStandardInIsolation(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewAddressPublicKey: unexpected error: %v", err)
 	}
-	dummyScriptPublicKey, err := txscript.PayToAddrScript(addr)
+	dummyScriptPublicKey, err := txscript.PayToAddrScript(addr, externalapi.KSH)
 	if err != nil {
 		t.Fatalf("PayToAddrScript: unexpected error: %v", err)
 	}

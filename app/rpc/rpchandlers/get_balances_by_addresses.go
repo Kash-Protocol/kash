@@ -3,6 +3,7 @@ package rpchandlers
 import (
 	"github.com/Kash-Protocol/kashd/app/appmessage"
 	"github.com/Kash-Protocol/kashd/app/rpc/rpccontext"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 	"github.com/pkg/errors"
 )
@@ -19,7 +20,9 @@ func HandleGetBalancesByAddresses(context *rpccontext.Context, _ *router.Router,
 
 	allEntries := make([]*appmessage.BalancesByAddressesEntry, len(getBalancesByAddressesRequest.Addresses))
 	for i, address := range getBalancesByAddressesRequest.Addresses {
-		balance, err := getBalanceByAddress(context, address)
+		kshbalance, err := getBalanceByAddress(context, address, externalapi.KSH)
+		kusdbalance, err := getBalanceByAddress(context, address, externalapi.KUSD)
+		krvbalance, err := getBalanceByAddress(context, address, externalapi.KRV)
 
 		if err != nil {
 			rpcError := &appmessage.RPCError{}
@@ -31,8 +34,10 @@ func HandleGetBalancesByAddresses(context *rpccontext.Context, _ *router.Router,
 			return errorMessage, nil
 		}
 		allEntries[i] = &appmessage.BalancesByAddressesEntry{
-			Address: address,
-			Balance: balance,
+			Address:     address,
+			KSHBalance:  kshbalance,
+			KUSDBalance: kusdbalance,
+			KRVBalance:  krvbalance,
 		}
 	}
 

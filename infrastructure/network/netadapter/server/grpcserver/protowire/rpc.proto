@@ -496,13 +496,14 @@ message UtxosByAddressesEntry {
 }
 
 // StopNotifyingUtxosChangedRequestMessage unregisters this connection for utxoChanged notifications
-// for the given addresses.
+// for the given addresses and asset types.
 //
 // This call is only available when this kashd was started with `--utxoindex`
 //
 // See: UtxosChangedNotificationMessage
 message StopNotifyingUtxosChangedRequestMessage {
   repeated string addresses = 1;
+  repeated uint32 assetTypes = 2;
 }
 
 message StopNotifyingUtxosChangedResponseMessage {
@@ -530,7 +531,9 @@ message GetBalanceByAddressRequestMessage {
 }
 
 message GetBalanceByAddressResponseMessage {
-  uint64 balance = 1;
+  uint64 kshBalance = 1;
+  uint64 kusdBalance = 2;
+  uint64 krvBalance = 3;
 
   RPCError error = 1000;
 }
@@ -541,7 +544,9 @@ message GetBalancesByAddressesRequestMessage {
 
 message BalancesByAddressEntry{
   string address = 1;
-  uint64 balance = 2;
+  uint64 kshBalance = 2;
+  uint64 kusdBalance = 3;
+  uint64 krvBalance = 4;
 
   RPCError error = 1000;
 }

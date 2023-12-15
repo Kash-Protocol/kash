@@ -178,7 +178,7 @@ func TestExtractScriptPubKeyAddrs(t *testing.T) {
 
 	t.Logf("Running %d tests.", len(tests))
 	for i, test := range tests {
-		class, addr, _ := ExtractScriptPubKeyAddress(
+		class, addr, _, _ := ExtractScriptPubKeyAddress(
 			test.script, &dagconfig.MainnetParams)
 
 		if !reflect.DeepEqual(addr, test.addr) {
@@ -372,7 +372,7 @@ func TestPayToAddrScript(t *testing.T) {
 
 	t.Logf("Running %d tests", len(tests))
 	for i, test := range tests {
-		scriptPublicKey, err := PayToAddrScript(test.in)
+		scriptPublicKey, err := PayToAddrScript(test.in, externalapi.KSH)
 		if e := checkScriptError(err, test.err); e != nil {
 			t.Errorf("PayToAddrScript #%d unexpected error - "+
 				"got %v, want %v", i, err, test.err)
@@ -443,7 +443,7 @@ var scriptClassTests = []struct {
 	},
 
 	{
-		// Nulldata. It is standard in Bitcoin but not in Kaspa
+		// Nulldata. It is standard in Bitcoin but not in Kash
 		name:   "nulldata",
 		script: "RETURN 0",
 		class:  NonStandardTy,

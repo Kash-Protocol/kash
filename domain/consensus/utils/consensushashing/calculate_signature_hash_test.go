@@ -342,7 +342,7 @@ func generateTxs() (nativeTx, subnetworkTx *externalapi.DomainTransaction, err e
 	if err != nil {
 		return nil, nil, fmt.Errorf("error decoding address1: %+v", err)
 	}
-	address1ToScript, err := txscript.PayToAddrScript(address1)
+	address1ToScript, err := txscript.PayToAddrScript(address1, externalapi.KSH)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error generating script: %+v", err)
 	}
@@ -352,7 +352,7 @@ func generateTxs() (nativeTx, subnetworkTx *externalapi.DomainTransaction, err e
 	if err != nil {
 		return nil, nil, fmt.Errorf("error decoding address2: %+v", err)
 	}
-	address2ToScript, err := txscript.PayToAddrScript(address2)
+	address2ToScript, err := txscript.PayToAddrScript(address2, externalapi.KSH)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error generating script: %+v", err)
 	}
@@ -496,7 +496,7 @@ func getSourceScript(b *testing.B) *externalapi.ScriptPublicKey {
 		b.Fatalf("Error from DecodeAddress: %+v", err)
 	}
 
-	sourceScript, err := txscript.PayToAddrScript(sourceAddress)
+	sourceScript, err := txscript.PayToAddrScript(sourceAddress, externalapi.KSH)
 	if err != nil {
 		b.Fatalf("Error from PayToAddrScript: %+v", err)
 	}

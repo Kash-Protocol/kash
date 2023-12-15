@@ -6,6 +6,7 @@ package externalapi
 // much it pays.
 type UTXOEntry interface {
 	Amount() uint64                    // Utxo amount in Sompis
+	AssetType() AssetType              // Asset type of the utxo
 	ScriptPublicKey() *ScriptPublicKey // The public key script for the output.
 	BlockDAAScore() uint64             // Daa score of the block accepting the tx.
 	IsCoinbase() bool

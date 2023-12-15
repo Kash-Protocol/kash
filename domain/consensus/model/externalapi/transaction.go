@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// DomainTransaction represents a Kaspa transaction
+// DomainTransaction represents a Kash transaction
 type DomainTransaction struct {
 	Version      uint16
 	Inputs       []*DomainTransactionInput
@@ -127,7 +127,7 @@ func (tx *DomainTransaction) Equal(other *DomainTransaction) bool {
 	return true
 }
 
-// DomainTransactionInput represents a Kaspa transaction input
+// DomainTransactionInput represents a Kash transaction input
 type DomainTransactionInput struct {
 	PreviousOutpoint DomainOutpoint
 	SignatureScript  []byte
@@ -184,7 +184,7 @@ func (input *DomainTransactionInput) Clone() *DomainTransactionInput {
 	}
 }
 
-// DomainOutpoint represents a Kaspa transaction outpoint
+// DomainOutpoint represents a Kash transaction outpoint
 type DomainOutpoint struct {
 	TransactionID DomainTransactionID
 	Index         uint32
@@ -296,7 +296,7 @@ func (output *DomainTransactionOutput) Clone() *DomainTransactionOutput {
 	}
 }
 
-// DomainTransactionID represents the ID of a Kaspa transaction
+// DomainTransactionID represents the ID of a Kash transaction
 type DomainTransactionID DomainHash
 
 // NewDomainTransactionIDFromByteArray constructs a new TransactionID out of a byte array

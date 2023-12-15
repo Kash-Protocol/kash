@@ -2,16 +2,16 @@ package server
 
 import (
 	"context"
-
 	"github.com/Kash-Protocol/kashd/cmd/kashwallet/daemon/pb"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 func (s *server) Send(_ context.Context, request *pb.SendRequest) (*pb.SendResponse, error) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
-	unsignedTransactions, err := s.createUnsignedTransactions(request.ToAddress, request.Amount, request.IsSendAll,
-		request.From, request.UseExistingChangeAddress)
+	unsignedTransactions, err := s.createUnsignedTransactions(request.ToAddress, externalapi.PbAssetTypeToType(request.AssetType),
+		request.Amount, request.IsSendAll, request.From, request.UseExistingChangeAddress)
 
 	if err != nil {
 		return nil, err

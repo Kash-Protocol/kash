@@ -6,7 +6,6 @@ package txscript
 
 import (
 	"fmt"
-
 	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/constants"
 	"github.com/pkg/errors"
@@ -188,32 +187,36 @@ func CalcScriptInfo(sigScript, scriptPubKey []byte, isP2SH bool) (*ScriptInfo, e
 
 // payToPubKeyScript creates a new script to pay a transaction
 // output to a 32-byte pubkey.
-func payToPubKeyScript(pubKey []byte) ([]byte, error) {
-	return NewScriptBuilder().
+func payToPubKeyScript(pubKey []byte, assetType externalapi.AssetType) ([]byte, error) {
+	builder := NewScriptBuilder().
+		AddAssetFlag(assetType). // Add the asset type to the script.
 		AddData(pubKey).
-		AddOp(OpCheckSig).
-		Script()
+		AddOp(OpCheckSig)
+
+	return builder.Script()
 }
 
 // payToPubKeyScript creates a new script to pay a transaction
 // output to a 33-byte pubkey.
-func payToPubKeyScriptECDSA(pubKey []byte) ([]byte, error) {
-	return NewScriptBuilder().
+func payToPubKeyScriptECDSA(pubKey []byte, assetType externalapi.AssetType) ([]byte, error) {
+	builder := NewScriptBuilder().
+		AddAssetFlag(assetType). // Add the asset type to the script.
 		AddData(pubKey).
-		AddOp(OpCheckSigECDSA).
-		Script()
+		AddOp(OpCheckSigECDSA)
+
+	return builder.Script()
 }
 
 // payToScriptHashScript creates a new script to pay a transaction output to a
 // script hash. It is expected that the input is a valid hash.
-func payToScriptHashScript(scriptHash []byte) ([]byte, error) {
-	return NewScriptBuilder().AddOp(OpBlake2b).AddData(scriptHash).
+func payToScriptHashScript(scriptHash []byte, assetType externalapi.AssetType) ([]byte, error) {
+	return NewScriptBuilder().AddAssetFlag(assetType).AddOp(OpBlake2b).AddData(scriptHash).
 		AddOp(OpEqual).Script()
 }
 
 // PayToAddrScript creates a new script to pay a transaction output to a the
 // specified address.
-func PayToAddrScript(addr util.Address) (*externalapi.ScriptPublicKey, error) {
+func PayToAddrScript(addr util.Address, assetType externalapi.AssetType) (*externalapi.ScriptPublicKey, error) {
 	const nilAddrErrStr = "unable to generate payment script for nil address"
 	switch addr := addr.(type) {
 	case *util.AddressPublicKey:
@@ -221,7 +224,7 @@ func PayToAddrScript(addr util.Address) (*externalapi.ScriptPublicKey, error) {
 			return nil, scriptError(ErrUnsupportedAddress,
 				nilAddrErrStr)
 		}
-		script, err := payToPubKeyScript(addr.ScriptAddress())
+		script, err := payToPubKeyScript(addr.ScriptAddress(), assetType)
 		if err != nil {
 			return nil, err
 		}
@@ -233,7 +236,7 @@ func PayToAddrScript(addr util.Address) (*externalapi.ScriptPublicKey, error) {
 			return nil, scriptError(ErrUnsupportedAddress,
 				nilAddrErrStr)
 		}
-		script, err := payToPubKeyScriptECDSA(addr.ScriptAddress())
+		script, err := payToPubKeyScriptECDSA(addr.ScriptAddress(), assetType)
 		if err != nil {
 			return nil, err
 		}
@@ -245,7 +248,7 @@ func PayToAddrScript(addr util.Address) (*externalapi.ScriptPublicKey, error) {
 			return nil, scriptError(ErrUnsupportedAddress,
 				nilAddrErrStr)
 		}
-		script, err := payToScriptHashScript(addr.ScriptAddress())
+		script, err := payToScriptHashScript(addr.ScriptAddress(), assetType)
 		if err != nil {
 			return nil, err
 		}
@@ -259,9 +262,10 @@ func PayToAddrScript(addr util.Address) (*externalapi.ScriptPublicKey, error) {
 }
 
 // PayToScriptHashScript takes a script and returns an equivalent pay-to-script-hash script
-func PayToScriptHashScript(redeemScript []byte) ([]byte, error) {
+func PayToScriptHashScript(redeemScript []byte, assetType externalapi.AssetType) ([]byte, error) {
 	redeemScriptHash := util.HashBlake2b(redeemScript)
 	script, err := NewScriptBuilder().
+		AddAssetFlag(assetType).
 		AddOp(OpBlake2b).AddData(redeemScriptHash).
 		AddOp(OpEqual).Script()
 	if err != nil {
@@ -271,8 +275,8 @@ func PayToScriptHashScript(redeemScript []byte) ([]byte, error) {
 }
 
 // PayToScriptHashSignatureScript generates a signature script that fits a pay-to-script-hash script
-func PayToScriptHashSignatureScript(redeemScript []byte, signature []byte) ([]byte, error) {
-	redeemScriptAsData, err := NewScriptBuilder().AddData(redeemScript).Script()
+func PayToScriptHashSignatureScript(redeemScript []byte, signature []byte, assetType externalapi.AssetType) ([]byte, error) {
+	redeemScriptAsData, err := NewScriptBuilder().AddAssetFlag(assetType).AddData(redeemScript).Script()
 	if err != nil {
 		return nil, err
 	}
@@ -301,20 +305,61 @@ func PushedData(script []byte) ([][]byte, error) {
 	return data, nil
 }
 
+// ExtractAssetTypeFromScriptPubKey extracts the asset type from a given script public key.
+func ExtractAssetTypeFromScriptPubKey(scriptPubKey *externalapi.ScriptPublicKey) (externalapi.AssetType, error) {
+	if scriptPubKey == nil {
+		return externalapi.UNKNOWN, errors.New("scriptPubKey is nil")
+	}
+
+	pops, err := parseScript(scriptPubKey.Script)
+	if err != nil {
+		return externalapi.UNKNOWN, err
+	}
+
+	// Check if the script contains the asset type flag
+	if len(pops) > 0 {
+		switch pops[0].opcode.value {
+		case OpAssetKSH:
+			return externalapi.KSH, nil
+		case OpAssetKRV:
+			return externalapi.KRV, nil
+		case OpAssetKUSD:
+			return externalapi.KUSD, nil
+		}
+	}
+
+	return externalapi.UNKNOWN, nil
+}
+
 // ExtractScriptPubKeyAddress returns the type of script and its addresses.
 // Note that it only works for 'standard' transaction script types. Any data such
 // as public keys which are invalid will return a nil address.
-func ExtractScriptPubKeyAddress(scriptPubKey *externalapi.ScriptPublicKey, dagParams *dagconfig.Params) (ScriptClass, util.Address, error) {
+func ExtractScriptPubKeyAddress(scriptPubKey *externalapi.ScriptPublicKey, dagParams *dagconfig.Params) (ScriptClass, util.Address, externalapi.AssetType, error) {
 	if scriptPubKey.Version > constants.MaxScriptPublicKeyVersion {
-		return NonStandardTy, nil, nil
+		return NonStandardTy, nil, externalapi.UNKNOWN, nil
 	}
 	// No valid address if the script doesn't parse.
 	pops, err := parseScript(scriptPubKey.Script)
 	if err != nil {
-		return NonStandardTy, nil, err
+		return NonStandardTy, nil, externalapi.UNKNOWN, err
 	}
 
-	scriptClass := typeOfScript(pops)
+	var assetType externalapi.AssetType
+	// Extract the assetType from the script.
+	if len(pops) > 0 {
+		switch pops[0].opcode.value {
+		case OpAssetKSH:
+			assetType = externalapi.KSH
+		case OpAssetKRV:
+			assetType = externalapi.KRV
+		case OpAssetKUSD:
+			assetType = externalapi.KUSD
+		default:
+			return NonStandardTy, nil, externalapi.UNKNOWN, nil
+		}
+	}
+
+	scriptClass := typeOfScript(pops[1:])
 	switch scriptClass {
 	case PubKeyTy:
 		// A pay-to-pubkey script is of the form:
@@ -324,9 +369,9 @@ func ExtractScriptPubKeyAddress(scriptPubKey *externalapi.ScriptPublicKey, dagPa
 		addr, err := util.NewAddressPublicKey(pops[0].data,
 			dagParams.Prefix)
 		if err != nil {
-			return scriptClass, nil, nil
+			return scriptClass, nil, assetType, nil
 		}
-		return scriptClass, addr, nil
+		return scriptClass, addr, assetType, nil
 
 	case PubKeyECDSATy:
 		// A pay-to-pubkey script is of the form:
@@ -336,9 +381,9 @@ func ExtractScriptPubKeyAddress(scriptPubKey *externalapi.ScriptPublicKey, dagPa
 		addr, err := util.NewAddressPublicKeyECDSA(pops[0].data,
 			dagParams.Prefix)
 		if err != nil {
-			return scriptClass, nil, nil
+			return scriptClass, nil, assetType, nil
 		}
-		return scriptClass, addr, nil
+		return scriptClass, addr, assetType, nil
 
 	case ScriptHashTy:
 		// A pay-to-script-hash script is of the form:
@@ -348,17 +393,17 @@ func ExtractScriptPubKeyAddress(scriptPubKey *externalapi.ScriptPublicKey, dagPa
 		addr, err := util.NewAddressScriptHashFromHash(pops[1].data,
 			dagParams.Prefix)
 		if err != nil {
-			return scriptClass, nil, nil
+			return scriptClass, nil, assetType, nil
 		}
-		return scriptClass, addr, nil
+		return scriptClass, addr, assetType, nil
 
 	case NonStandardTy:
 		// Don't attempt to extract addresses or required signatures for
 		// nonstandard transactions.
-		return NonStandardTy, nil, nil
+		return scriptClass, nil, assetType, nil
 	}
 
-	return NonStandardTy, nil, errors.Errorf("Cannot handle script class %s", scriptClass)
+	return NonStandardTy, nil, assetType, errors.Errorf("Cannot handle script class %s", scriptClass)
 }
 
 // AtomicSwapDataPushes houses the data pushes found in atomic swap contracts.

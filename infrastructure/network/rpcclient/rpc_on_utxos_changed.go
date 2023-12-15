@@ -2,16 +2,19 @@ package rpcclient
 
 import (
 	"github.com/Kash-Protocol/kashd/app/appmessage"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	routerpkg "github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 	"github.com/pkg/errors"
 )
 
 // RegisterForUTXOsChangedNotifications sends an RPC request respective to the function's name and returns the RPC server's response.
 // Additionally, it starts listening for the appropriate notification using the given handler function
-func (c *RPCClient) RegisterForUTXOsChangedNotifications(addresses []string,
+func (c *RPCClient) RegisterForUTXOsChangedNotifications(addresses []string, assetTypes []externalapi.AssetType,
 	onUTXOsChanged func(notification *appmessage.UTXOsChangedNotificationMessage)) error {
 
-	err := c.rpcRouter.outgoingRoute().Enqueue(appmessage.NewNotifyUTXOsChangedRequestMessage(addresses))
+	err := c.rpcRouter.outgoingRoute().Enqueue(appmessage.NewNotifyUTXOsChangedRequestMessage(
+		addresses, externalapi.ConvertAssetTypeSliceToUint32Slice(assetTypes)))
+
 	if err != nil {
 		return err
 	}

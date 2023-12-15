@@ -101,7 +101,7 @@ func testEstimateMassIncreaseForSignaturesSetUp(t *testing.T, consensusConfig *c
 		t.Fatalf("Address: %+v", err)
 	}
 
-	scriptPublicKey, err := txscript.PayToAddrScript(address)
+	scriptPublicKey, err := txscript.PayToAddrScript(address, externalapi.KSH)
 	if err != nil {
 		t.Fatalf("PayToAddrScript: %+v", err)
 	}

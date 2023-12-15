@@ -2,6 +2,7 @@ package utxo
 
 import (
 	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
+	"github.com/pkg/errors"
 )
 
 type utxoEntry struct {
@@ -31,6 +32,14 @@ func (u *utxoEntry) ScriptPublicKey() *externalapi.ScriptPublicKey {
 	clone := externalapi.ScriptPublicKey{Script: make([]byte, len(u.scriptPublicKey.Script)), Version: u.scriptPublicKey.Version}
 	copy(clone.Script, u.scriptPublicKey.Script)
 	return &clone
+}
+
+func (u *utxoEntry) AssetType() externalapi.AssetType {
+	assetType, err := externalapi.ExtractAssetType(u.scriptPublicKey.Script)
+	if err != nil {
+		panic(errors.Wrap(err, "Failed to extract asset type"))
+	}
+	return assetType
 }
 
 func (u *utxoEntry) BlockDAAScore() uint64 {

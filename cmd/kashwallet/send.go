@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	"os"
 	"strings"
 
@@ -35,13 +36,14 @@ func send(conf *sendConfig) error {
 
 	var sendAmountSompi uint64
 	if !conf.IsSendAll {
-		sendAmountSompi = uint64(conf.SendAmount * constants.SompiPerKaspa)
+		sendAmountSompi = uint64(conf.SendAmount * constants.SompiPerKash)
 	}
 
 	createUnsignedTransactionsResponse, err :=
 		daemonClient.CreateUnsignedTransactions(ctx, &pb.CreateUnsignedTransactionsRequest{
 			From:                     conf.FromAddresses,
 			Address:                  conf.ToAddress,
+			AssetType:                externalapi.AssetTypeFromString(conf.SendAssetType).ToPbAssetType(),
 			Amount:                   sendAmountSompi,
 			IsSendAll:                conf.IsSendAll,
 			UseExistingChangeAddress: conf.UseExistingChangeAddress,

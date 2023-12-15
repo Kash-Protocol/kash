@@ -64,7 +64,7 @@ func TestMultisig(t *testing.T) {
 				t.Fatalf("The address is of unexpected type")
 			}
 
-			scriptPublicKey, err := txscript.PayToAddrScript(address)
+			scriptPublicKey, err := txscript.PayToAddrScript(address, externalapi.KSH)
 			if err != nil {
 				t.Fatalf("PayToAddrScript: %+v", err)
 			}
@@ -225,7 +225,7 @@ func TestP2PK(t *testing.T) {
 				}
 			}
 
-			scriptPublicKey, err := txscript.PayToAddrScript(address)
+			scriptPublicKey, err := txscript.PayToAddrScript(address, externalapi.KSH)
 			if err != nil {
 				t.Fatalf("PayToAddrScript: %+v", err)
 			}
@@ -317,7 +317,7 @@ func TestMaxSompi(t *testing.T) {
 		params := &consensusConfig.Params
 		cfg := *consensusConfig
 		cfg.BlockCoinbaseMaturity = 0
-		cfg.PreDeflationaryPhaseBaseSubsidy = 20e6 * constants.SompiPerKaspa
+		cfg.PreDeflationaryPhaseBaseSubsidy = 20e6 * constants.SompiPerKash
 		tc, teardown, err := consensus.NewFactory().NewTestConsensus(&cfg, "TestMaxSompi")
 		if err != nil {
 			t.Fatalf("Error setting up tc: %+v", err)
@@ -347,7 +347,7 @@ func TestMaxSompi(t *testing.T) {
 			t.Fatalf("Address: %+v", err)
 		}
 
-		scriptPublicKey, err := txscript.PayToAddrScript(address)
+		scriptPublicKey, err := txscript.PayToAddrScript(address, externalapi.KSH)
 		if err != nil {
 			t.Fatalf("PayToAddrScript: %+v", err)
 		}
@@ -479,7 +479,7 @@ func TestMaxSompi(t *testing.T) {
 		unsignedTxWithLargeInputAndOutputAmount, err := libkashwallet.CreateUnsignedTransaction(publicKeys, minimumSignatures,
 			[]*libkashwallet.Payment{{
 				Address: address,
-				Amount:  22e6 * constants.SompiPerKaspa,
+				Amount:  22e6 * constants.SompiPerKash,
 			}}, selectedUTXOsForTxWithLargeInputAndOutputAmount)
 		if err != nil {
 			t.Fatalf("CreateUnsignedTransactions: %+v", err)

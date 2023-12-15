@@ -220,7 +220,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptPubKey, err := PayToAddrScript(address)
+			scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
 			if err != nil {
 				t.Errorf("failed to make scriptPubKey "+
 					"for %s: %v", msg, err)
@@ -270,7 +270,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptPubKey, err := PayToAddrScript(address)
+			scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
 			if err != nil {
 				t.Errorf("failed to make scriptPubKey "+
 					"for %s: %v", msg, err)
@@ -347,7 +347,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptPubKey, err := PayToAddrScript(address)
+			scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
 			if err != nil {
 				t.Errorf("failed to make scriptPubKey "+
 					"for %s: %v", msg, err)
@@ -361,7 +361,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptScriptPubKey, err := PayToAddrScript(scriptAddr)
+			scriptScriptPubKey, err := PayToAddrScript(scriptAddr, externalapi.KSH)
 			if err != nil {
 				t.Errorf("failed to make script scriptPubKey for "+
 					"%s: %v", msg, err)
@@ -411,7 +411,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptPubKey, err := PayToAddrScript(address)
+			scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
 			if err != nil {
 				t.Errorf("failed to make scriptPubKey "+
 					"for %s: %v", msg, err)
@@ -425,7 +425,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptScriptPubKey, err := PayToAddrScript(scriptAddr)
+			scriptScriptPubKey, err := PayToAddrScript(scriptAddr, externalapi.KSH)
 			if err != nil {
 				t.Errorf("failed to make script scriptPubKey for "+
 					"%s: %v", msg, err)
@@ -491,7 +491,7 @@ func generateKeys() (keyPair *secp256k1.SchnorrKeyPair, scriptPublicKey *externa
 		return nil, nil, nil, errors.Errorf("failed to make address for %s: %s", serializedPubKey, err)
 	}
 
-	scriptPubKey, err := PayToAddrScript(address)
+	scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
 	if err != nil {
 		return nil, nil, nil, errors.Errorf("failed to make scriptPubKey for %s: %s", address, err)
 	}

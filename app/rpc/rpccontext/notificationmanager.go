@@ -442,11 +442,12 @@ func (nl *NotificationListener) convertUTXOChangesToUTXOsChangedNotification(
 	return notification, nil
 }
 
-func (nl *NotificationListener) scriptPubKeyStringToAddressString(scriptPublicKeyString utxoindex.ScriptPublicKeyString) (string, error) {
+func (nl *NotificationListener) scriptPubKeyStringToAddressString(scriptPublicKeyString utxoindex.ScriptPublicKeyString,
+) (string, error) {
 	scriptPubKey := externalapi.NewScriptPublicKeyFromString(string(scriptPublicKeyString))
 
 	// ignore error because it is often returned when the script is of unknown type
-	scriptType, address, err := txscript.ExtractScriptPubKeyAddress(scriptPubKey, nl.params)
+	scriptType, address, _, err := txscript.ExtractScriptPubKeyAddress(scriptPubKey, nl.params)
 	if err != nil {
 		return "", err
 	}

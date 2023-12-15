@@ -5,7 +5,7 @@ import (
 	"math/big"
 )
 
-// MsgBlockWithTrustedData represents a kaspa BlockWithTrustedData message
+// MsgBlockWithTrustedData represents a kash BlockWithTrustedData message
 type MsgBlockWithTrustedData struct {
 	baseMessage
 

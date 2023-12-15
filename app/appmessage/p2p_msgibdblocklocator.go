@@ -4,7 +4,7 @@ import (
 	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
-// MsgIBDBlockLocator represents a kaspa ibdBlockLocator message
+// MsgIBDBlockLocator represents a kash ibdBlockLocator message
 type MsgIBDBlockLocator struct {
 	baseMessage
 	TargetHash         *externalapi.DomainHash

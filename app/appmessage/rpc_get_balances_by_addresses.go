@@ -21,8 +21,10 @@ func NewGetBalancesByAddressesRequest(addresses []string) *GetBalancesByAddresse
 
 // BalancesByAddressesEntry represents the balance of some address
 type BalancesByAddressesEntry struct {
-	Address string
-	Balance uint64
+	Address     string
+	KSHBalance  uint64
+	KUSDBalance uint64
+	KRVBalance  uint64
 }
 
 // GetBalancesByAddressesResponseMessage is an appmessage corresponding to

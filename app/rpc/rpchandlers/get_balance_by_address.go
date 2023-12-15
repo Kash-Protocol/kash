@@ -3,6 +3,7 @@ package rpchandlers
 import (
 	"github.com/Kash-Protocol/kashd/app/appmessage"
 	"github.com/Kash-Protocol/kashd/app/rpc/rpccontext"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/txscript"
 	"github.com/Kash-Protocol/kashd/infrastructure/network/netadapter/router"
 	"github.com/Kash-Protocol/kashd/util"
@@ -19,7 +20,10 @@ func HandleGetBalanceByAddress(context *rpccontext.Context, _ *router.Router, re
 
 	getBalanceByAddressRequest := request.(*appmessage.GetBalanceByAddressRequestMessage)
 
-	balance, err := getBalanceByAddress(context, getBalanceByAddressRequest.Address)
+	kshBalance, err := getBalanceByAddress(context, getBalanceByAddressRequest.Address, externalapi.KSH)
+	kusdBalance, err := getBalanceByAddress(context, getBalanceByAddressRequest.Address, externalapi.KUSD)
+	krvBalance, err := getBalanceByAddress(context, getBalanceByAddressRequest.Address, externalapi.KRV)
+
 	if err != nil {
 		rpcError := &appmessage.RPCError{}
 		if !errors.As(err, &rpcError) {
@@ -30,17 +34,17 @@ func HandleGetBalanceByAddress(context *rpccontext.Context, _ *router.Router, re
 		return errorMessage, nil
 	}
 
-	response := appmessage.NewGetBalanceByAddressResponse(balance)
+	response := appmessage.NewGetBalanceByAddressResponse(kshBalance, kusdBalance, krvBalance)
 	return response, nil
 }
 
-func getBalanceByAddress(context *rpccontext.Context, addressString string) (uint64, error) {
+func getBalanceByAddress(context *rpccontext.Context, addressString string, assetType externalapi.AssetType) (uint64, error) {
 	address, err := util.DecodeAddress(addressString, context.Config.ActiveNetParams.Prefix)
 	if err != nil {
 		return 0, appmessage.RPCErrorf("Couldn't decode address '%s': %s", addressString, err)
 	}
 
-	scriptPublicKey, err := txscript.PayToAddrScript(address)
+	scriptPublicKey, err := txscript.PayToAddrScript(address, assetType)
 	if err != nil {
 		return 0, appmessage.RPCErrorf("Could not create a scriptPublicKey for address '%s': %s", addressString, err)
 	}
