@@ -93,7 +93,7 @@ func sign(dagParams *dagconfig.Params, tx *externalapi.DomainTransaction, idx in
 	sighashReusedValues *consensushashing.SighashReusedValues, kdb KeyDB, sdb ScriptDB) (
 	[]byte, ScriptClass, util.Address, error) {
 
-	class, address, err := ExtractScriptPubKeyAddress(script, dagParams)
+	class, address, _, err := ExtractScriptPubKeyAddress(script, dagParams)
 	if err != nil {
 		return nil, NonStandardTy, nil, err
 	}
@@ -154,7 +154,7 @@ func mergeScripts(dagParams *dagconfig.Params, tx *externalapi.DomainTransaction
 			Version: prevScript.Version,
 		}
 		// We already know this information somewhere up the stack.
-		class, _, _ :=
+		class, _, _, _ :=
 			ExtractScriptPubKeyAddress(scriptPubKey, dagParams)
 
 		// regenerate scripts.

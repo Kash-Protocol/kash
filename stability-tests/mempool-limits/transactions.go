@@ -193,7 +193,7 @@ func buildPayToPayAddressScript(t *testing.T) *externalapi.ScriptPublicKey {
 	if err != nil {
 		t.Fatalf("DecodeAddress: %+v", err)
 	}
-	script, err := txscript.PayToAddrScript(address)
+	script, err := txscript.PayToAddrScript(address, externalapi.KSH)
 	if err != nil {
 		t.Fatalf("PayToAddrScript: %+v", err)
 	}

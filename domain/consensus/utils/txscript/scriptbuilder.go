@@ -7,6 +7,7 @@ package txscript
 import (
 	"encoding/binary"
 	"fmt"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 )
 
 const (
@@ -275,6 +276,33 @@ func (b *ScriptBuilder) addLockTimeOrSequence(lockTimeOrSequence uint64) *Script
 	}
 	fixedLockTimeOrSequenceBytesBytes := lockTimeOrSequenceBytes[:unpaddedSize]
 	return b.AddData(fixedLockTimeOrSequenceBytesBytes)
+}
+
+// AddAssetFlag adds an asset type indicator to the script.
+func (b *ScriptBuilder) AddAssetFlag(assetType externalapi.AssetType) *ScriptBuilder {
+	if b.err != nil {
+		return b
+	}
+	if len(b.script)+1 > MaxScriptSize {
+		str := fmt.Sprintf("adding an asset type would exceed the "+
+			"maximum allow canonical script length of %d",
+			MaxScriptSize)
+		b.err = ErrScriptNotCanonical(str)
+		return b
+	}
+
+	switch assetType {
+	case externalapi.KSH:
+		b.script = append(b.script, OpAssetKSH)
+	case externalapi.KRV:
+		b.script = append(b.script, OpAssetKRV)
+	case externalapi.KUSD:
+		b.script = append(b.script, OpAssetKUSD)
+	default:
+		b.err = fmt.Errorf("unknown asset type")
+	}
+
+	return b
 }
 
 // Reset resets the script so it has no content.

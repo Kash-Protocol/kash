@@ -161,7 +161,7 @@ func (ctx *Context) populateTransactionOutputWithVerboseData(transactionOutput *
 	// Ignore the error here since an error means the script
 	// couldn't be parsed and there's no additional information about
 	// it anyways
-	scriptPublicKeyType, scriptPublicKeyAddress, _ := txscript.ExtractScriptPubKeyAddress(
+	scriptPublicKeyType, scriptPublicKeyAddress, _, _ := txscript.ExtractScriptPubKeyAddress(
 		domainScriptPublicKey, ctx.Config.ActiveNetParams)
 
 	var encodedScriptPublicKeyAddress string

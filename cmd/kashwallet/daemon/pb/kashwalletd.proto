@@ -21,23 +21,37 @@ message GetBalanceRequest {
 }
 
 message GetBalanceResponse {
-  uint64 available = 1;
-  uint64 pending = 2;
-  repeated AddressBalances addressBalances = 3;
+  repeated AssetBalance assetBalances = 1;
+}
+
+message AssetBalance {
+  AssetType assetType = 1;
+  uint64 available = 2;
+  uint64 pending = 3;
+  repeated AddressBalances addressBalances = 4;
 }
 
 message AddressBalances {
   string address = 1;
-  uint64 available = 2;
-  uint64 pending = 3;
+  AssetType assetType = 2;
+  uint64 available = 3;
+  uint64 pending = 4;
+}
+
+enum AssetType {
+  KSH = 0;
+  KUSD = 1;
+  KRV = 2;
+  UNKNOWN = 3;
 }
 
 message CreateUnsignedTransactionsRequest {
   string address = 1;
-  uint64 amount = 2;
-  repeated string from = 3;
-  bool useExistingChangeAddress = 4;
-  bool isSendAll = 5;
+  AssetType assetType = 2;
+  uint64 amount = 3;
+  repeated string from = 4;
+  bool useExistingChangeAddress = 5;
+  bool isSendAll = 6;
 }
 
 message CreateUnsignedTransactionsResponse {
@@ -106,11 +120,12 @@ message GetExternalSpendableUTXOsResponse{
 // Since SendRequest contains a password - this command should only be used on a trusted or secure connection
 message SendRequest{
   string toAddress = 1;
-  uint64 amount = 2;
-  string password = 3;
-  repeated string from = 4;
-  bool useExistingChangeAddress = 5;
-  bool isSendAll = 6;
+  AssetType assetType = 2;
+  uint64 amount = 3;
+  string password = 4;
+  repeated string from = 5;
+  bool useExistingChangeAddress = 6;
+  bool isSendAll = 7;
 }
 
 message SendResponse{

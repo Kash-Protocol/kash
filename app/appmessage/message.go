@@ -27,7 +27,7 @@ func (cmd MessageCommand) String() string {
 	return fmt.Sprintf("%s [code %d]", cmdString, uint8(cmd))
 }
 
-// Commands used in kaspa message headers which describe the type of message.
+// Commands used in kash message headers which describe the type of message.
 const (
 	// protocol
 	CmdVersion MessageCommand = iota

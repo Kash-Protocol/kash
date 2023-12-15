@@ -35,7 +35,7 @@ func TestUTXOIndex(t *testing.T) {
 	// Register for UTXO changes
 	const blockAmountToMine = 100
 	onUTXOsChangedChan := make(chan *appmessage.UTXOsChangedNotificationMessage, blockAmountToMine)
-	err := kashd.rpcClient.RegisterForUTXOsChangedNotifications([]string{miningAddress1}, func(
+	err := kashd.rpcClient.RegisterForUTXOsChangedNotifications([]string{miningAddress1}, []externalapi.AssetType{externalapi.KSH}, func(
 		notification *appmessage.UTXOsChangedNotificationMessage) {
 
 		onUTXOsChangedChan <- notification
@@ -55,13 +55,13 @@ func TestUTXOIndex(t *testing.T) {
 		t.Fatalf("Error Retriving Coin supply: %s", err)
 	}
 
-	rewardsMinedSompi := uint64(blockAmountToMine * constants.SompiPerKaspa * 500)
+	rewardsMinedSompi := uint64(blockAmountToMine * constants.SompiPerKash * 500)
 	getBlockCountResponse, err := kashd.rpcClient.GetBlockCount()
 	if err != nil {
 		t.Fatalf("Error Retriving BlockCount: %s", err)
 	}
 	rewardsMinedViaBlockCountSompi := uint64(
-		(getBlockCountResponse.BlockCount - 2) * constants.SompiPerKaspa * 500, // -2 because of genesis and virtual.
+		(getBlockCountResponse.BlockCount - 2) * constants.SompiPerKash * 500, // -2 because of genesis and virtual.
 	)
 
 	if getCoinSupplyResponse.CirculatingSompi != rewardsMinedSompi {
@@ -188,7 +188,7 @@ func buildTransactionForUTXOIndexTest(t *testing.T, entry *appmessage.UTXOsByAdd
 	if err != nil {
 		t.Fatalf("Error decoding payeeAddress: %+v", err)
 	}
-	toScript, err := txscript.PayToAddrScript(payeeAddress)
+	toScript, err := txscript.PayToAddrScript(payeeAddress, externalapi.KSH)
 	if err != nil {
 		t.Fatalf("Error generating script: %+v", err)
 	}

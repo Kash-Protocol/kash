@@ -7,9 +7,9 @@ txscript
 Package txscript implements the kaspa transaction script language. There is
 a comprehensive test suite.
 
-## Kaspa Scripts
+## Kash Scripts
 
-Kaspa provides a stack-based, FORTH-like language for the scripts in
+Kash provides a stack-based, FORTH-like language for the scripts in
 the kaspa transactions. This language is not turing complete
 although it is still fairly powerful. 
 

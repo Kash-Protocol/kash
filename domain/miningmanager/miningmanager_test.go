@@ -841,7 +841,7 @@ func generateNewCoinbase(addressPrefix util.Bech32Prefix, op opType) (*externala
 	if err != nil {
 		return nil, err
 	}
-	scriptPublicKey, err := txscript.PayToAddrScript(payAddress)
+	scriptPublicKey, err := txscript.PayToAddrScript(payAddress, externalapi.KSH)
 	if err != nil {
 		return nil, err
 	}
@@ -854,7 +854,7 @@ func createTransactionWithUTXOEntry(t *testing.T, i int, daaScore uint64) *exter
 	prevOutTxID := externalapi.DomainTransactionID{}
 	prevOutPoint := externalapi.DomainOutpoint{TransactionID: prevOutTxID, Index: uint32(i)}
 	scriptPublicKey, redeemScript := testutils.OpTrueScript()
-	signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil)
+	signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil, externalapi.KSH)
 	if err != nil {
 		t.Fatalf("PayToScriptHashSignatureScript: %v", err)
 	}

@@ -20,12 +20,13 @@ func NewGetBalanceByAddressRequest(address string) *GetBalanceByAddressRequestMe
 }
 
 // GetBalanceByAddressResponseMessage is an appmessage corresponding to
-// its respective RPC message
+// its respective RPC message. It includes balances for KSH, KUSD, and KRV.
 type GetBalanceByAddressResponseMessage struct {
 	baseMessage
-	Balance uint64
-
-	Error *RPCError
+	KSHBalance  uint64
+	KUSDBalance uint64
+	KRVBalance  uint64
+	Error       *RPCError
 }
 
 // Command returns the protocol command string for the message
@@ -34,8 +35,11 @@ func (msg *GetBalanceByAddressResponseMessage) Command() MessageCommand {
 }
 
 // NewGetBalanceByAddressResponse returns an instance of the message
-func NewGetBalanceByAddressResponse(Balance uint64) *GetBalanceByAddressResponseMessage {
+// with specified balances for KSH, KUSD, and KRV.
+func NewGetBalanceByAddressResponse(kshBalance, kusdBalance, krvBalance uint64) *GetBalanceByAddressResponseMessage {
 	return &GetBalanceByAddressResponseMessage{
-		Balance: Balance,
+		KSHBalance:  kshBalance,
+		KUSDBalance: kusdBalance,
+		KRVBalance:  krvBalance,
 	}
 }

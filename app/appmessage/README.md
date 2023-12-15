@@ -5,17 +5,17 @@ wire
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/Kash-Protocol/kashd/wire)
 =======
 
-Package wire implements the kaspa wire protocol.
+Package wire implements the kash wire protocol.
 
-## Kaspa Message Overview
+## Kash Message Overview
 
-The kaspa protocol consists of exchanging messages between peers. Each message
+The kash protocol consists of exchanging messages between peers. Each message
 is preceded by a header which identifies information about it such as which
-kaspa network it is a part of, its type, how big it is, and a checksum to
+kash network it is a part of, its type, how big it is, and a checksum to
 verify validity. All encoding and decoding of message headers is handled by this
 package.
 
-To accomplish this, there is a generic interface for kaspa messages named
+To accomplish this, there is a generic interface for kash messages named
 `Message` which allows messages of any type to be read, written, or passed
 around through channels, functions, etc. In addition, concrete implementations
 of most all kaspa messages are provided. All of the details of marshalling and 

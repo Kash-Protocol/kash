@@ -6,7 +6,7 @@ kaspa transaction scripts.
 
 # Script Overview
 
-Kaspa transaction scripts are written in a stack-base, FORTH-like language.
+Kash transaction scripts are written in a stack-base, FORTH-like language.
 
 The kaspa script language consists of a number of opcodes which fall into
 several categories such pushing and popping data to and from the stack,

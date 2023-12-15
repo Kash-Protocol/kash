@@ -23,21 +23,30 @@ func balance(conf *balanceConfig) error {
 		return err
 	}
 
-	pendingSuffix := ""
-	if response.Pending > 0 {
-		pendingSuffix = " (pending)"
-	}
 	if conf.Verbose {
-		pendingSuffix = ""
-		println("Address                                                                       Available             Pending")
-		println("-----------------------------------------------------------------------------------------------------------")
-		for _, addressBalance := range response.AddressBalances {
-			fmt.Printf("%s %s %s\n", addressBalance.Address, utils.FormatKas(addressBalance.Available), utils.FormatKas(addressBalance.Pending))
+		println("Asset Type    Address                                                                       Available             Pending")
+		println("------------------------------------------------------------------------------------------------------------------------")
+		for _, assetBalance := range response.AssetBalances {
+			assetType := assetBalance.AssetType.String() // Assuming AssetType has a String() method
+			for _, addressBalance := range assetBalance.AddressBalances {
+				fmt.Printf("%-12s %-75s %-20s %-20s\n", assetType, addressBalance.Address, utils.FormatKas(addressBalance.Available), utils.FormatKas(addressBalance.Pending))
+			}
 		}
-		println("-----------------------------------------------------------------------------------------------------------")
-		print("                                                 ")
+		println("------------------------------------------------------------------------------------------------------------------------")
+	} else {
+		for _, assetBalance := range response.AssetBalances {
+			var totalAvailable, totalPending uint64
+			for _, addressBalance := range assetBalance.AddressBalances {
+				totalAvailable += addressBalance.Available
+				totalPending += addressBalance.Pending
+			}
+			pendingSuffix := ""
+			if totalPending > 0 {
+				pendingSuffix = fmt.Sprintf(" (pending %s)", utils.FormatKas(totalPending))
+			}
+			fmt.Printf("Total balance, %s %s%s\n", assetBalance.AssetType.String(), utils.FormatKas(totalAvailable), pendingSuffix)
+		}
 	}
-	fmt.Printf("Total balance, KSH %s %s%s\n", utils.FormatKas(response.Available), utils.FormatKas(response.Pending), pendingSuffix)
 
 	return nil
 }

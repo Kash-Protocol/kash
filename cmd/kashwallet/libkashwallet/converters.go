@@ -10,8 +10,8 @@ import (
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/utxo"
 )
 
-// KaspawalletdUTXOsTolibkashwalletUTXOs converts a  []*pb.UtxosByAddressesEntry to a []*libkashwallet.UTXO
-func KaspawalletdUTXOsTolibkashwalletUTXOs(kashwalletdUtxoEntires []*pb.UtxosByAddressesEntry) ([]*UTXO, error) {
+// KashwalletdUTXOsTolibkashwalletUTXOs converts a  []*pb.UtxosByAddressesEntry to a []*libkashwallet.UTXO
+func KashwalletdUTXOsTolibkashwalletUTXOs(kashwalletdUtxoEntires []*pb.UtxosByAddressesEntry) ([]*UTXO, error) {
 	UTXOs := make([]*UTXO, len(kashwalletdUtxoEntires))
 	for i, entry := range kashwalletdUtxoEntires {
 		script, err := hex.DecodeString(entry.UtxoEntry.ScriptPublicKey.ScriptPublicKey)
@@ -41,8 +41,8 @@ func KaspawalletdUTXOsTolibkashwalletUTXOs(kashwalletdUtxoEntires []*pb.UtxosByA
 	return UTXOs, nil
 }
 
-// AppMessageUTXOToKaspawalletdUTXO converts an appmessage.UTXOsByAddressesEntry to a  pb.UtxosByAddressesEntry
-func AppMessageUTXOToKaspawalletdUTXO(appUTXOsByAddressesEntry *appmessage.UTXOsByAddressesEntry) *pb.UtxosByAddressesEntry {
+// AppMessageUTXOToKashwalletdUTXO converts an appmessage.UTXOsByAddressesEntry to a  pb.UtxosByAddressesEntry
+func AppMessageUTXOToKashwalletdUTXO(appUTXOsByAddressesEntry *appmessage.UTXOsByAddressesEntry) *pb.UtxosByAddressesEntry {
 	return &pb.UtxosByAddressesEntry{
 		Outpoint: &pb.Outpoint{
 			TransactionId: appUTXOsByAddressesEntry.Outpoint.TransactionID,

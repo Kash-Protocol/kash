@@ -18,7 +18,7 @@ Kashd is the reference full node implementation of Kash, a groundbreaking crypto
 
 - **ASIC Resistance with RandomX**: Kash adopts the RandomX algorithm, an ASIC-resistant proof-of-work mechanism. This choice reflects Kash's commitment to maintaining a decentralized and egalitarian mining landscape.
 
-- **Rapid and Secure Transactions**: Leveraging the Kaspa protocol, Kash inherits its renowned sub-second block times and instant confirmations, ensuring rapid and secure transactions.
+- **Rapid and Secure Transactions**: Kash adopts the BlockDAG network from Kaspa, renowned for its sub-second block times and instant confirmations, providing fast and secure transaction capabilities.
 
 - **Adherence to PHANTOM Protocol**: Kash upholds the core attributes of Kaspa, including its reliance on [the PHANTOM protocol](https://eprint.iacr.org/2018/104.pdf), a sophisticated generalization of Nakamoto consensus.
 
@@ -36,36 +36,33 @@ Go 1.18 or later.
 - Ensure Go was installed properly and is a supported version:
 
 ```bash
-$ go version
+go version
 ```
 
 - Clone the Kashd repository:
 
 ```bash
-$ git clone https://github.com/Kash-Protocol/kashd
-$ cd kashd
+git clone https://github.com/Kash-Protocol/kashd && cd kashd
 ```
 
 - Before installing Kashd, ensure that the `randomx` library is properly built. Navigate to the `util/randomx` directory within the project and execute the build process for `randomx`:
 
 ```bash
-$ cd util/randomx
-$ ./build.sh
-$ cd ../../
+cd util/randomx && ./build.sh && cd ../../
 ```
 
 - Set the necessary environment variables for CGO and Go build flags:
 
 ```bash
-$ export CGO_ENABLED=1
-$ export CGO_LDFLAGS="-L$(pwd)/util/randomx/lib -lrandomx -lm"
-$ export GOFLAGS='-ldflags=-extldflags="-static"'
+export CGO_ENABLED=1 &&
+export CGO_LDFLAGS="-L$(pwd)/util/randomx/lib -lrandomx -lm" &&
+export GOFLAGS='-ldflags=-extldflags="-static"'
 ```
 
 - After setting the environment variables and successfully building `randomx`, install Kashd and all its dependencies:
 
 ```bash
-$ go install . ./cmd/...
+go install . ./cmd/...
 ```
 
 - Kashd (and utilities) should now be installed in `$(go env GOPATH)/bin`. If you did
@@ -77,7 +74,7 @@ $ go install . ./cmd/...
 Kashd operates with minimal configuration for basic operations. Advanced users can tweak various settings for optimized performance.
 
 ```bash
-$ kashd
+kashd
 ```
 
 ## Community and Support

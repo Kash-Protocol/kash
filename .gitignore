@@ -21,7 +21,7 @@ kashd.db
 # Real binaries, build with `go build .`
 kashd
 cmd/gencerts/gencerts
-cmd/kashctl/kaspactl
+cmd/kashctl/kashctl
 cmd/kasminer/kashminer
 *.exe
 *.exe~

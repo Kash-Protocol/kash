@@ -4,7 +4,8 @@ package appmessage
 // its respective RPC message
 type NotifyUTXOsChangedRequestMessage struct {
 	baseMessage
-	Addresses []string
+	Addresses  []string
+	AssetTypes []uint32
 }
 
 // Command returns the protocol command string for the message
@@ -13,9 +14,10 @@ func (msg *NotifyUTXOsChangedRequestMessage) Command() MessageCommand {
 }
 
 // NewNotifyUTXOsChangedRequestMessage returns a instance of the message
-func NewNotifyUTXOsChangedRequestMessage(addresses []string) *NotifyUTXOsChangedRequestMessage {
+func NewNotifyUTXOsChangedRequestMessage(addresses []string, assetTypes []uint32) *NotifyUTXOsChangedRequestMessage {
 	return &NotifyUTXOsChangedRequestMessage{
-		Addresses: addresses,
+		Addresses:  addresses,
+		AssetTypes: assetTypes,
 	}
 }
 

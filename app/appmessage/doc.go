@@ -1,16 +1,16 @@
 /*
-Package appmessage implements the kaspa appmessage protocol.
+Package appmessage implements the kash appmessage protocol.
 
 At a high level, this package provides support for marshalling and unmarshalling
-supported kaspa messages to and from the appmessage. This package does not deal
+supported kash messages to and from the appmessage. This package does not deal
 with the specifics of message handling such as what to do when a message is
 received. This provides the caller with a high level of flexibility.
 
-# Kaspa Message Overview
+# Kash Message Overview
 
-The kaspa protocol consists of exchanging messages between peers. Each
+The kash protocol consists of exchanging messages between peers. Each
 message is preceded by a header which identifies information about it such as
-which kaspa network it is a part of, its type, how big it is, and a checksum
+which kash network it is a part of, its type, how big it is, and a checksum
 to verify validity. All encoding and decoding of message headers is handled by
 this package.
 
@@ -60,7 +60,7 @@ latest protocol version this package supports and is typically the value to use
 for all outbound connections before a potentially lower protocol version is
 negotiated.
 
-# Kaspa Network
+# Kash Network
 
 The kaspa network is a magic number which is used to identify the start of a
 message and which kaspa network the message applies to. This package provides

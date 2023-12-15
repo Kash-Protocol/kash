@@ -83,7 +83,7 @@ Bug fixes:
 * Fix RPC client memory/goroutine leak (#2122)
 * Fix a subtle lock sync issue in consensus insert block  (#2121)
 * Mempool: Retrieve stable state of the mempool. Optimze get mempool entries by addresses (#2111)
-* Kaspawallet.send(): Make separate context for Broadcast, to prolong timeout (#2131)
+* Kashwallet.send(): Make separate context for Broadcast, to prolong timeout (#2131)
 
 
 
@@ -129,7 +129,7 @@ Kashd v0.12.1 - 2022-05-31
 * Update Dockerfile for go 1.18 (#2038)
 * Remove HF1 activation code (#2042)
 
-Kaspa wallet:
+Kash wallet:
 * Various kashwallet text fixes and log additions (#2032, #2047, #2062)
 * Wallet address synchronization improvement (#2025)
 * Add support for `from` address in `kashwallet send` (#1964)
@@ -159,7 +159,7 @@ Bug fixes:
 Non-breaking changes:
 * Adding a "sweep" command to `kashwallet` (#2018)
 * Use `blue work` heuristic to skip irrelevant relay blocks
-* Kaspawallet daemon: Add Send and Sign commands (#2016)
+* Kashwallet daemon: Add Send and Sign commands (#2016)
 
 Kashd v0.11.17 - 2022-04-06
 ===========================
@@ -266,7 +266,7 @@ Non-breaking changes:
 * Ignore header mass in devnet and testnet (#1879)
 * Remove unused args from CalcSubsidy (#1877)
 * ExpectedHeaderPruningPoint fix (#1876)
-* Changes to libkashwallet to support Kaspaper (#1878)
+* Changes to libkashwallet to support Kashper (#1878)
 * Get rid of genesis's UTXO dump (#1867)
 
 Kashd v0.11.2 - 2021-11-11

@@ -27,7 +27,7 @@ $ cd kashd/cmd/kashctl
 $ go install .
 ```
 
-- Kaspactl should now be installed in `$(go env GOPATH)/bin`. If you did not already add the bin directory to your
+- Kashctl should now be installed in `$(go env GOPATH)/bin`. If you did not already add the bin directory to your
   system path during Go installation, you are encouraged to do so now.
 
 ## Usage

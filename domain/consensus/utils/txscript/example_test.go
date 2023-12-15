@@ -8,7 +8,6 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
-
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/txscript"
 	"github.com/Kash-Protocol/kashd/domain/dagconfig"
 	"github.com/Kash-Protocol/kashd/util"
@@ -30,7 +29,7 @@ func ExamplePayToAddrScript() {
 	}
 
 	// Create a public key script that pays to the address.
-	script, err := txscript.PayToAddrScript(address)
+	script, err := txscript.PayToAddrScript(address, externalapi.KSH)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -61,7 +60,7 @@ func ExampleExtractScriptPubKeyAddress() {
 	}
 
 	// Extract and print details from the script.
-	scriptClass, address, err := txscript.ExtractScriptPubKeyAddress(
+	scriptClass, address, _, err := txscript.ExtractScriptPubKeyAddress(
 		&externalapi.ScriptPublicKey{
 			Script:  script,
 			Version: 0,

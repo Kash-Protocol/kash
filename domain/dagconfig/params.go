@@ -25,19 +25,19 @@ var (
 	// the overhead of creating it multiple times.
 	bigOne = big.NewInt(1)
 
-	// mainPowMax is the highest proof of work value a Kaspa block can
+	// mainPowMax is the highest proof of work value a Kash block can
 	// have for the main network. It is the value 2^255 - 1.
 	mainPowMax = new(big.Int).Sub(new(big.Int).Lsh(bigOne, 255), bigOne)
 
-	// testnetPowMax is the highest proof of work value a Kaspa block
+	// testnetPowMax is the highest proof of work value a Kash block
 	// can have for the test network. It is the value 2^255 - 1.
 	testnetPowMax = new(big.Int).Sub(new(big.Int).Lsh(bigOne, 255), bigOne)
 
-	// simnetPowMax is the highest proof of work value a Kaspa block
+	// simnetPowMax is the highest proof of work value a Kash block
 	// can have for the simulation test network. It is the value 2^255 - 1.
 	simnetPowMax = new(big.Int).Sub(new(big.Int).Lsh(bigOne, 255), bigOne)
 
-	// devnetPowMax is the highest proof of work value a Kaspa block
+	// devnetPowMax is the highest proof of work value a Kash block
 	// can have for the development network. It is the value
 	// 2^255 - 1.
 	devnetPowMax = new(big.Int).Sub(new(big.Int).Lsh(bigOne, 255), bigOne)
@@ -46,8 +46,8 @@ var (
 // KType defines the size of GHOSTDAG consensus algorithm K parameter.
 type KType uint8
 
-// Params defines a Kaspa network by its parameters. These parameters may be
-// used by Kaspa applications to differentiate networks as well as addresses
+// Params defines a Kash network by its parameters. These parameters may be
+// used by Kash applications to differentiate networks as well as addresses
 // and keys for one network from those intended for use on another network.
 type Params struct {
 	// K defines the K parameter for GHOSTDAG consensus algorithm.
@@ -58,7 +58,7 @@ type Params struct {
 	Name string
 
 	// Net defines the magic bytes used to identify the network.
-	Net appmessage.KaspaNet
+	Net appmessage.KashNet
 
 	// RPCPort defines the rpc server port
 	RPCPort string
@@ -206,7 +206,7 @@ func (p *Params) PruningDepth() uint64 {
 	return 2*p.FinalityDepth() + 4*p.MergeSetSizeLimit*uint64(p.K) + 2*uint64(p.K) + 2
 }
 
-// MainnetParams defines the network parameters for the main Kaspa network.
+// MainnetParams defines the network parameters for the main Kash network.
 var MainnetParams = Params{
 	K:           defaultGHOSTDAGK,
 	Name:        "kash-mainnet",
@@ -271,7 +271,7 @@ var MainnetParams = Params{
 	MergeDepth:    defaultMergeDepth,
 }
 
-// TestnetParams defines the network parameters for the test Kaspa network.
+// TestnetParams defines the network parameters for the test Kash network.
 var TestnetParams = Params{
 	K:           defaultGHOSTDAGK,
 	Name:        "kash-testnet-10",
@@ -333,7 +333,7 @@ var TestnetParams = Params{
 	MergeDepth:    defaultMergeDepth,
 }
 
-// SimnetParams defines the network parameters for the simulation test Kaspa
+// SimnetParams defines the network parameters for the simulation test Kash
 // network. This network is similar to the normal test network except it is
 // intended for private use within a group of individuals doing simulation
 // testing. The functionality is intended to differ in that the only nodes
@@ -399,7 +399,7 @@ var SimnetParams = Params{
 	MergeDepth:    defaultMergeDepth,
 }
 
-// DevnetParams defines the network parameters for the development Kaspa network.
+// DevnetParams defines the network parameters for the development Kash network.
 var DevnetParams = Params{
 	K:           defaultGHOSTDAGK,
 	Name:        "kash-devnet",
@@ -461,14 +461,14 @@ var DevnetParams = Params{
 	MergeDepth:    defaultMergeDepth,
 }
 
-// ErrDuplicateNet describes an error where the parameters for a Kaspa
+// ErrDuplicateNet describes an error where the parameters for a Kash
 // network could not be set due to the network already being a standard
 // network or previously-registered into this package.
-var ErrDuplicateNet = errors.New("duplicate Kaspa network")
+var ErrDuplicateNet = errors.New("duplicate Kash network")
 
-var registeredNets = make(map[appmessage.KaspaNet]struct{})
+var registeredNets = make(map[appmessage.KashNet]struct{})
 
-// Register registers the network parameters for a Kaspa network. This may
+// Register registers the network parameters for a Kash network. This may
 // error with ErrDuplicateNet if the network is already registered (either
 // due to a previous Register call, or the network being one of the default
 // networks).

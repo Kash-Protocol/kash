@@ -201,8 +201,8 @@ const (
 	OpMin                 = 0xa3 // 163
 	OpMax                 = 0xa4 // 164
 	OpWithin              = 0xa5 // 165
-	OpUnknown166          = 0xa6 // 166
-	OpUnknown167          = 0xa7 // 167
+	OpMintKUSD            = 0xa6 // 166
+	OpStakeKSH            = 0xa7 // 167
 	OpSHA256              = 0xa8 // 168
 	OpCheckMultiSigECDSA  = 0xa9 // 169
 	OpBlake2b             = 0xaa // 170
@@ -213,9 +213,9 @@ const (
 	OpCheckMultiSigVerify = 0xaf // 175
 	OpCheckLockTimeVerify = 0xb0 // 176
 	OpCheckSequenceVerify = 0xb1 // 177
-	OpUnknown178          = 0xb2 // 178
-	OpUnknown179          = 0xb3 // 179
-	OpUnknown180          = 0xb4 // 180
+	OpAssetKSH            = 0xb2 // 178
+	OpAssetKUSD           = 0xb3 // 179
+	OpAssetKRV            = 0xb4 // 180
 	OpUnknown181          = 0xb5 // 181
 	OpUnknown182          = 0xb6 // 182
 	OpUnknown183          = 0xb7 // 183
@@ -494,12 +494,16 @@ var opcodeArray = [256]opcode{
 	OpCheckMultiSig:       {OpCheckMultiSig, "OP_CHECKMULTISIG", 1, opcodeCheckMultiSig},
 	OpCheckMultiSigVerify: {OpCheckMultiSigVerify, "OP_CHECKMULTISIGVERIFY", 1, opcodeCheckMultiSigVerify},
 
+	// KASH opcodes.
+	OpMintKUSD: {OpMintKUSD, "OP_MINTKUSD", 1, opcodeMintKUSD},
+	OpStakeKSH: {OpStakeKSH, "OP_STAKEKSH", 1, opcodeStakeKSH},
+
+	// UTXO asset type opcodes.(KSH, KUSD, KRV)
+	OpAssetKSH:  {OpAssetKSH, "OP_UNKNOWN178", 1, opcodeNop},
+	OpAssetKUSD: {OpAssetKUSD, "OP_UNKNOWN179", 1, opcodeNop},
+	OpAssetKRV:  {OpAssetKRV, "OP_UNKNOWN180", 1, opcodeNop},
+
 	// Undefined opcodes.
-	OpUnknown166: {OpUnknown166, "OP_UNKNOWN166", 1, opcodeInvalid},
-	OpUnknown167: {OpUnknown167, "OP_UNKNOWN167", 1, opcodeInvalid},
-	OpUnknown178: {OpUnknown188, "OP_UNKNOWN178", 1, opcodeInvalid},
-	OpUnknown179: {OpUnknown189, "OP_UNKNOWN179", 1, opcodeInvalid},
-	OpUnknown180: {OpUnknown190, "OP_UNKNOWN180", 1, opcodeInvalid},
 	OpUnknown181: {OpUnknown191, "OP_UNKNOWN181", 1, opcodeInvalid},
 	OpUnknown182: {OpUnknown192, "OP_UNKNOWN182", 1, opcodeInvalid},
 	OpUnknown183: {OpUnknown193, "OP_UNKNOWN183", 1, opcodeInvalid},
@@ -2477,6 +2481,14 @@ func opcodeCheckMultiSigVerify(op *parsedOpcode, vm *Engine) error {
 		err = abstractVerify(op, vm, ErrCheckMultiSigVerify)
 	}
 	return err
+}
+
+func opcodeMintKUSD(op *parsedOpcode, vm *Engine) error {
+	return nil
+}
+
+func opcodeStakeKSH(op *parsedOpcode, vm *Engine) error {
+	return nil
 }
 
 // OpcodeByName is a map that can be used to lookup an opcode by its

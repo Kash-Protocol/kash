@@ -12,7 +12,7 @@ import (
 )
 
 // Connect connects to the kashwalletd server, and returns the client instance
-func Connect(address string) (pb.KaspawalletdClient, func(), error) {
+func Connect(address string) (pb.KashwalletdClient, func(), error) {
 	// Connection is local, so 1 second timeout is sufficient
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
@@ -25,7 +25,7 @@ func Connect(address string) (pb.KaspawalletdClient, func(), error) {
 		return nil, nil, err
 	}
 
-	return pb.NewKaspawalletdClient(conn), func() {
+	return pb.NewKashwalletdClient(conn), func() {
 		conn.Close()
 	}, nil
 }

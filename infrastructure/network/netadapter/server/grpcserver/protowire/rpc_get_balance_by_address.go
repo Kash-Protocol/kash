@@ -41,7 +41,9 @@ func (x *KashdMessage_GetBalanceByAddressResponse) fromAppMessage(message *appme
 		err = &RPCError{Message: message.Error.Message}
 	}
 	x.GetBalanceByAddressResponse = &GetBalanceByAddressResponseMessage{
-		Balance: message.Balance,
+		KshBalance:  message.KSHBalance,
+		KusdBalance: message.KUSDBalance,
+		KrvBalance:  message.KRVBalance,
 
 		Error: err,
 	}
@@ -58,12 +60,17 @@ func (x *GetBalanceByAddressResponseMessage) toAppMessage() (appmessage.Message,
 		return nil, err
 	}
 
-	if rpcErr != nil && x.Balance != 1 {
-		return nil, errors.New("GetBalanceByAddressResponse contains both an error and a response")
+	if rpcErr != nil {
+		return &appmessage.GetBalanceByAddressResponseMessage{
+			Error: rpcErr,
+		}, nil
 	}
 
 	return &appmessage.GetBalanceByAddressResponseMessage{
-		Balance: x.Balance,
-		Error:   rpcErr,
+		KSHBalance:  x.KshBalance,
+		KUSDBalance: x.KusdBalance,
+		KRVBalance:  x.KrvBalance,
+
+		Error: rpcErr,
 	}, nil
 }

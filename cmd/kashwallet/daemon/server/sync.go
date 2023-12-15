@@ -182,7 +182,7 @@ func (s *server) updateAddressesAndLastUsedIndexes(requestedAddressSet walletAdd
 			return errors.Errorf("Got result from address %s even though it wasn't requested", entry.Address)
 		}
 
-		if entry.Balance == 0 {
+		if entry.KSHBalance == 0 && entry.KUSDBalance == 0 && entry.KRVBalance == 0 {
 			continue
 		}
 

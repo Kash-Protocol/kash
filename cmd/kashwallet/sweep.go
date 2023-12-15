@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/hex"
 	"fmt"
-
 	"github.com/Kash-Protocol/kashd/cmd/kashwallet/daemon/client"
 	"github.com/Kash-Protocol/kashd/cmd/kashwallet/daemon/pb"
 	"github.com/Kash-Protocol/kashd/cmd/kashwallet/libkashwallet"
@@ -64,7 +63,7 @@ func sweep(conf *sweepConfig) error {
 		return err
 	}
 
-	UTXOs, err := libkashwallet.KaspawalletdUTXOsTolibkashwalletUTXOs(getExternalSpendableUTXOsResponse.Entries)
+	UTXOs, err := libkashwallet.KashwalletdUTXOsTolibkashwalletUTXOs(getExternalSpendableUTXOsResponse.Entries)
 	if err != nil {
 		return err
 	}
@@ -150,7 +149,7 @@ func createSplitTransactionsWithSchnorrPrivteKey(
 
 	massCalculater := txmass.NewCalculator(params.MassPerTxByte, params.MassPerScriptPubKeyByte, params.MassPerSigOp)
 
-	scriptPublicKey, err := txscript.PayToAddrScript(toAddress)
+	scriptPublicKey, err := txscript.PayToAddrScript(toAddress, externalapi.KSH)
 	if err != nil {
 		return nil, err
 	}

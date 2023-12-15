@@ -143,7 +143,7 @@ func generateTx(t *testing.T, firstBlockCoinbase *externalapi.DomainTransaction,
 	if err != nil {
 		t.Fatalf("Error decoding payeeAddress: %+v", err)
 	}
-	toScript, err := txscript.PayToAddrScript(payeeAddress)
+	toScript, err := txscript.PayToAddrScript(payeeAddress, externalapi.KSH)
 	if err != nil {
 		t.Fatalf("Error generating script: %+v", err)
 	}

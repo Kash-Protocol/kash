@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	"time"
 
 	"github.com/Kash-Protocol/kashd/cmd/kashwallet/daemon/pb"
@@ -22,7 +23,8 @@ func (s *server) CreateUnsignedTransactions(_ context.Context, request *pb.Creat
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
-	unsignedTransactions, err := s.createUnsignedTransactions(request.Address, request.Amount, request.IsSendAll,
+	unsignedTransactions, err := s.createUnsignedTransactions(request.Address,
+		externalapi.PbAssetTypeToType(request.AssetType), request.Amount, request.IsSendAll,
 		request.From, request.UseExistingChangeAddress)
 	if err != nil {
 		return nil, err
@@ -31,7 +33,8 @@ func (s *server) CreateUnsignedTransactions(_ context.Context, request *pb.Creat
 	return &pb.CreateUnsignedTransactionsResponse{UnsignedTransactions: unsignedTransactions}, nil
 }
 
-func (s *server) createUnsignedTransactions(address string, amount uint64, isSendAll bool, fromAddressesString []string, useExistingChangeAddress bool) ([][]byte, error) {
+func (s *server) createUnsignedTransactions(address string, assetType externalapi.AssetType,
+	amount uint64, isSendAll bool, fromAddressesString []string, useExistingChangeAddress bool) ([][]byte, error) {
 	if !s.isSynced() {
 		return nil, errors.Errorf("wallet daemon is not synced yet, %s", s.formatSyncStateReport())
 	}
@@ -57,7 +60,7 @@ func (s *server) createUnsignedTransactions(address string, amount uint64, isSen
 		fromAddresses = append(fromAddresses, fromAddress)
 	}
 
-	selectedUTXOs, spendValue, changeSompi, err := s.selectUTXOs(amount, isSendAll, feePerInput, fromAddresses)
+	selectedUTXOs, spendValue, changeSompi, err := s.selectUTXOs(amount, isSendAll, feePerInput, fromAddresses, assetType)
 	if err != nil {
 		return nil, err
 	}
@@ -72,13 +75,15 @@ func (s *server) createUnsignedTransactions(address string, amount uint64, isSen
 	}
 
 	payments := []*libkashwallet.Payment{{
-		Address: toAddress,
-		Amount:  spendValue,
+		Address:   toAddress,
+		AssetType: assetType,
+		Amount:    spendValue,
 	}}
 	if changeSompi > 0 {
 		payments = append(payments, &libkashwallet.Payment{
-			Address: changeAddress,
-			Amount:  changeSompi,
+			Address:   changeAddress,
+			AssetType: assetType,
+			Amount:    changeSompi,
 		})
 	}
 	unsignedTransaction, err := libkashwallet.CreateUnsignedTransaction(s.keysFile.ExtendedPublicKeys,
@@ -88,14 +93,15 @@ func (s *server) createUnsignedTransactions(address string, amount uint64, isSen
 		return nil, err
 	}
 
-	unsignedTransactions, err := s.maybeAutoCompoundTransaction(unsignedTransaction, toAddress, changeAddress, changeWalletAddress)
+	unsignedTransactions, err := s.maybeAutoCompoundTransaction(unsignedTransaction, toAddress,
+		changeAddress, changeWalletAddress, assetType)
 	if err != nil {
 		return nil, err
 	}
 	return unsignedTransactions, nil
 }
 
-func (s *server) selectUTXOs(spendAmount uint64, isSendAll bool, feePerInput uint64, fromAddresses []*walletAddress) (
+func (s *server) selectUTXOs(spendAmount uint64, isSendAll bool, feePerInput uint64, fromAddresses []*walletAddress, assetType externalapi.AssetType) (
 	selectedUTXOs []*libkashwallet.UTXO, totalReceived uint64, changeSompi uint64, err error) {
 
 	selectedUTXOs = []*libkashwallet.UTXO{}
@@ -107,7 +113,8 @@ func (s *server) selectUTXOs(spendAmount uint64, isSendAll bool, feePerInput uin
 	}
 
 	for _, utxo := range s.utxosSortedByAmount {
-		if (fromAddresses != nil && !slices.Contains(fromAddresses, utxo.address)) ||
+		if utxo.UTXOEntry.AssetType() != assetType ||
+			(fromAddresses != nil && !slices.Contains(fromAddresses, utxo.address)) ||
 			!isUTXOSpendable(utxo, dagInfo.VirtualDAAScore, s.params.BlockCoinbaseMaturity) {
 			continue
 		}
@@ -146,7 +153,7 @@ func (s *server) selectUTXOs(spendAmount uint64, isSendAll bool, feePerInput uin
 	}
 	if totalValue < totalSpend {
 		return nil, 0, 0, errors.Errorf("Insufficient funds for send: %f required, while only %f available",
-			float64(totalSpend)/constants.SompiPerKaspa, float64(totalValue)/constants.SompiPerKaspa)
+			float64(totalSpend)/constants.SompiPerKash, float64(totalValue)/constants.SompiPerKash)
 	}
 
 	return selectedUTXOs, totalReceived, totalValue - totalSpend, nil
