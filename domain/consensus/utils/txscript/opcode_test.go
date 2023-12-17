@@ -78,7 +78,9 @@ func TestOpcodeDisasm(t *testing.T) {
 		0xb0: "OP_CHECKLOCKTIMEVERIFY", 0xb1: "OP_CHECKSEQUENCEVERIFY",
 		0xfa: "OP_SMALLINTEGER", 0xfb: "OP_PUBKEYS",
 		0xfd: "OP_PUBKEYHASH", 0xfe: "OP_PUBKEY",
-		0xff: "OP_INVALIDOPCODE",
+		0xff: "OP_INVALIDOPCODE", 0xb2: "OP_ASSETKSH",
+		0xb3: "OP_ASSETKUSD", 0xb4: "OP_ASSETKRV",
+		0xa6: "OP_MINTKUSD", 0xa7: "OP_STAKEKSH",
 	}
 	for opcodeVal, expectedStr := range expectedStrings {
 		var data []byte
@@ -178,6 +180,5 @@ func TestOpcodeDisasm(t *testing.T) {
 }
 
 func isOpUnknown(opcodeVal int) bool {
-	return opcodeVal >= 0xb2 && opcodeVal <= 0xf9 || opcodeVal == 0xfc ||
-		opcodeVal == 0xa6 || opcodeVal == 0xa7
+	return opcodeVal >= 0xb5 && opcodeVal <= 0xf9 || opcodeVal == 0xfc
 }

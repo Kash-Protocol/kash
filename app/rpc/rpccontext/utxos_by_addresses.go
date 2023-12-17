@@ -2,7 +2,6 @@ package rpccontext
 
 import (
 	"encoding/hex"
-	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	"github.com/Kash-Protocol/kashd/domain/consensus/utils/txscript"
 	"github.com/Kash-Protocol/kashd/util"
 	"github.com/pkg/errors"
@@ -24,6 +23,7 @@ func ConvertUTXOOutpointEntryPairsToUTXOsByAddressesEntries(address string, pair
 			},
 			UTXOEntry: &appmessage.RPCUTXOEntry{
 				Amount:          utxoEntry.Amount(),
+				AssetType:       utxoEntry.AssetType().ToUint32(),
 				ScriptPublicKey: &appmessage.RPCScriptPublicKey{Script: hex.EncodeToString(utxoEntry.ScriptPublicKey().Script), Version: utxoEntry.ScriptPublicKey().Version},
 				BlockDAAScore:   utxoEntry.BlockDAAScore(),
 				IsCoinbase:      utxoEntry.IsCoinbase(),
@@ -34,19 +34,13 @@ func ConvertUTXOOutpointEntryPairsToUTXOsByAddressesEntries(address string, pair
 }
 
 // ConvertAddressStringsToUTXOsChangedNotificationAddresses converts address strings
-// and asset types to UTXOsChangedNotificationAddresses.
+// to UTXOsChangedNotificationAddresses.
 func (ctx *Context) ConvertAddressStringsToUTXOsChangedNotificationAddresses(
-	addressStrings []string, assetTypes []uint32) ([]*UTXOsChangedNotificationAddress, error) {
-
-	// Ensure addressStrings and assetTypes have the same length
-	if len(addressStrings) != len(assetTypes) {
-		return nil, errors.New("addressStrings and assetTypes must have the same length")
-	}
+	addressStrings []string) ([]*UTXOsChangedNotificationAddress, error) {
 
 	addresses := make([]*UTXOsChangedNotificationAddress, len(addressStrings))
 	for i := range addressStrings {
 		addressString := addressStrings[i]
-		assetType := assetTypes[i]
 
 		address, err := util.DecodeAddress(addressString, ctx.Config.ActiveNetParams.Prefix)
 		if err != nil {
@@ -54,7 +48,7 @@ func (ctx *Context) ConvertAddressStringsToUTXOsChangedNotificationAddresses(
 		}
 
 		// Use the corresponding assetType for each address
-		scriptPublicKey, err := txscript.PayToAddrScript(address, externalapi.AssetTypeFromUint32(assetType))
+		scriptPublicKey, err := txscript.PayToAddrScript(address)
 		if err != nil {
 			return nil, errors.Errorf("Could not create a scriptPublicKey for address '%s': %s", addressString, err)
 		}

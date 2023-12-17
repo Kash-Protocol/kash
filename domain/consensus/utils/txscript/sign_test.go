@@ -146,7 +146,7 @@ func TestSignTxOutput(t *testing.T) {
 	// Pay to Pubkey (merging with correct)
 	for _, hashType := range hashTypes {
 		for _, input := range tx.Inputs {
-			input.UTXOEntry = utxo.NewUTXOEntry(500, scriptPubKey, false, 100)
+			input.UTXOEntry = utxo.NewUTXOEntry(500, externalapi.KSH, scriptPubKey, false, 100)
 		}
 		for i := range tx.Inputs {
 			msg := fmt.Sprintf("%d:%d", hashType, i)
@@ -220,7 +220,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
+			scriptPubKey, err := PayToAddrScript(address)
 			if err != nil {
 				t.Errorf("failed to make scriptPubKey "+
 					"for %s: %v", msg, err)
@@ -270,7 +270,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
+			scriptPubKey, err := PayToAddrScript(address)
 			if err != nil {
 				t.Errorf("failed to make scriptPubKey "+
 					"for %s: %v", msg, err)
@@ -347,7 +347,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
+			scriptPubKey, err := PayToAddrScript(address)
 			if err != nil {
 				t.Errorf("failed to make scriptPubKey "+
 					"for %s: %v", msg, err)
@@ -361,7 +361,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptScriptPubKey, err := PayToAddrScript(scriptAddr, externalapi.KSH)
+			scriptScriptPubKey, err := PayToAddrScript(scriptAddr)
 			if err != nil {
 				t.Errorf("failed to make script scriptPubKey for "+
 					"%s: %v", msg, err)
@@ -411,7 +411,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
+			scriptPubKey, err := PayToAddrScript(address)
 			if err != nil {
 				t.Errorf("failed to make scriptPubKey "+
 					"for %s: %v", msg, err)
@@ -425,7 +425,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			scriptScriptPubKey, err := PayToAddrScript(scriptAddr, externalapi.KSH)
+			scriptScriptPubKey, err := PayToAddrScript(scriptAddr)
 			if err != nil {
 				t.Errorf("failed to make script scriptPubKey for "+
 					"%s: %v", msg, err)
@@ -491,7 +491,7 @@ func generateKeys() (keyPair *secp256k1.SchnorrKeyPair, scriptPublicKey *externa
 		return nil, nil, nil, errors.Errorf("failed to make address for %s: %s", serializedPubKey, err)
 	}
 
-	scriptPubKey, err := PayToAddrScript(address, externalapi.KSH)
+	scriptPubKey, err := PayToAddrScript(address)
 	if err != nil {
 		return nil, nil, nil, errors.Errorf("failed to make scriptPubKey for %s: %s", address, err)
 	}
@@ -819,7 +819,7 @@ nexttest:
 			txOut := sigScriptTests[i].inputs[j].txout
 			inputs = append(inputs, &externalapi.DomainTransactionInput{
 				PreviousOutpoint: *coinbaseOutpoint,
-				UTXOEntry:        utxo.NewUTXOEntry(txOut.Value, txOut.ScriptPublicKey, false, 10),
+				UTXOEntry:        utxo.NewUTXOEntry(txOut.Value, externalapi.KSH, txOut.ScriptPublicKey, false, 10),
 			})
 		}
 		tx := &externalapi.DomainTransaction{

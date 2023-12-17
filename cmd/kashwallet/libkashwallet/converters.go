@@ -25,6 +25,7 @@ func KashwalletdUTXOsTolibkashwalletUTXOs(kashwalletdUtxoEntires []*pb.UtxosByAd
 		UTXOs[i] = &UTXO{
 			UTXOEntry: utxo.NewUTXOEntry(
 				entry.UtxoEntry.Amount,
+				externalapi.AssetTypeFromUint32(entry.UtxoEntry.AssetType),
 				&externalapi.ScriptPublicKey{
 					Script:  script,
 					Version: uint16(entry.UtxoEntry.ScriptPublicKey.Version),

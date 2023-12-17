@@ -16,7 +16,7 @@ func HandleNotifyUTXOsChanged(context *rpccontext.Context, router *router.Router
 
 	notifyUTXOsChangedRequest := request.(*appmessage.NotifyUTXOsChangedRequestMessage)
 	addresses, err := context.ConvertAddressStringsToUTXOsChangedNotificationAddresses(
-		notifyUTXOsChangedRequest.Addresses, notifyUTXOsChangedRequest.AssetTypes)
+		notifyUTXOsChangedRequest.Addresses)
 	if err != nil {
 		errorMessage := appmessage.NewNotifyUTXOsChangedResponseMessage()
 		errorMessage.Error = appmessage.RPCErrorf("Parsing error: %s", err)

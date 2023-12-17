@@ -2,7 +2,6 @@ package externalapi
 
 import (
 	"errors"
-	"github.com/Kash-Protocol/kashd/cmd/kashwallet/daemon/pb"
 	"strings"
 )
 
@@ -24,19 +23,6 @@ const (
 	OpAssetKRV  = 0xb4 // 180
 )
 
-// ToPbAssetType converts the AssetType to a pb.AssetType.
-func (t AssetType) ToPbAssetType() pb.AssetType {
-	switch t {
-	case KSH:
-		return pb.AssetType_KSH
-	case KRV:
-		return pb.AssetType_KRV
-	case KUSD:
-		return pb.AssetType_KUSD
-	}
-	return pb.AssetType_UNKNOWN
-}
-
 // ToUint32 converts an asset.AssetType to a uint32.
 func (t AssetType) ToUint32() uint32 {
 	return uint32(t)
@@ -52,20 +38,6 @@ func (t AssetType) String() string {
 		return "KUSD"
 	}
 	return "UNKNOWN"
-}
-
-// PbAssetTypeToType converts a pb.AssetType to a AssetType.
-func PbAssetTypeToType(t pb.AssetType) AssetType {
-	switch t {
-	case pb.AssetType_KSH:
-		return KSH
-	case pb.AssetType_KRV:
-		return KRV
-	case pb.AssetType_KUSD:
-		return KUSD
-	default:
-		return UNKNOWN
-	}
 }
 
 // AssetTypeFromString creates an asset.AssetType from a string.

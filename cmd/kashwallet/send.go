@@ -43,7 +43,7 @@ func send(conf *sendConfig) error {
 		daemonClient.CreateUnsignedTransactions(ctx, &pb.CreateUnsignedTransactionsRequest{
 			From:                     conf.FromAddresses,
 			Address:                  conf.ToAddress,
-			AssetType:                externalapi.AssetTypeFromString(conf.SendAssetType).ToPbAssetType(),
+			AssetType:                externalapi.AssetTypeFromString(conf.SendAssetType).ToUint32(),
 			Amount:                   sendAmountSompi,
 			IsSendAll:                conf.IsSendAll,
 			UseExistingChangeAddress: conf.UseExistingChangeAddress,

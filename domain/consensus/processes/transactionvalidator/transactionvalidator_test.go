@@ -45,7 +45,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Failed to generate p2pk address: %v", err)
 		}
-		scriptPublicKey, err := txscript.PayToAddrScript(addr, externalapi.KSH)
+		scriptPublicKey, err := txscript.PayToAddrScript(addr)
 		if err != nil {
 			t.Fatalf("PayToAddrScript: unexpected error: %v", err)
 		}
@@ -59,6 +59,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			SigOpCount:       1,
 			UTXOEntry: utxo.NewUTXOEntry(
 				100_000_000, // 1 KSH
+				externalapi.KSH,
 				scriptPublicKey,
 				true,
 				uint64(5)),
@@ -69,6 +70,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			SigOpCount:       1,
 			UTXOEntry: utxo.NewUTXOEntry(
 				100_000_000, // 1 KSH
+				externalapi.KSH,
 				scriptPublicKey,
 				true,
 				uint64(5)),
@@ -80,6 +82,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			SigOpCount:       1,
 			UTXOEntry: utxo.NewUTXOEntry(
 				100_000_000, // 1 KSH
+				externalapi.KSH,
 				scriptPublicKey,
 				true,
 				uint64(6)),
@@ -92,6 +95,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			SigOpCount:       1,
 			UTXOEntry: utxo.NewUTXOEntry(
 				21e14+1,
+				externalapi.KSH,
 				scriptPublicKey,
 				false,
 				0),
@@ -104,6 +108,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			SigOpCount:       1,
 			UTXOEntry: utxo.NewUTXOEntry(
 				constants.MaxSompi+1,
+				externalapi.KSH,
 				scriptPublicKey,
 				false,
 				0),
@@ -294,7 +299,7 @@ func TestSigningTwoInputs(t *testing.T) {
 			t.Fatalf("Failed to generate p2pk address: %v", err)
 		}
 
-		scriptPublicKey, err := txscript.PayToAddrScript(addr, externalapi.KSH)
+		scriptPublicKey, err := txscript.PayToAddrScript(addr)
 		if err != nil {
 			t.Fatalf("PayToAddrScript: unexpected error: %v", err)
 		}
@@ -344,7 +349,7 @@ func TestSigningTwoInputs(t *testing.T) {
 					},
 					Sequence:   constants.MaxTxInSequenceNum,
 					SigOpCount: 1,
-					UTXOEntry:  utxo.NewUTXOEntry(block2TxOut.Value, block2TxOut.ScriptPublicKey, true, 0),
+					UTXOEntry:  utxo.NewUTXOEntry(block2TxOut.Value, block2Tx.OutputUTXOAssetType(), block2TxOut.ScriptPublicKey, true, 0),
 				},
 				{
 					PreviousOutpoint: externalapi.DomainOutpoint{
@@ -353,7 +358,7 @@ func TestSigningTwoInputs(t *testing.T) {
 					},
 					Sequence:   constants.MaxTxInSequenceNum,
 					SigOpCount: 1,
-					UTXOEntry:  utxo.NewUTXOEntry(block3TxOut.Value, block3TxOut.ScriptPublicKey, true, 0),
+					UTXOEntry:  utxo.NewUTXOEntry(block3TxOut.Value, block2Tx.OutputUTXOAssetType(), block3TxOut.ScriptPublicKey, true, 0),
 				},
 			},
 			Outputs: []*externalapi.DomainTransactionOutput{{
@@ -420,7 +425,7 @@ func TestSigningTwoInputsECDSA(t *testing.T) {
 			t.Fatalf("Failed to generate p2pk address: %v", err)
 		}
 
-		scriptPublicKey, err := txscript.PayToAddrScript(addr, externalapi.KSH)
+		scriptPublicKey, err := txscript.PayToAddrScript(addr)
 		if err != nil {
 			t.Fatalf("PayToAddrScript: unexpected error: %v", err)
 		}
@@ -470,7 +475,7 @@ func TestSigningTwoInputsECDSA(t *testing.T) {
 					},
 					Sequence:   constants.MaxTxInSequenceNum,
 					SigOpCount: 1,
-					UTXOEntry:  utxo.NewUTXOEntry(block2TxOut.Value, block2TxOut.ScriptPublicKey, true, 0),
+					UTXOEntry:  utxo.NewUTXOEntry(block2TxOut.Value, block2Tx.OutputUTXOAssetType(), block2TxOut.ScriptPublicKey, true, 0),
 				},
 				{
 					PreviousOutpoint: externalapi.DomainOutpoint{
@@ -479,7 +484,7 @@ func TestSigningTwoInputsECDSA(t *testing.T) {
 					},
 					Sequence:   constants.MaxTxInSequenceNum,
 					SigOpCount: 1,
-					UTXOEntry:  utxo.NewUTXOEntry(block3TxOut.Value, block3TxOut.ScriptPublicKey, true, 0),
+					UTXOEntry:  utxo.NewUTXOEntry(block3TxOut.Value, block2Tx.OutputUTXOAssetType(), block3TxOut.ScriptPublicKey, true, 0),
 				},
 			},
 			Outputs: []*externalapi.DomainTransactionOutput{{

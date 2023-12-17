@@ -1,6 +1,7 @@
 package dagtraversalmanager_test
 
 import (
+	"reflect"
 	"sort"
 	"testing"
 
@@ -357,28 +358,12 @@ func TestBlockWindow(t *testing.T) {
 }
 
 func checkWindowIDs(window []*externalapi.DomainHash, expectedIDs []string, idByBlockMap map[externalapi.DomainHash]string) error {
-	// Convert expectedIDs and window to sets for efficient lookup and comparison.
-	expectedSet := make(map[string]struct{})
-	for _, id := range expectedIDs {
-		expectedSet[id] = struct{}{}
+	ids := make([]string, len(window))
+	for i, node := range window {
+		ids[i] = idByBlockMap[*node]
 	}
-
-	windowSet := make(map[string]struct{})
-	for _, node := range window {
-		id := idByBlockMap[*node]
-		windowSet[id] = struct{}{}
+	if !reflect.DeepEqual(ids, expectedIDs) {
+		return errors.Errorf("window expected to have blocks %s but got %s", expectedIDs, ids)
 	}
-
-	// Check if window set is equal to expected set.
-	if len(windowSet) != len(expectedSet) {
-		return errors.Errorf("window size (%d) does not match expected size (%d)", len(windowSet), len(expectedSet))
-	}
-
-	for id := range windowSet {
-		if _, exists := expectedSet[id]; !exists {
-			return errors.Errorf("window contains unexpected block %s", id)
-		}
-	}
-
 	return nil
 }

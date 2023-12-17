@@ -178,7 +178,7 @@ func TestExtractScriptPubKeyAddrs(t *testing.T) {
 
 	t.Logf("Running %d tests.", len(tests))
 	for i, test := range tests {
-		class, addr, _, _ := ExtractScriptPubKeyAddress(
+		class, addr, _ := ExtractScriptPubKeyAddress(
 			test.script, &dagconfig.MainnetParams)
 
 		if !reflect.DeepEqual(addr, test.addr) {
@@ -372,7 +372,7 @@ func TestPayToAddrScript(t *testing.T) {
 
 	t.Logf("Running %d tests", len(tests))
 	for i, test := range tests {
-		scriptPublicKey, err := PayToAddrScript(test.in, externalapi.KSH)
+		scriptPublicKey, err := PayToAddrScript(test.in)
 		if e := checkScriptError(err, test.err); e != nil {
 			t.Errorf("PayToAddrScript #%d unexpected error - "+
 				"got %v, want %v", i, err, test.err)

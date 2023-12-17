@@ -136,14 +136,14 @@ func TestIsTransactionOutputDust(t *testing.T) {
 			true,
 		},
 		{
-			"36 byte public key script with value 605",
-			externalapi.DomainTransactionOutput{Value: 605, ScriptPublicKey: scriptPublicKey},
+			"36 byte public key script with value 617",
+			externalapi.DomainTransactionOutput{Value: 617, ScriptPublicKey: scriptPublicKey},
 			1000,
 			true,
 		},
 		{
-			"36 byte public key script with value 606",
-			externalapi.DomainTransactionOutput{Value: 606, ScriptPublicKey: scriptPublicKey},
+			"36 byte public key script with value 618",
+			externalapi.DomainTransactionOutput{Value: 618, ScriptPublicKey: scriptPublicKey},
 			1000,
 			false,
 		},
@@ -210,7 +210,7 @@ func TestCheckTransactionStandardInIsolation(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewAddressPublicKey: unexpected error: %v", err)
 	}
-	dummyScriptPublicKey, err := txscript.PayToAddrScript(addr, externalapi.KSH)
+	dummyScriptPublicKey, err := txscript.PayToAddrScript(addr)
 	if err != nil {
 		t.Fatalf("PayToAddrScript: unexpected error: %v", err)
 	}

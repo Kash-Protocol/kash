@@ -2,22 +2,23 @@ package utxo
 
 import (
 	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
-	"github.com/pkg/errors"
 )
 
 type utxoEntry struct {
 	amount          uint64
+	assetType       externalapi.AssetType
 	scriptPublicKey *externalapi.ScriptPublicKey
 	blockDAAScore   uint64
 	isCoinbase      bool
 }
 
 // NewUTXOEntry creates a new utxoEntry representing the given txOut
-func NewUTXOEntry(amount uint64, scriptPubKey *externalapi.ScriptPublicKey, isCoinbase bool, blockDAAScore uint64) externalapi.UTXOEntry {
+func NewUTXOEntry(amount uint64, assetType externalapi.AssetType, scriptPubKey *externalapi.ScriptPublicKey, isCoinbase bool, blockDAAScore uint64) externalapi.UTXOEntry {
 	scriptPubKeyClone := externalapi.ScriptPublicKey{Script: make([]byte, len(scriptPubKey.Script)), Version: scriptPubKey.Version}
 	copy(scriptPubKeyClone.Script, scriptPubKey.Script)
 	return &utxoEntry{
 		amount:          amount,
+		assetType:       assetType,
 		scriptPublicKey: &scriptPubKeyClone,
 		blockDAAScore:   blockDAAScore,
 		isCoinbase:      isCoinbase,
@@ -35,11 +36,7 @@ func (u *utxoEntry) ScriptPublicKey() *externalapi.ScriptPublicKey {
 }
 
 func (u *utxoEntry) AssetType() externalapi.AssetType {
-	assetType, err := externalapi.ExtractAssetType(u.scriptPublicKey.Script)
-	if err != nil {
-		panic(errors.Wrap(err, "Failed to extract asset type"))
-	}
-	return assetType
+	return u.assetType
 }
 
 func (u *utxoEntry) BlockDAAScore() uint64 {

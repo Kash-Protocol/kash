@@ -108,6 +108,7 @@ func NewTxIn(prevOut *Outpoint, signatureScript []byte, sequence uint64, sigOpCo
 // TxOut defines a kaspa transaction output.
 type TxOut struct {
 	Value        uint64
+	AssetType    externalapi.AssetType
 	ScriptPubKey *externalapi.ScriptPublicKey
 }
 

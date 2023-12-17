@@ -121,6 +121,13 @@ func WriteElement(w io.Writer, element interface{}) error {
 			return err
 		}
 		return nil
+
+	case externalapi.AssetType:
+		err := binaryserializer.PutUint32(w, uint32(e))
+		if err != nil {
+			return err
+		}
+		return nil
 	}
 
 	return errors.Wrapf(errNoEncodingForType, "couldn't find a way to write type %T", element)

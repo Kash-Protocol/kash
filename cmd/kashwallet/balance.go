@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 
 	"github.com/Kash-Protocol/kashd/cmd/kashwallet/daemon/client"
 	"github.com/Kash-Protocol/kashd/cmd/kashwallet/daemon/pb"
@@ -23,28 +24,60 @@ func balance(conf *balanceConfig) error {
 		return err
 	}
 
+	// Initialize dummy records for each asset type
+	assetTypes := []externalapi.AssetType{externalapi.KSH, externalapi.KUSD, externalapi.KRV}
+	dummyBalances := make(map[string]map[externalapi.AssetType]*pb.AddressBalances)
+	for _, assetBalance := range response.AssetBalances {
+		for _, addressBalance := range assetBalance.AddressBalances {
+			if _, ok := dummyBalances[addressBalance.Address]; !ok {
+				dummyBalances[addressBalance.Address] = make(map[externalapi.AssetType]*pb.AddressBalances)
+				for _, assetType := range assetTypes {
+					dummyBalances[addressBalance.Address][assetType] = &pb.AddressBalances{
+						Address:   addressBalance.Address,
+						Available: 0,
+						Pending:   0,
+					}
+				}
+			}
+			dummyBalances[addressBalance.Address][externalapi.AssetTypeFromUint32(assetBalance.AssetType)] = addressBalance
+		}
+	}
+
 	if conf.Verbose {
-		println("Asset Type    Address                                                                       Available             Pending")
-		println("------------------------------------------------------------------------------------------------------------------------")
+		fmt.Printf("%-75s %12s %20s %20s\n", "Address", "Asset Type", "Available", "Pending")
+		println("------------------------------------------------------------------------------------------------------------")
+
+		for address, addressBalances := range dummyBalances {
+			fmt.Printf("%-75s\n", address)
+			for _, assetType := range assetTypes {
+				addressBalance := addressBalances[assetType]
+				availableStr := utils.FormatKas(addressBalance.Available)
+				pendingStr := utils.FormatKas(addressBalance.Pending)
+				if addressBalance.Available == 0 {
+					availableStr = "--"
+				}
+				if addressBalance.Pending == 0 {
+					pendingStr = "--"
+				}
+				fmt.Printf("%75s %12s %20s %20s\n", "", assetType.String(), availableStr, pendingStr)
+			}
+			println("------------------------------------------------------------------------------------------------------------")
+		}
+	} else {
+		totalBalances := make(map[externalapi.AssetType]uint64)
 		for _, assetBalance := range response.AssetBalances {
-			assetType := assetBalance.AssetType.String() // Assuming AssetType has a String() method
+			assetType := externalapi.AssetTypeFromUint32(assetBalance.AssetType)
 			for _, addressBalance := range assetBalance.AddressBalances {
-				fmt.Printf("%-12s %-75s %-20s %-20s\n", assetType, addressBalance.Address, utils.FormatKas(addressBalance.Available), utils.FormatKas(addressBalance.Pending))
+				totalBalances[assetType] += addressBalance.Available
 			}
 		}
-		println("------------------------------------------------------------------------------------------------------------------------")
-	} else {
-		for _, assetBalance := range response.AssetBalances {
-			var totalAvailable, totalPending uint64
-			for _, addressBalance := range assetBalance.AddressBalances {
-				totalAvailable += addressBalance.Available
-				totalPending += addressBalance.Pending
+		for _, assetType := range assetTypes {
+			totalAvailable := totalBalances[assetType]
+			availableStr := utils.FormatKas(totalAvailable)
+			if totalAvailable == 0 {
+				availableStr = "--"
 			}
-			pendingSuffix := ""
-			if totalPending > 0 {
-				pendingSuffix = fmt.Sprintf(" (pending %s)", utils.FormatKas(totalPending))
-			}
-			fmt.Printf("Total balance, %s %s%s\n", assetBalance.AssetType.String(), utils.FormatKas(totalAvailable), pendingSuffix)
+			fmt.Printf("Total balance, %5s %20s\n", assetType.String(), availableStr)
 		}
 	}
 

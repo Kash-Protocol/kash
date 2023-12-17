@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/Kash-Protocol/kashd/domain/consensus/model/externalapi"
 	"os"
 
 	"github.com/Kash-Protocol/kashd/cmd/kashwallet/daemon/client"
@@ -24,7 +25,7 @@ func createUnsignedTransaction(conf *createUnsignedTransactionConfig) error {
 	response, err := daemonClient.CreateUnsignedTransactions(ctx, &pb.CreateUnsignedTransactionsRequest{
 		From:                     conf.FromAddresses,
 		Address:                  conf.ToAddress,
-		AssetType:                pb.AssetType(pb.AssetType_value[conf.AssetType]),
+		AssetType:                externalapi.AssetTypeFromString(conf.AssetType).ToUint32(),
 		Amount:                   sendAmountSompi,
 		IsSendAll:                conf.IsSendAll,
 		UseExistingChangeAddress: conf.UseExistingChangeAddress,

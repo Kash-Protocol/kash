@@ -90,6 +90,7 @@ type RPCOutpoint struct {
 // over RPC
 type RPCUTXOEntry struct {
 	Amount          uint64
+	AssetType       uint32
 	ScriptPublicKey *RPCScriptPublicKey
 	BlockDAAScore   uint64
 	IsCoinbase      bool

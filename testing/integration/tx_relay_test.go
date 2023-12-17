@@ -143,7 +143,7 @@ func generateTx(t *testing.T, firstBlockCoinbase *externalapi.DomainTransaction,
 	if err != nil {
 		t.Fatalf("Error decoding payeeAddress: %+v", err)
 	}
-	toScript, err := txscript.PayToAddrScript(payeeAddress, externalapi.KSH)
+	toScript, err := txscript.PayToAddrScript(payeeAddress)
 	if err != nil {
 		t.Fatalf("Error generating script: %+v", err)
 	}
@@ -163,9 +163,10 @@ func generateTx(t *testing.T, firstBlockCoinbase *externalapi.DomainTransaction,
 
 	fromScript := firstBlockCoinbase.Outputs[0].ScriptPublicKey
 	fromAmount := firstBlockCoinbase.Outputs[0].Value
+	fromAssetType := firstBlockCoinbase.OutputUTXOAssetType()
 
 	tx := appmessage.MsgTxToDomainTransaction(msgTx)
-	tx.Inputs[0].UTXOEntry = utxo.NewUTXOEntry(fromAmount, fromScript, false, 500)
+	tx.Inputs[0].UTXOEntry = utxo.NewUTXOEntry(fromAmount, fromAssetType, fromScript, false, 500)
 	signatureScript, err := txscript.SignatureScript(tx, 0, consensushashing.SigHashAll, privateKey,
 		&consensushashing.SighashReusedValues{})
 	if err != nil {

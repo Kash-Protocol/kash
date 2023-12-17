@@ -24,7 +24,7 @@ func (s *server) CreateUnsignedTransactions(_ context.Context, request *pb.Creat
 	defer s.lock.Unlock()
 
 	unsignedTransactions, err := s.createUnsignedTransactions(request.Address,
-		externalapi.PbAssetTypeToType(request.AssetType), request.Amount, request.IsSendAll,
+		externalapi.AssetTypeFromUint32(request.AssetType), request.Amount, request.IsSendAll,
 		request.From, request.UseExistingChangeAddress)
 	if err != nil {
 		return nil, err
@@ -86,9 +86,17 @@ func (s *server) createUnsignedTransactions(address string, assetType externalap
 			Amount:    changeSompi,
 		})
 	}
+
+	// TODO: Add support for MintKUSD, StakeKSH, RedeemKSH.
+	TxTypeMapping := map[externalapi.AssetType]externalapi.DomainTransactionType{
+		externalapi.KSH:  externalapi.TransferKSH,
+		externalapi.KUSD: externalapi.TransferKUSD,
+		externalapi.KRV:  externalapi.TransferKRV,
+	}
+
 	unsignedTransaction, err := libkashwallet.CreateUnsignedTransaction(s.keysFile.ExtendedPublicKeys,
 		s.keysFile.MinimumSignatures,
-		payments, selectedUTXOs)
+		payments, selectedUTXOs, TxTypeMapping[assetType])
 	if err != nil {
 		return nil, err
 	}

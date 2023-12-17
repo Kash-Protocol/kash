@@ -12,7 +12,7 @@ import (
 func OpTrueScript() (*externalapi.ScriptPublicKey, []byte) {
 	var err error
 	redeemScript := []byte{txscript.OpTrue}
-	scriptPublicKeyScript, err := txscript.PayToScriptHashScript(redeemScript, externalapi.KSH)
+	scriptPublicKeyScript, err := txscript.PayToScriptHashScript(redeemScript)
 	if err != nil {
 		panic(errors.Wrapf(err, "Couldn't parse opTrueScript. This should never happen"))
 	}

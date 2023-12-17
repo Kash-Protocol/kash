@@ -154,7 +154,7 @@ func (op *orphansPool) processOrphansAfterAcceptedTransaction(acceptedTransactio
 			}
 			for _, input := range orphan.Transaction().Inputs {
 				if input.PreviousOutpoint.Equal(&outpoint) && input.UTXOEntry == nil {
-					input.UTXOEntry = utxo.NewUTXOEntry(output.Value, output.ScriptPublicKey, false,
+					input.UTXOEntry = utxo.NewUTXOEntry(output.Value, externalapi.KSH, output.ScriptPublicKey, false,
 						constants.UnacceptedDAAScore)
 					break
 				}

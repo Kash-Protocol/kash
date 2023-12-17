@@ -53,6 +53,7 @@ func sign(params *dagconfig.Params, mnemonic string, partiallySignedTransaction 
 		prevOut := partiallySignedInput.PrevOutput
 		partiallySignedTransaction.Tx.Inputs[i].UTXOEntry = utxo.NewUTXOEntry(
 			prevOut.Value,
+			partiallySignedTransaction.Tx.InputUTXOAssetType(),
 			prevOut.ScriptPublicKey,
 			false, // This is a fake value, because it's irrelevant for the signature
 			0,     // This is a fake value, because it's irrelevant for the signature

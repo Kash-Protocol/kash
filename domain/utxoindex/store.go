@@ -119,7 +119,7 @@ func (uis *utxoIndexStore) commit() error {
 	}
 	defer dbTransaction.RollbackUnlessClosed()
 
-	toRemoveSompiSupply := uint64(0)
+	supplyChange := externalapi.AssetSupplyChange{}
 
 	for scriptPublicKeyString, toRemoveUTXOOutpointEntryPairs := range uis.toRemove {
 		scriptPublicKey := externalapi.NewScriptPublicKeyFromString(string(scriptPublicKeyString))
@@ -133,11 +133,9 @@ func (uis *utxoIndexStore) commit() error {
 			if err != nil {
 				return err
 			}
-			toRemoveSompiSupply = toRemoveSompiSupply + utxoEntryToRemove.Amount()
+			supplyChange.Subtract(utxoEntryToRemove.AssetType(), utxoEntryToRemove.Amount())
 		}
 	}
-
-	toAddSompiSupply := uint64(0)
 
 	for scriptPublicKeyString, toAddUTXOOutpointEntryPairs := range uis.toAdd {
 		scriptPublicKey := externalapi.NewScriptPublicKeyFromString(string(scriptPublicKeyString))
@@ -155,7 +153,7 @@ func (uis *utxoIndexStore) commit() error {
 			if err != nil {
 				return err
 			}
-			toAddSompiSupply = toAddSompiSupply + utxoEntryToAdd.Amount()
+			supplyChange.Add(utxoEntryToAdd.AssetType(), utxoEntryToAdd.Amount())
 		}
 	}
 
@@ -165,7 +163,7 @@ func (uis *utxoIndexStore) commit() error {
 		return err
 	}
 
-	err = uis.updateCirculatingSompiSupply(dbTransaction, toAddSompiSupply, toRemoveSompiSupply)
+	err = uis.updateCirculatingSompiSupply(dbTransaction, &supplyChange)
 	if err != nil {
 		return err
 	}
@@ -180,7 +178,8 @@ func (uis *utxoIndexStore) commit() error {
 }
 
 func (uis *utxoIndexStore) addAndCommitOutpointsWithoutTransaction(utxoPairs []*externalapi.OutpointAndUTXOEntryPair) error {
-	toAddSompiSupply := uint64(0)
+	supplyChange := externalapi.AssetSupplyChange{}
+
 	for _, pair := range utxoPairs {
 		bucket := uis.bucketForScriptPublicKey(pair.UTXOEntry.ScriptPublicKey())
 		key, err := uis.convertOutpointToKey(bucket, pair.Outpoint)
@@ -197,10 +196,11 @@ func (uis *utxoIndexStore) addAndCommitOutpointsWithoutTransaction(utxoPairs []*
 		if err != nil {
 			return err
 		}
-		toAddSompiSupply = toAddSompiSupply + pair.UTXOEntry.Amount()
+
+		supplyChange.Add(pair.UTXOEntry.AssetType(), pair.UTXOEntry.Amount())
 	}
 
-	err := uis.updateCirculatingSompiSupplyWithoutTransaction(toAddSompiSupply, uint64(0))
+	err := uis.updateCirculatingSompiSupplyWithoutTransaction(&supplyChange)
 	if err != nil {
 		return err
 	}
@@ -351,7 +351,13 @@ func (uis *utxoIndexStore) initializeCirculatingSompiSupply() error {
 	}
 	defer cursor.Close()
 
-	circulatingSompiSupplyInDatabase := uint64(0)
+	// Initialize circulating supply for each asset type
+	supply := &externalapi.CirculatingSupply{
+		KSH:  0,
+		KUSD: 0,
+		KRV:  0,
+	}
+
 	for cursor.Next() {
 		serializedUTXOEntry, err := cursor.Value()
 		if err != nil {
@@ -362,72 +368,80 @@ func (uis *utxoIndexStore) initializeCirculatingSompiSupply() error {
 			return err
 		}
 
-		circulatingSompiSupplyInDatabase = circulatingSompiSupplyInDatabase + utxoEntry.Amount()
+		// Update the supply based on the asset type
+		switch utxoEntry.AssetType() {
+		case externalapi.KSH:
+			supply.KSH += utxoEntry.Amount()
+		case externalapi.KUSD:
+			supply.KUSD += utxoEntry.Amount()
+		case externalapi.KRV:
+			supply.KRV += utxoEntry.Amount()
+		}
 	}
 
-	err = uis.database.Put(
-		circulatingSupplyKey,
-		binaryserialization.SerializeUint64(circulatingSompiSupplyInDatabase),
-	)
-
+	serializedSupply, err := binaryserialization.SerializeCirculatingSupply(supply)
 	if err != nil {
 		return err
 	}
 
-	return nil
+	return uis.database.Put(circulatingSupplyKey, serializedSupply)
 }
 
-func (uis *utxoIndexStore) updateCirculatingSompiSupply(dbTransaction database.Transaction, toAddSompiSupply uint64, toRemoveSompiSupply uint64) error {
-	if toAddSompiSupply != toRemoveSompiSupply {
-		circulatingSupplyBytes, err := dbTransaction.Get(circulatingSupplyKey)
-		if err != nil {
-			return err
-		}
-
-		circulatingSupply, err := binaryserialization.DeserializeUint64(circulatingSupplyBytes)
-		if err != nil {
-			return err
-		}
-		err = dbTransaction.Put(
-			circulatingSupplyKey,
-			binaryserialization.SerializeUint64(circulatingSupply+toAddSompiSupply-toRemoveSompiSupply),
-		)
-		if err != nil {
-			return err
-		}
+func (uis *utxoIndexStore) updateCirculatingSompiSupply(dbTransaction database.Transaction, supplyChange *externalapi.AssetSupplyChange) error {
+	circulatingSupplyBytes, err := dbTransaction.Get(circulatingSupplyKey)
+	if err != nil {
+		return err
 	}
-	return nil
-}
 
-func (uis *utxoIndexStore) updateCirculatingSompiSupplyWithoutTransaction(toAddSompiSupply uint64, toRemoveSompiSupply uint64) error {
-	if toAddSompiSupply != toRemoveSompiSupply {
-		circulatingSupplyBytes, err := uis.database.Get(circulatingSupplyKey)
-		if err != nil {
-			return err
-		}
-
-		circulatingSupply, err := binaryserialization.DeserializeUint64(circulatingSupplyBytes)
-		if err != nil {
-			return err
-		}
-		err = uis.database.Put(
-			circulatingSupplyKey,
-			binaryserialization.SerializeUint64(circulatingSupply+toAddSompiSupply-toRemoveSompiSupply),
-		)
-		if err != nil {
-			return err
-		}
+	circulatingSupply, err := binaryserialization.DeserializeCirculatingSupply(circulatingSupplyBytes)
+	if err != nil {
+		return err
 	}
-	return nil
+
+	// Update the circulating supply for each asset type
+	circulatingSupply.KSH += supplyChange.KSHtoAdd - supplyChange.KSHtoRemove
+	circulatingSupply.KUSD += supplyChange.KUSDtoAdd - supplyChange.KUSDtoRemove
+	circulatingSupply.KRV += supplyChange.KRVtoAdd - supplyChange.KRVtoRemove
+
+	serializedSupply, err := binaryserialization.SerializeCirculatingSupply(circulatingSupply)
+	if err != nil {
+		return err
+	}
+
+	return dbTransaction.Put(circulatingSupplyKey, serializedSupply)
 }
 
-func (uis *utxoIndexStore) getCirculatingSompiSupply() (uint64, error) {
+func (uis *utxoIndexStore) updateCirculatingSompiSupplyWithoutTransaction(supplyChange *externalapi.AssetSupplyChange) error {
+	circulatingSupplyBytes, err := uis.database.Get(circulatingSupplyKey)
+	if err != nil {
+		return err
+	}
+
+	circulatingSupply, err := binaryserialization.DeserializeCirculatingSupply(circulatingSupplyBytes)
+	if err != nil {
+		return err
+	}
+
+	// Update the circulating supply for each asset type
+	circulatingSupply.KSH += supplyChange.KSHtoAdd - supplyChange.KSHtoRemove
+	circulatingSupply.KUSD += supplyChange.KUSDtoAdd - supplyChange.KUSDtoRemove
+	circulatingSupply.KRV += supplyChange.KRVtoAdd - supplyChange.KRVtoRemove
+
+	serializedSupply, err := binaryserialization.SerializeCirculatingSupply(circulatingSupply)
+	if err != nil {
+		return err
+	}
+
+	return uis.database.Put(circulatingSupplyKey, serializedSupply)
+}
+
+func (uis *utxoIndexStore) getCirculatingSompiSupply() (*externalapi.CirculatingSupply, error) {
 	if uis.isAnythingStaged() {
-		return 0, errors.Errorf("cannot get circulatingSupply while staging isn't empty")
+		return nil, errors.Errorf("cannot get circulatingSupply while staging isn't empty")
 	}
 	circulatingSupply, err := uis.database.Get(circulatingSupplyKey)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
-	return binaryserialization.DeserializeUint64(circulatingSupply)
+	return binaryserialization.DeserializeCirculatingSupply(circulatingSupply)
 }

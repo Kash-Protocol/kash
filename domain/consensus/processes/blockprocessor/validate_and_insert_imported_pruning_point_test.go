@@ -425,6 +425,7 @@ func makeFakeUTXOs() []*externalapi.OutpointAndUTXOEntryPair {
 			},
 			UTXOEntry: utxo.NewUTXOEntry(
 				0,
+				externalapi.KSH,
 				&externalapi.ScriptPublicKey{
 					Script:  nil,
 					Version: 0,
@@ -440,6 +441,7 @@ func makeFakeUTXOs() []*externalapi.OutpointAndUTXOEntryPair {
 			},
 			UTXOEntry: utxo.NewUTXOEntry(
 				2,
+				externalapi.KSH,
 				&externalapi.ScriptPublicKey{
 					Script:  nil,
 					Version: 0,
@@ -497,7 +499,7 @@ func TestGetPruningPointUTXOs(t *testing.T) {
 
 		// Create a transaction that adds a lot of UTXOs to the UTXO set
 		transactionToSpend := blockWithSpendableCoinbase.Transactions[0]
-		signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil, externalapi.KSH)
+		signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil)
 		if err != nil {
 			t.Fatalf("Error creating signature script: %+v", err)
 		}
@@ -643,7 +645,7 @@ func BenchmarkGetPruningPointUTXOs(b *testing.B) {
 
 	addBlockWithLotsOfOutputs := func(b *testing.B, transactionToSpend *externalapi.DomainTransaction) *externalapi.DomainBlock {
 		// Create a transaction that adds a lot of UTXOs to the UTXO set
-		signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil, externalapi.KSH)
+		signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil)
 		if err != nil {
 			b.Fatalf("Error creating signature script: %+v", err)
 		}

@@ -25,6 +25,7 @@ func UTXOEntryToDBUTXOEntry(utxoEntry externalapi.UTXOEntry) *DbUtxoEntry {
 	dbScriptPublicKey := ScriptPublicKeyToDBScriptPublicKey(utxoEntry.ScriptPublicKey())
 	return &DbUtxoEntry{
 		Amount:          utxoEntry.Amount(),
+		AssetType:       uint32(utxoEntry.AssetType()),
 		ScriptPublicKey: dbScriptPublicKey,
 		BlockDaaScore:   utxoEntry.BlockDAAScore(),
 		IsCoinbase:      utxoEntry.IsCoinbase(),
@@ -37,5 +38,5 @@ func DBUTXOEntryToUTXOEntry(dbUtxoEntry *DbUtxoEntry) (externalapi.UTXOEntry, er
 	if err != nil {
 		return nil, err
 	}
-	return utxo.NewUTXOEntry(dbUtxoEntry.Amount, scriptPublicKey, dbUtxoEntry.IsCoinbase, dbUtxoEntry.BlockDaaScore), nil
+	return utxo.NewUTXOEntry(dbUtxoEntry.Amount, externalapi.AssetTypeFromUint32(dbUtxoEntry.AssetType), scriptPublicKey, dbUtxoEntry.IsCoinbase, dbUtxoEntry.BlockDaaScore), nil
 }

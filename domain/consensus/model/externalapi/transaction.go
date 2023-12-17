@@ -24,6 +24,10 @@ type DomainTransaction struct {
 	// ID is a field that is used to cache the transaction ID.
 	// Always use consensushashing.TransactionID instead of accessing this field directly
 	ID *DomainTransactionID
+
+	// DomainTransactionType defines the type of a transaction.
+	// Like TransferKSH, StakeKSH
+	Type DomainTransactionType
 }
 
 // Clone returns a clone of DomainTransaction
@@ -57,6 +61,7 @@ func (tx *DomainTransaction) Clone() *DomainTransaction {
 		Fee:          tx.Fee,
 		Mass:         tx.Mass,
 		ID:           idClone,
+		Type:         tx.Type,
 	}
 }
 
@@ -64,7 +69,7 @@ func (tx *DomainTransaction) Clone() *DomainTransaction {
 // an indication to update Equal and Clone accordingly.
 var _ = DomainTransaction{0, []*DomainTransactionInput{}, []*DomainTransactionOutput{}, 0,
 	DomainSubnetworkID{}, 0, []byte{}, 0, 0,
-	&DomainTransactionID{}}
+	&DomainTransactionID{}, TransferKSH}
 
 // Equal returns whether tx equals to other
 func (tx *DomainTransaction) Equal(other *DomainTransaction) bool {
@@ -112,6 +117,10 @@ func (tx *DomainTransaction) Equal(other *DomainTransaction) bool {
 		return false
 	}
 
+	if tx.Type != other.Type {
+		return false
+	}
+
 	if tx.Fee != 0 && other.Fee != 0 && tx.Fee != other.Fee {
 		panic(errors.New("identical transactions should always have the same fee"))
 	}
@@ -125,6 +134,34 @@ func (tx *DomainTransaction) Equal(other *DomainTransaction) bool {
 	}
 
 	return true
+}
+
+// InputUTXOAssetType returns the asset type of the input UTXOs based on the transaction type.
+func (tx *DomainTransaction) InputUTXOAssetType() AssetType {
+	switch tx.Type {
+	case TransferKSH, MintKUSD, StakeKSH:
+		return KSH
+	case TransferKUSD:
+		return KUSD
+	case TransferKRV, RedeemKSH:
+		return KRV
+	default:
+		return UNKNOWN
+	}
+}
+
+// OutputUTXOAssetType returns the asset type of the output UTXOs based on the transaction type.
+func (tx *DomainTransaction) OutputUTXOAssetType() AssetType {
+	switch tx.Type {
+	case TransferKSH, RedeemKSH:
+		return KSH
+	case TransferKUSD, MintKUSD:
+		return KUSD
+	case TransferKRV, StakeKSH:
+		return KRV
+	default:
+		return UNKNOWN
+	}
 }
 
 // DomainTransactionInput represents a Kash transaction input
@@ -360,4 +397,36 @@ func (id *DomainTransactionID) ByteArray() *[DomainHashSize]byte {
 // The transactionID bytes are cloned, therefore it is safe to modify the resulting slice.
 func (id *DomainTransactionID) ByteSlice() []byte {
 	return (*DomainHash)(id).ByteSlice()
+}
+
+// DomainTransactionType defines the type of a transaction.
+type DomainTransactionType uint32
+
+// Enumeration of different transaction types with brief descriptions.
+const (
+	TransferKSH  DomainTransactionType = iota // KSH -> KSH: Regular KSH transfer
+	TransferKUSD                              // KUSD -> KUSD: Regular KUSD transfer
+	TransferKRV                               // KRV -> KRV: Regular KRV transfer
+	MintKUSD                                  // KSH -> KUSD: Minting KUSD using KSH
+	StakeKSH                                  // KSH -> KRV: Staking KSH to get KRV
+	RedeemKSH                                 // KRV -> KSH: Redeeming KSH using KRV
+)
+
+func (t DomainTransactionType) String() string {
+	switch t {
+	case TransferKSH:
+		return "TransferKSH"
+	case TransferKUSD:
+		return "TransferKUSD"
+	case TransferKRV:
+		return "TransferKRV"
+	case MintKUSD:
+		return "MintKUSD"
+	case StakeKSH:
+		return "StakeKSH"
+	case RedeemKSH:
+		return "RedeemKSH"
+	default:
+		return "Unknown"
+	}
 }

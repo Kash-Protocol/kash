@@ -44,7 +44,7 @@ func (mpus *mempoolUTXOSet) addTransaction(transaction *model.MempoolTransaction
 		outpoint := externalapi.DomainOutpoint{TransactionID: *transaction.TransactionID(), Index: uint32(i)}
 
 		mpus.poolUnspentOutputs[outpoint] =
-			utxo.NewUTXOEntry(output.Value, output.ScriptPublicKey, false, constants.UnacceptedDAAScore)
+			utxo.NewUTXOEntry(output.Value, externalapi.KSH, output.ScriptPublicKey, false, constants.UnacceptedDAAScore)
 	}
 }
 

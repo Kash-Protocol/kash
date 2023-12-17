@@ -148,7 +148,7 @@ func (bb *testBlockBuilder) buildBlockWithParents(stagingArea *model.StagingArea
 	*externalapi.DomainBlock, externalapi.UTXODiff, error) {
 
 	if coinbaseData == nil {
-		scriptPublicKeyScript, err := txscript.PayToScriptHashScript([]byte{txscript.OpTrue}, externalapi.KSH)
+		scriptPublicKeyScript, err := txscript.PayToScriptHashScript([]byte{txscript.OpTrue})
 		if err != nil {
 			panic(errors.Wrapf(err, "Couldn't parse opTrueScript. This should never happen"))
 		}

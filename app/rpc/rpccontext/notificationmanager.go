@@ -447,7 +447,7 @@ func (nl *NotificationListener) scriptPubKeyStringToAddressString(scriptPublicKe
 	scriptPubKey := externalapi.NewScriptPublicKeyFromString(string(scriptPublicKeyString))
 
 	// ignore error because it is often returned when the script is of unknown type
-	scriptType, address, _, err := txscript.ExtractScriptPubKeyAddress(scriptPubKey, nl.params)
+	scriptType, address, err := txscript.ExtractScriptPubKeyAddress(scriptPubKey, nl.params)
 	if err != nil {
 		return "", err
 	}

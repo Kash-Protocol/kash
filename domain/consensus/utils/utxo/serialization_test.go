@@ -14,7 +14,7 @@ func Benchmark_serializeUTXO(b *testing.B) {
 		b.Fatalf("Error decoding scriptPublicKey string: %s", err)
 	}
 	scriptPublicKey := &externalapi.ScriptPublicKey{script, 0}
-	entry := NewUTXOEntry(5000000000, scriptPublicKey, false, 1432432)
+	entry := NewUTXOEntry(5000000000, externalapi.KSH, scriptPublicKey, false, 1432432)
 	outpoint := &externalapi.DomainOutpoint{
 		TransactionID: *externalapi.NewDomainTransactionIDFromByteArray(&[externalapi.DomainHashSize]byte{
 			0x16, 0x5e, 0x38, 0xe8, 0xb3, 0x91, 0x45, 0x95,
@@ -39,7 +39,7 @@ func Test_serializeUTXO(t *testing.T) {
 		t.Fatalf("Error decoding scriptPublicKey script string: %s", err)
 	}
 	scriptPublicKey := &externalapi.ScriptPublicKey{Script: script, Version: 0}
-	entry := NewUTXOEntry(5000000000, scriptPublicKey, false, 1432432)
+	entry := NewUTXOEntry(5000000000, externalapi.KSH, scriptPublicKey, false, 1432432)
 	outpoint := &externalapi.DomainOutpoint{
 		TransactionID: *externalapi.NewDomainTransactionIDFromByteArray(&[externalapi.DomainHashSize]byte{
 			0x16, 0x5e, 0x38, 0xe8, 0xb3, 0x91, 0x45, 0x95,

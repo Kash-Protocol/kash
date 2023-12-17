@@ -341,6 +341,7 @@ func TestTransactionAcceptance(t *testing.T) {
 						IsAccepted:  true,
 						TransactionInputUTXOEntries: []externalapi.UTXOEntry{
 							utxo.NewUTXOEntry(transactionFromBlueChildOfRedBlockInput0UTXOEntry.Amount(),
+								transactionFromBlueChildOfRedBlockInput0UTXOEntry.AssetType(),
 								transactionFromBlueChildOfRedBlockInput0UTXOEntry.ScriptPublicKey(),
 								transactionFromBlueChildOfRedBlockInput0UTXOEntry.IsCoinbase(), uint64(updatedDAAScoreVirtualBlock))},
 					},

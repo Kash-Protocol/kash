@@ -20,9 +20,7 @@ func HandleGetBalanceByAddress(context *rpccontext.Context, _ *router.Router, re
 
 	getBalanceByAddressRequest := request.(*appmessage.GetBalanceByAddressRequestMessage)
 
-	kshBalance, err := getBalanceByAddress(context, getBalanceByAddressRequest.Address, externalapi.KSH)
-	kusdBalance, err := getBalanceByAddress(context, getBalanceByAddressRequest.Address, externalapi.KUSD)
-	krvBalance, err := getBalanceByAddress(context, getBalanceByAddressRequest.Address, externalapi.KRV)
+	kshBalance, kusdBalance, krvBalance, err := getBalanceByAddress(context, getBalanceByAddressRequest.Address)
 
 	if err != nil {
 		rpcError := &appmessage.RPCError{}
@@ -38,24 +36,34 @@ func HandleGetBalanceByAddress(context *rpccontext.Context, _ *router.Router, re
 	return response, nil
 }
 
-func getBalanceByAddress(context *rpccontext.Context, addressString string, assetType externalapi.AssetType) (uint64, error) {
+func getBalanceByAddress(context *rpccontext.Context, addressString string) (uint64, uint64, uint64, error) {
 	address, err := util.DecodeAddress(addressString, context.Config.ActiveNetParams.Prefix)
 	if err != nil {
-		return 0, appmessage.RPCErrorf("Couldn't decode address '%s': %s", addressString, err)
+		return 0, 0, 0, appmessage.RPCErrorf("Couldn't decode address '%s': %s", addressString, err)
 	}
 
-	scriptPublicKey, err := txscript.PayToAddrScript(address, assetType)
+	scriptPublicKey, err := txscript.PayToAddrScript(address)
 	if err != nil {
-		return 0, appmessage.RPCErrorf("Could not create a scriptPublicKey for address '%s': %s", addressString, err)
+		return 0, 0, 0, appmessage.RPCErrorf("Could not create a scriptPublicKey for address '%s': %s", addressString, err)
 	}
 	utxoOutpointEntryPairs, err := context.UTXOIndex.UTXOs(scriptPublicKey)
 	if err != nil {
-		return 0, err
+		return 0, 0, 0, err
 	}
 
-	balance := uint64(0)
+	kshBalance := uint64(0)
+	kusdBalance := uint64(0)
+	krvBalance := uint64(0)
+
 	for _, utxoOutpointEntryPair := range utxoOutpointEntryPairs {
-		balance += utxoOutpointEntryPair.Amount()
+		switch utxoOutpointEntryPair.AssetType() {
+		case externalapi.KSH:
+			kshBalance += utxoOutpointEntryPair.Amount()
+		case externalapi.KUSD:
+			kusdBalance += utxoOutpointEntryPair.Amount()
+		case externalapi.KRV:
+			krvBalance += utxoOutpointEntryPair.Amount()
+		}
 	}
-	return balance, nil
+	return kshBalance, kusdBalance, krvBalance, nil
 }

@@ -24,8 +24,7 @@ func (x *StopNotifyingUtxosChangedRequestMessage) toAppMessage() (appmessage.Mes
 		return nil, errors.Wrapf(errorNil, "StopNotifyingUtxosChangedRequestMessage is nil")
 	}
 	return &appmessage.StopNotifyingUTXOsChangedRequestMessage{
-		Addresses:  x.Addresses,
-		AssetTypes: x.AssetTypes,
+		Addresses: x.Addresses,
 	}, nil
 }
 

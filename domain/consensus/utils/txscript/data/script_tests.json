@@ -1218,7 +1218,7 @@
   ],
   [
     "0",
-    "IF 0xb2 ELSE 1 ENDIF",
+    "IF 0xb5 ELSE 1 ENDIF",
     "",
     "OK",
     "opcodes above OP_CHECKSEQUENCEVERIFY invalid if executed"
@@ -3683,20 +3683,14 @@
   ],
   [
     "1",
-    "IF 0xb2 ELSE 1 ENDIF",
+    "IF 0xb5 ELSE 1 ENDIF",
     "",
     "BAD_OPCODE",
     "opcodes above OP_CHECKSEQUENCEVERIFY invalid if executed"
   ],
   [
     "1",
-    "IF 0xb3 ELSE 1 ENDIF",
-    "",
-    "BAD_OPCODE"
-  ],
-  [
-    "1",
-    "IF 0xb4 ELSE 1 ENDIF",
+    "IF 0xb5 ELSE 1 ENDIF",
     "",
     "BAD_OPCODE"
   ],
@@ -4273,10 +4267,10 @@
   ],
   [
     "1",
-    "0xb2",
+    "0xb5",
     "",
     "BAD_OPCODE",
-    "0xb2 == OP_CHECKSEQUENCEVERIFY + 1"
+    "0xb5 == OP_CHECKSEQUENCEVERIFY + 1"
   ],
   [
     "2147483648",

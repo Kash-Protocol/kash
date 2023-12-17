@@ -22,7 +22,7 @@ func HandleGetBlockTemplate(context *rpccontext.Context, _ *router.Router, reque
 		return errorMessage, nil
 	}
 
-	scriptPublicKey, err := txscript.PayToAddrScript(payAddress, externalapi.KSH)
+	scriptPublicKey, err := txscript.PayToAddrScript(payAddress)
 	if err != nil {
 		return nil, err
 	}

@@ -132,5 +132,5 @@ func deserializeUTXOEntry(r io.Reader) (externalapi.UTXOEntry, error) {
 	}
 	scriptPubKey := externalapi.ScriptPublicKey{scriptPubKeyScript, version}
 
-	return NewUTXOEntry(amount, &scriptPubKey, isCoinbase, blockDAAScore), nil
+	return NewUTXOEntry(amount, externalapi.KSH, &scriptPubKey, isCoinbase, blockDAAScore), nil
 }
