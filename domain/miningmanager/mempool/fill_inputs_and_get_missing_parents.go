@@ -42,7 +42,7 @@ func fillInputs(transaction *externalapi.DomainTransaction, parentsInPool model.
 			continue
 		}
 		relevantOutput := parent.Transaction().Outputs[input.PreviousOutpoint.Index]
-		input.UTXOEntry = utxo.NewUTXOEntry(relevantOutput.Value, relevantOutput.ScriptPublicKey,
+		input.UTXOEntry = utxo.NewUTXOEntry(relevantOutput.Value, externalapi.KSH, relevantOutput.ScriptPublicKey,
 			false, constants.UnacceptedDAAScore)
 	}
 }

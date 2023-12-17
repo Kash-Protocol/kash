@@ -18,7 +18,7 @@ func initTestTransactionAcceptanceDataForClone() []*externalapi.TransactionAccep
 					[]byte{1, 2, 3},
 					uint64(0xFFFFFFFF),
 					1,
-					utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+					utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 				Outputs: []*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 					&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 					{uint64(0xFFFF),
@@ -37,7 +37,7 @@ func initTestTransactionAcceptanceDataForClone() []*externalapi.TransactionAccep
 			},
 			1,
 			true,
-			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 		},
 	}
 	return tests
@@ -63,7 +63,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 				[]byte{1, 2, 3},
 				uint64(0xFFFFFFFF),
 				1,
-				utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+				utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 			Outputs: []*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 				&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 				{uint64(0xFFFF),
@@ -82,7 +82,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 		},
 		1,
 		true,
-		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 	}
 
 	var testTransactionAcceptanceData1 = externalapi.TransactionAcceptanceData{
@@ -93,7 +93,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 				[]byte{1, 2, 3},
 				uint64(0xFFFFFFFF),
 				1,
-				utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+				utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 			Outputs: []*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 				&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 				{uint64(0xFFFF),
@@ -111,7 +111,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 		},
 		1,
 		true,
-		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 	}
 	// test 2: different transactions
 	var testTransactionAcceptanceData2 = externalapi.TransactionAcceptanceData{
@@ -122,7 +122,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 				[]byte{1, 2, 3},
 				uint64(0xFFFFFFFF),
 				1,
-				utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+				utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 			Outputs: []*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 				&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 				{uint64(0xFFFF),
@@ -140,7 +140,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 		},
 		1,
 		true,
-		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 	}
 	//test 3: different Fee
 	var testTransactionAcceptanceData3 = externalapi.TransactionAcceptanceData{
@@ -151,7 +151,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 				[]byte{1, 2, 3},
 				uint64(0xFFFFFFFF),
 				1,
-				utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+				utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 			Outputs: []*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 				&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 				{uint64(0xFFFF),
@@ -170,7 +170,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 		},
 		2,
 		true,
-		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 	}
 	//test 4: different isAccepted
 	var testTransactionAcceptanceData4 = externalapi.TransactionAcceptanceData{
@@ -181,7 +181,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 				[]byte{1, 2, 3},
 				uint64(0xFFFFFFFF),
 				1,
-				utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+				utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 			Outputs: []*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 				&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 				{uint64(0xFFFF),
@@ -200,7 +200,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 		},
 		1,
 		false,
-		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 	}
 
 	//test 5: different TransactionInputUTXOEntries
@@ -212,7 +212,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 				[]byte{1, 2, 3},
 				uint64(0xFFFFFFFF),
 				1,
-				utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+				utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 			Outputs: []*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 				&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 				{uint64(0xFFFF),
@@ -231,7 +231,7 @@ func initTransactionAcceptanceDataForEqual() []testTransactionAcceptanceDataStru
 		},
 		1,
 		false,
-		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+		[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 	}
 
 	tests := []testTransactionAcceptanceDataStruct{
@@ -318,7 +318,7 @@ func initTestBlockAcceptanceDataForClone() []*externalapi.BlockAcceptanceData {
 							[]byte{1, 2, 3},
 							uint64(0xFFFFFFFF),
 							1,
-							utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+							utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 					[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 						&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 						{uint64(0xFFFF),
@@ -334,10 +334,11 @@ func initTestBlockAcceptanceDataForClone() []*externalapi.BlockAcceptanceData {
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+					externalapi.TransferKSH,
 				},
 				1,
 				true,
-				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 			}},
 	},
 	}
@@ -366,7 +367,7 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					[]byte{1, 2, 3},
 					uint64(0xFFFFFFFF),
 					1,
-					utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+					utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 				[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 					&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 					{uint64(0xFFFF),
@@ -382,10 +383,11 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+				externalapi.TransferKSH,
 			},
 			1,
 			true,
-			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 		}}}
 	//test 1: structs are equal
 	var testBlockAcceptanceData1 = externalapi.BlockAcceptanceData{
@@ -399,7 +401,7 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					[]byte{1, 2, 3},
 					uint64(0xFFFFFFFF),
 					1,
-					utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+					utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 				[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 					&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 					{uint64(0xFFFF),
@@ -415,10 +417,11 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+				externalapi.TransferKSH,
 			},
 			1,
 			true,
-			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 		}}}
 	// test 2: different size
 	var testBlockAcceptanceData2 = externalapi.BlockAcceptanceData{
@@ -432,7 +435,7 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					[]byte{1, 2, 3},
 					uint64(0xFFFFFFFF),
 					1,
-					utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+					utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 				[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 					&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 					{uint64(0xFFFF),
@@ -448,10 +451,11 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+				externalapi.TransferKSH,
 			},
 			1,
 			true,
-			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 		}, {}}}
 	//test 3: different transactions, same size
 	var testBlockAcceptanceData3 = externalapi.BlockAcceptanceData{
@@ -465,7 +469,7 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					[]byte{1, 2, 3},
 					uint64(0xFFFFFFFF),
 					1,
-					utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+					utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 				[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 					&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 					{uint64(0xFFFF),
@@ -481,10 +485,11 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+				externalapi.TransferKSH,
 			},
 			1,
 			false,
-			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 		}}}
 
 	// test 4 - different block hash
@@ -499,7 +504,7 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					[]byte{1, 2, 3},
 					uint64(0xFFFFFFFF),
 					1,
-					utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+					utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 				[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 					&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 					{uint64(0xFFFF),
@@ -515,10 +520,11 @@ func iniBlockAcceptanceDataForEqual() []testBlockAcceptanceDataStruct {
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 					0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+				externalapi.TransferKSH,
 			},
 			1,
 			true,
-			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+			[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 		}}}
 
 	tests := []testBlockAcceptanceDataStruct{
@@ -603,7 +609,7 @@ func initTestAcceptanceDataForClone() []externalapi.AcceptanceData {
 						[]byte{1, 2, 3},
 						uint64(0xFFFFFFFF),
 						1,
-						utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+						utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 					[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 						&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 						{uint64(0xFFFF),
@@ -619,10 +625,11 @@ func initTestAcceptanceDataForClone() []externalapi.AcceptanceData {
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+					externalapi.TransferKSH,
 				},
 				1,
 				true,
-				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 			}},
 	},
 	}
@@ -653,7 +660,7 @@ func initAcceptanceDataForEqual() []testAcceptanceDataStruct {
 						[]byte{1, 2, 3},
 						uint64(0xFFFFFFFF),
 						1,
-						utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+						utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 					[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 						&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 						{uint64(0xFFFF),
@@ -669,10 +676,11 @@ func initAcceptanceDataForEqual() []testAcceptanceDataStruct {
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+					externalapi.TransferKSH,
 				},
 				1,
 				true,
-				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 			}}}}
 	//test 1: structs are equal
 	var testAcceptanceData1 = []*externalapi.BlockAcceptanceData{
@@ -686,7 +694,7 @@ func initAcceptanceDataForEqual() []testAcceptanceDataStruct {
 						[]byte{1, 2, 3},
 						uint64(0xFFFFFFFF),
 						1,
-						utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+						utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 					[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 						&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 						{uint64(0xFFFF),
@@ -702,10 +710,11 @@ func initAcceptanceDataForEqual() []testAcceptanceDataStruct {
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+					externalapi.TransferKSH,
 				},
 				1,
 				true,
-				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 			}}}}
 	// test 2: different size
 	var testAcceptanceData2 = []*externalapi.BlockAcceptanceData{
@@ -719,7 +728,7 @@ func initAcceptanceDataForEqual() []testAcceptanceDataStruct {
 						[]byte{1, 2, 3},
 						uint64(0xFFFFFFFF),
 						1,
-						utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+						utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 					[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 						&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 						{uint64(0xFFFF),
@@ -735,10 +744,11 @@ func initAcceptanceDataForEqual() []testAcceptanceDataStruct {
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+					externalapi.TransferKSH,
 				},
 				1,
 				true,
-				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 			}}}, {}}
 	//test 3: different transactions, same size
 	var testAcceptanceData3 = []*externalapi.BlockAcceptanceData{
@@ -752,7 +762,7 @@ func initAcceptanceDataForEqual() []testAcceptanceDataStruct {
 						[]byte{1, 2, 3},
 						uint64(0xFFFFFFFF),
 						1,
-						utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
+						utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)}},
 					[]*externalapi.DomainTransactionOutput{{uint64(0xFFFF),
 						&externalapi.ScriptPublicKey{Script: []byte{1, 2}, Version: 0}},
 						{uint64(0xFFFF),
@@ -768,10 +778,11 @@ func initAcceptanceDataForEqual() []testAcceptanceDataStruct {
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02}),
+					externalapi.TransferKSH,
 				},
 				1,
 				true,
-				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
+				[]externalapi.UTXOEntry{utxo.NewUTXOEntry(1, externalapi.KSH, &externalapi.ScriptPublicKey{Script: []byte{0, 1, 2, 3}, Version: 0}, true, 2)},
 			}}}}
 
 	tests := []testAcceptanceDataStruct{

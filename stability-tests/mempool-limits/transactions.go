@@ -134,6 +134,7 @@ func generateTransactionsWithMultipleOutputs(t *testing.T,
 				},
 				UTXOEntry: utxopkg.NewUTXOEntry(
 					fundingTransactionOutput.Value,
+					fundingTransaction.OutputUTXOAssetType(),
 					payToPayAddressScript,
 					false,
 					0),
@@ -193,7 +194,7 @@ func buildPayToPayAddressScript(t *testing.T) *externalapi.ScriptPublicKey {
 	if err != nil {
 		t.Fatalf("DecodeAddress: %+v", err)
 	}
-	script, err := txscript.PayToAddrScript(address, externalapi.KSH)
+	script, err := txscript.PayToAddrScript(address)
 	if err != nil {
 		t.Fatalf("PayToAddrScript: %+v", err)
 	}

@@ -73,13 +73,17 @@ func TestPrintMerkleHash(t *testing.T) {
 	// Replace with the actual transactions for genesis and testnet blocks
 	genesisTransactions := []*externalapi.DomainTransaction{genesisCoinbaseTx}
 	testnetTransactions := []*externalapi.DomainTransaction{testnetGenesisCoinbaseTx}
+	devnetTransactions := []*externalapi.DomainTransaction{devnetGenesisCoinbaseTx}
+	simnetTransactions := []*externalapi.DomainTransaction{simnetGenesisCoinbaseTx}
 
 	fmt.Printf("Genesis Merkle Root: %s\n", consensushashing.TransactionHash(genesisTransactions[0]))
 	fmt.Printf("Testnet Merkle Root: %s\n", consensushashing.TransactionHash(testnetTransactions[0]))
+	fmt.Printf("Devnet Merkle Root: %s\n", consensushashing.TransactionHash(devnetTransactions[0]))
+	fmt.Printf("Simnet Merkle Root: %s\n", consensushashing.TransactionHash(simnetTransactions[0]))
 }
 
-// TestPrintsHashStrToReadableBytes is a scratchpad for printing the genesis block hash
-func TestPrintsHashStrToReadableBytes(t *testing.T) {
+// TestPrintsGenesisHash is a scratchpad for printing the genesis block hash
+func TestPrintsGenesisHash(t *testing.T) {
 	mainhashStr := consensushashing.BlockHash(MainnetParams.GenesisBlock).String()
 	testhashStr := consensushashing.BlockHash(TestnetParams.GenesisBlock).String()
 	simhashStr := consensushashing.BlockHash(SimnetParams.GenesisBlock).String()
@@ -106,6 +110,32 @@ func TestPrintsHashStrToReadableBytes(t *testing.T) {
 			if (i+1)%8 == 0 {
 				fmt.Println()
 			}
+		}
+	}
+}
+
+// TestPrintsHashStrToReadableBytes is a scratchpad for printing the genesis block hash
+func TestPrintsHashStrToReadableBytes(t *testing.T) {
+	hashstr := "a2b71eec8405f10304db58000d51388689b716cfa975e3c404e2df73095767b6"
+	hashBytes, err := hex.DecodeString(hashstr)
+	if err != nil {
+		log.Fatalf("Failed to decode hash: %v", err)
+	}
+
+	domainHashSize := 32
+
+	if len(hashBytes) != domainHashSize {
+		log.Fatalf("Hash size (%d) does not match DomainHashSize (%d)", len(hashBytes), domainHashSize)
+	}
+
+	fmt.Println("Hash bytes:")
+	for i, b := range hashBytes {
+		fmt.Printf("0x%02x", b)
+		if i < len(hashBytes)-1 {
+			fmt.Print(", ")
+		}
+		if (i+1)%8 == 0 {
+			fmt.Println()
 		}
 	}
 }

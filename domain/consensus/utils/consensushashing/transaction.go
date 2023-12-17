@@ -126,6 +126,11 @@ func serializeTransaction(w io.Writer, tx *externalapi.DomainTransaction, encodi
 		return err
 	}
 
+	err = binaryserializer.PutUint32(w, uint32(tx.Type))
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 

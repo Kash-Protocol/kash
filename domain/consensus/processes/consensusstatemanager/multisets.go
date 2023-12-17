@@ -72,7 +72,8 @@ func addTransactionToMultiset(multiset model.Multiset, transaction *externalapi.
 			TransactionID: *transactionID,
 			Index:         uint32(i),
 		}
-		utxoEntry := utxo.NewUTXOEntry(output.Value, output.ScriptPublicKey, isCoinbase, blockDAAScore)
+		utxoEntry := utxo.NewUTXOEntry(output.Value, transaction.OutputUTXOAssetType(),
+			output.ScriptPublicKey, isCoinbase, blockDAAScore)
 
 		log.Tracef("Adding input %s at index %d from the multiset", transactionID, i)
 		err := addUTXOToMultiset(multiset, utxoEntry, outpoint)

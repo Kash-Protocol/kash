@@ -499,9 +499,9 @@ var opcodeArray = [256]opcode{
 	OpStakeKSH: {OpStakeKSH, "OP_STAKEKSH", 1, opcodeStakeKSH},
 
 	// UTXO asset type opcodes.(KSH, KUSD, KRV)
-	OpAssetKSH:  {OpAssetKSH, "OP_UNKNOWN178", 1, opcodeNop},
-	OpAssetKUSD: {OpAssetKUSD, "OP_UNKNOWN179", 1, opcodeNop},
-	OpAssetKRV:  {OpAssetKRV, "OP_UNKNOWN180", 1, opcodeNop},
+	OpAssetKSH:  {OpAssetKSH, "OP_ASSETKSH", 1, opcodeNop},
+	OpAssetKUSD: {OpAssetKUSD, "OP_ASSETKUSD", 1, opcodeNop},
+	OpAssetKRV:  {OpAssetKRV, "OP_ASSETKRV", 1, opcodeNop},
 
 	// Undefined opcodes.
 	OpUnknown181: {OpUnknown191, "OP_UNKNOWN181", 1, opcodeInvalid},

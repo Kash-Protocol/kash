@@ -252,6 +252,7 @@ func (x *RpcUtxoEntry) toAppMessage() (*appmessage.RPCUTXOEntry, error) {
 	}
 	return &appmessage.RPCUTXOEntry{
 		Amount:          x.Amount,
+		AssetType:       x.AssetType,
 		ScriptPublicKey: scriptPubKey,
 		BlockDAAScore:   x.BlockDaaScore,
 		IsCoinbase:      x.IsCoinbase,
@@ -263,6 +264,7 @@ func (x *RpcUtxoEntry) fromAppMessage(message *appmessage.RPCUTXOEntry) {
 	scriptPublicKey.fromAppMessage(message.ScriptPublicKey)
 	*x = RpcUtxoEntry{
 		Amount:          message.Amount,
+		AssetType:       message.AssetType,
 		ScriptPublicKey: scriptPublicKey,
 		BlockDaaScore:   message.BlockDAAScore,
 		IsCoinbase:      message.IsCoinbase,

@@ -54,7 +54,7 @@ func TestCheckLockTimeVerifyConditionedByDAAScore(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Failed to create a script using createScriptCLTV: %v", err)
 		}
-		p2shScriptCLTV, err := txscript.PayToScriptHashScript(redeemScriptCLTV, externalapi.KSH)
+		p2shScriptCLTV, err := txscript.PayToScriptHashScript(redeemScriptCLTV)
 		if err != nil {
 			t.Fatalf("Failed to create a pay-to-script-hash script : %v", err)
 		}
@@ -161,7 +161,7 @@ func TestCheckLockTimeVerifyConditionedByDAAScoreWithWrongLockTime(t *testing.T)
 		if err != nil {
 			t.Fatalf("Failed to create a script using createScriptCLTV: %v", err)
 		}
-		p2shScriptCLTV, err := txscript.PayToScriptHashScript(redeemScriptCLTV, externalapi.KSH)
+		p2shScriptCLTV, err := txscript.PayToScriptHashScript(redeemScriptCLTV)
 		if err != nil {
 			t.Fatalf("Failed to create a pay-to-script-hash script : %v", err)
 		}
@@ -263,7 +263,7 @@ func TestCheckLockTimeVerifyConditionedByAbsoluteTime(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Failed to create a script using createScriptCLTV: %v", err)
 		}
-		p2shScriptCLTV, err := txscript.PayToScriptHashScript(redeemScriptCLTV, externalapi.KSH)
+		p2shScriptCLTV, err := txscript.PayToScriptHashScript(redeemScriptCLTV)
 		if err != nil {
 			t.Fatalf("Failed to create a pay-to-script-hash script : %v", err)
 		}
@@ -391,7 +391,7 @@ func TestCheckLockTimeVerifyConditionedByAbsoluteTimeWithWrongLockTime(t *testin
 		if err != nil {
 			t.Fatalf("Failed to create a script using createScriptCLTV: %v", err)
 		}
-		p2shScriptCLTV, err := txscript.PayToScriptHashScript(redeemScriptCLTV, externalapi.KSH)
+		p2shScriptCLTV, err := txscript.PayToScriptHashScript(redeemScriptCLTV)
 		if err != nil {
 			t.Fatalf("Failed to create a pay-to-script-hash script : %v", err)
 		}
@@ -483,7 +483,7 @@ func createTransactionWithLockedOutput(txToSpend *externalapi.DomainTransaction,
 	scriptPublicKeyCLTV *externalapi.ScriptPublicKey) (*externalapi.DomainTransaction, error) {
 
 	_, redeemScript := testutils.OpTrueScript()
-	signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil, externalapi.KSH)
+	signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -510,7 +510,7 @@ func createTransactionWithLockedOutput(txToSpend *externalapi.DomainTransaction,
 func createTransactionThatSpentTheLockedOutput(txToSpend *externalapi.DomainTransaction, fee uint64,
 	redeemScript []byte, lockTime uint64) (*externalapi.DomainTransaction, error) {
 
-	signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, []byte{}, externalapi.KSH)
+	signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, []byte{})
 	if err != nil {
 		return nil, err
 	}

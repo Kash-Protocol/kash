@@ -110,7 +110,7 @@ func (mud *mutableUTXODiff) AddTransaction(transaction *externalapi.DomainTransa
 			TransactionID: transactionID,
 			Index:         uint32(i),
 		}
-		entry := NewUTXOEntry(output.Value, output.ScriptPublicKey, isCoinbase, blockDAAScore)
+		entry := NewUTXOEntry(output.Value, externalapi.KSH, output.ScriptPublicKey, isCoinbase, blockDAAScore)
 
 		err := mud.addEntry(outpoint, entry)
 		if err != nil {

@@ -64,10 +64,10 @@ func TestUTXOIndex(t *testing.T) {
 		(getBlockCountResponse.BlockCount - 2) * constants.SompiPerKash * 500, // -2 because of genesis and virtual.
 	)
 
-	if getCoinSupplyResponse.CirculatingSompi != rewardsMinedSompi {
-		t.Fatalf("Error: Circulating supply Mismatch - Circulating Sompi: %d Sompi Mined: %d", getCoinSupplyResponse.CirculatingSompi, rewardsMinedSompi)
-	} else if getCoinSupplyResponse.CirculatingSompi != rewardsMinedViaBlockCountSompi {
-		t.Fatalf("Error: Circulating supply Mismatch - Circulating Sompi: %d Sompi Mined via Block count: %d", getCoinSupplyResponse.CirculatingSompi, rewardsMinedViaBlockCountSompi)
+	if getCoinSupplyResponse.KSHCirculatingSompi != rewardsMinedSompi {
+		t.Fatalf("Error: Circulating supply Mismatch - Circulating Sompi: %d Sompi Mined: %d", getCoinSupplyResponse.KSHCirculatingSompi, rewardsMinedSompi)
+	} else if getCoinSupplyResponse.KSHCirculatingSompi != rewardsMinedViaBlockCountSompi {
+		t.Fatalf("Error: Circulating supply Mismatch - Circulating Sompi: %d Sompi Mined via Block count: %d", getCoinSupplyResponse.KSHCirculatingSompi, rewardsMinedViaBlockCountSompi)
 	}
 
 	// Collect the UTXO and make sure there's nothing in Removed
@@ -188,7 +188,7 @@ func buildTransactionForUTXOIndexTest(t *testing.T, entry *appmessage.UTXOsByAdd
 	if err != nil {
 		t.Fatalf("Error decoding payeeAddress: %+v", err)
 	}
-	toScript, err := txscript.PayToAddrScript(payeeAddress, externalapi.KSH)
+	toScript, err := txscript.PayToAddrScript(payeeAddress)
 	if err != nil {
 		t.Fatalf("Error generating script: %+v", err)
 	}
@@ -201,6 +201,7 @@ func buildTransactionForUTXOIndexTest(t *testing.T, entry *appmessage.UTXOsByAdd
 	}
 	fromScript := &externalapi.ScriptPublicKey{Script: fromScriptCode, Version: 0}
 	fromAmount := entry.UTXOEntry.Amount
+	fromAssetType := entry.UTXOEntry.AssetType
 
 	msgTx := appmessage.NewNativeMsgTx(constants.MaxTransactionVersion, txIns, txOuts)
 
@@ -214,7 +215,7 @@ func buildTransactionForUTXOIndexTest(t *testing.T, entry *appmessage.UTXOsByAdd
 	}
 
 	tx := appmessage.MsgTxToDomainTransaction(msgTx)
-	tx.Inputs[0].UTXOEntry = utxo.NewUTXOEntry(fromAmount, fromScript, false, 500)
+	tx.Inputs[0].UTXOEntry = utxo.NewUTXOEntry(fromAmount, externalapi.AssetTypeFromUint32(fromAssetType), fromScript, false, 500)
 
 	signatureScript, err := txscript.SignatureScript(tx, 0, consensushashing.SigHashAll, privateKey,
 		&consensushashing.SighashReusedValues{})

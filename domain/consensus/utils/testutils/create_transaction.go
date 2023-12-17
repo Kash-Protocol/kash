@@ -13,7 +13,7 @@ import (
 func CreateTransaction(txToSpend *externalapi.DomainTransaction, fee uint64) (*externalapi.DomainTransaction, error) {
 	scriptPublicKey, redeemScript := OpTrueScript()
 
-	signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil, externalapi.KSH)
+	signatureScript, err := txscript.PayToScriptHashSignatureScript(redeemScript, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -73,6 +73,7 @@ func TestVirtualDiff(t *testing.T) {
 
 		if !entry.Equal(utxo.NewUTXOEntry(
 			blockB.Transactions[0].Outputs[0].Value,
+			blockB.Transactions[0].OutputUTXOAssetType(),
 			blockB.Transactions[0].Outputs[0].ScriptPublicKey,
 			true,
 			consensusConfig.GenesisBlock.Header.DAAScore()+2, //Expected virtual DAA score

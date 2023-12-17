@@ -59,7 +59,7 @@ func (s *server) GetBalance(_ context.Context, _ *pb.GetBalanceRequest) (*pb.Get
 			}
 			addressBalances = append(addressBalances, &pb.AddressBalances{
 				Address:   address.String(),
-				AssetType: assetType.ToPbAssetType(),
+				AssetType: assetType.ToUint32(),
 				Available: balances.available,
 				Pending:   balances.pending,
 			})
@@ -67,7 +67,7 @@ func (s *server) GetBalance(_ context.Context, _ *pb.GetBalanceRequest) (*pb.Get
 			pending += balances.pending
 		}
 		assetBalances = append(assetBalances, &pb.AssetBalance{
-			AssetType:       assetType.ToPbAssetType(),
+			AssetType:       assetType.ToUint32(),
 			Available:       available,
 			Pending:         pending,
 			AddressBalances: addressBalances,

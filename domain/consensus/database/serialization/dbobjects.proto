@@ -125,9 +125,10 @@ message DbScriptPublicKey {
 
 message DbUtxoEntry {
   uint64 amount = 1;
-  DbScriptPublicKey scriptPublicKey = 2;
-  uint64 blockDaaScore = 3;
-  bool isCoinbase = 4;
+  uint32 assetType = 2;
+  DbScriptPublicKey scriptPublicKey = 3;
+  uint64 blockDaaScore = 4;
+  bool isCoinbase = 5;
 }
 
 message DbReachabilityData {

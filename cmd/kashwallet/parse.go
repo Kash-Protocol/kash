@@ -60,7 +60,7 @@ func parse(conf *parseConfig) error {
 
 		allOutputSompi := uint64(0)
 		for index, output := range partiallySignedTransaction.Tx.Outputs {
-			scriptPublicKeyType, scriptPublicKeyAddress, _, err := txscript.ExtractScriptPubKeyAddress(output.ScriptPublicKey, conf.ActiveNetParams)
+			scriptPublicKeyType, scriptPublicKeyAddress, err := txscript.ExtractScriptPubKeyAddress(output.ScriptPublicKey, conf.ActiveNetParams)
 			if err != nil {
 				return err
 			}

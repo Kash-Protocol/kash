@@ -218,7 +218,7 @@ func RPCTransactionToDomainTransaction(rpcTransaction *RPCTransaction) (*externa
 		Outputs:      outputs,
 		LockTime:     rpcTransaction.LockTime,
 		SubnetworkID: *subnetworkID,
-		Gas:          rpcTransaction.LockTime,
+		Gas:          rpcTransaction.Gas,
 		Payload:      payload,
 	}, nil
 }
@@ -244,6 +244,7 @@ func RPCUTXOEntryToUTXOEntry(entry *RPCUTXOEntry) (externalapi.UTXOEntry, error)
 
 	return utxo.NewUTXOEntry(
 		entry.Amount,
+		externalapi.AssetTypeFromUint32(entry.AssetType),
 		&externalapi.ScriptPublicKey{
 			Script:  script,
 			Version: entry.ScriptPublicKey.Version,
@@ -286,7 +287,7 @@ func DomainTransactionToRPCTransaction(transaction *externalapi.DomainTransactio
 		Outputs:      outputs,
 		LockTime:     transaction.LockTime,
 		SubnetworkID: subnetworkID,
-		Gas:          transaction.LockTime,
+		Gas:          transaction.Gas,
 		Payload:      payload,
 	}
 }
@@ -312,6 +313,7 @@ func outpointAndUTXOEntryPairToDomainOutpointAndUTXOEntryPair(
 		},
 		UTXOEntry: utxo.NewUTXOEntry(
 			outpointAndUTXOEntryPair.UTXOEntry.Amount,
+			outpointAndUTXOEntryPair.UTXOEntry.AssetType,
 			outpointAndUTXOEntryPair.UTXOEntry.ScriptPublicKey,
 			outpointAndUTXOEntryPair.UTXOEntry.IsCoinbase,
 			outpointAndUTXOEntryPair.UTXOEntry.BlockDAAScore,

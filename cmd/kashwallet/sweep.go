@@ -149,7 +149,7 @@ func createSplitTransactionsWithSchnorrPrivteKey(
 
 	massCalculater := txmass.NewCalculator(params.MassPerTxByte, params.MassPerScriptPubKeyByte, params.MassPerSigOp)
 
-	scriptPublicKey, err := txscript.PayToAddrScript(toAddress, externalapi.KSH)
+	scriptPublicKey, err := txscript.PayToAddrScript(toAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -170,6 +170,7 @@ func createSplitTransactionsWithSchnorrPrivteKey(
 				PreviousOutpoint: *currentUTXO.Outpoint,
 				UTXOEntry: utxo.NewUTXOEntry(
 					currentUTXO.UTXOEntry.Amount(),
+					currentUTXO.UTXOEntry.AssetType(),
 					currentUTXO.UTXOEntry.ScriptPublicKey(),
 					false,
 					constants.UnacceptedDAAScore,

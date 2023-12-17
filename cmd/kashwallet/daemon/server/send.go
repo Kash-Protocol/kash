@@ -10,7 +10,7 @@ func (s *server) Send(_ context.Context, request *pb.SendRequest) (*pb.SendRespo
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
-	unsignedTransactions, err := s.createUnsignedTransactions(request.ToAddress, externalapi.PbAssetTypeToType(request.AssetType),
+	unsignedTransactions, err := s.createUnsignedTransactions(request.ToAddress, externalapi.AssetTypeFromUint32(request.AssetType),
 		request.Amount, request.IsSendAll, request.From, request.UseExistingChangeAddress)
 
 	if err != nil {

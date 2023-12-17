@@ -30,6 +30,7 @@ type OutpointAndUTXOEntryPair struct {
 // UTXOEntry houses details about an individual transaction output in a UTXO
 type UTXOEntry struct {
 	Amount          uint64
+	AssetType       externalapi.AssetType
 	ScriptPublicKey *externalapi.ScriptPublicKey
 	BlockDAAScore   uint64
 	IsCoinbase      bool

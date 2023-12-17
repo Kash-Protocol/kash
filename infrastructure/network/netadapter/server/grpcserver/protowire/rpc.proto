@@ -94,9 +94,10 @@ message RpcOutpoint {
 
 message RpcUtxoEntry {
   uint64 amount = 1;
-  RpcScriptPublicKey scriptPublicKey = 2;
-  uint64 blockDaaScore = 3;
-  bool isCoinbase = 4;
+  uint32 assetType = 2;
+  RpcScriptPublicKey scriptPublicKey = 3;
+  uint64 blockDaaScore = 4;
+  bool isCoinbase = 5;
 }
 
 message RpcTransactionVerboseData{
@@ -503,7 +504,6 @@ message UtxosByAddressesEntry {
 // See: UtxosChangedNotificationMessage
 message StopNotifyingUtxosChangedRequestMessage {
   repeated string addresses = 1;
-  repeated uint32 assetTypes = 2;
 }
 
 message StopNotifyingUtxosChangedResponseMessage {
@@ -722,7 +722,9 @@ message GetCoinSupplyRequestMessage{
 
 message GetCoinSupplyResponseMessage{
         uint64 maxSompi = 1; // note: this is a hard coded maxSupply, actual maxSupply is expected to deviate by upto -5%, but cannot be measured exactly.
-        uint64 circulatingSompi = 2;
+        uint64 kshCirculatingSompi = 2;
+        uint64 kusdCirculatingSompi = 3;
+        uint64 krvCirculatingSompi = 4;
 
         RPCError error = 1000;
 }

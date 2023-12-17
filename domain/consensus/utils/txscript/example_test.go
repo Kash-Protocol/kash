@@ -29,7 +29,7 @@ func ExamplePayToAddrScript() {
 	}
 
 	// Create a public key script that pays to the address.
-	script, err := txscript.PayToAddrScript(address, externalapi.KSH)
+	script, err := txscript.PayToAddrScript(address)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -60,7 +60,7 @@ func ExampleExtractScriptPubKeyAddress() {
 	}
 
 	// Extract and print details from the script.
-	scriptClass, address, _, err := txscript.ExtractScriptPubKeyAddress(
+	scriptClass, address, err := txscript.ExtractScriptPubKeyAddress(
 		&externalapi.ScriptPublicKey{
 			Script:  script,
 			Version: 0,

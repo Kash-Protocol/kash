@@ -101,7 +101,7 @@ func testEstimateMassIncreaseForSignaturesSetUp(t *testing.T, consensusConfig *c
 		t.Fatalf("Address: %+v", err)
 	}
 
-	scriptPublicKey, err := txscript.PayToAddrScript(address, externalapi.KSH)
+	scriptPublicKey, err := txscript.PayToAddrScript(address)
 	if err != nil {
 		t.Fatalf("PayToAddrScript: %+v", err)
 	}
@@ -134,7 +134,8 @@ func testEstimateMassIncreaseForSignaturesSetUp(t *testing.T, consensusConfig *c
 				TransactionID: *consensushashing.TransactionID(block1.Transactions[0]),
 				Index:         0,
 			},
-			UTXOEntry:      utxo.NewUTXOEntry(block1TxOut.Value, block1TxOut.ScriptPublicKey, true, 0),
+			UTXOEntry: utxo.NewUTXOEntry(block1TxOut.Value, block1Tx.OutputUTXOAssetType(),
+				block1TxOut.ScriptPublicKey, true, 0),
 			DerivationPath: path,
 		},
 	}
@@ -143,7 +144,7 @@ func testEstimateMassIncreaseForSignaturesSetUp(t *testing.T, consensusConfig *c
 		[]*libkashwallet.Payment{{
 			Address: address,
 			Amount:  10,
-		}}, selectedUTXOs)
+		}}, selectedUTXOs, externalapi.TransferKSH)
 	if err != nil {
 		t.Fatalf("CreateUnsignedTransactions: %+v", err)
 	}

@@ -32,10 +32,11 @@ func CreateUnsignedTransaction(
 	extendedPublicKeys []string,
 	minimumSignatures uint32,
 	payments []*Payment,
-	selectedUTXOs []*UTXO) ([]byte, error) {
+	selectedUTXOs []*UTXO,
+	txType externalapi.DomainTransactionType) ([]byte, error) {
 
 	sortPublicKeys(extendedPublicKeys)
-	unsignedTransaction, err := createUnsignedTransaction(extendedPublicKeys, minimumSignatures, payments, selectedUTXOs)
+	unsignedTransaction, err := createUnsignedTransaction(extendedPublicKeys, minimumSignatures, payments, selectedUTXOs, txType)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +100,8 @@ func createUnsignedTransaction(
 	extendedPublicKeys []string,
 	minimumSignatures uint32,
 	payments []*Payment,
-	selectedUTXOs []*UTXO) (*serialization.PartiallySignedTransaction, error) {
+	selectedUTXOs []*UTXO,
+	txType externalapi.DomainTransactionType) (*serialization.PartiallySignedTransaction, error) {
 
 	inputs := make([]*externalapi.DomainTransactionInput, len(selectedUTXOs))
 	partiallySignedInputs := make([]*serialization.PartiallySignedInput, len(selectedUTXOs))
@@ -135,7 +137,7 @@ func createUnsignedTransaction(
 
 	outputs := make([]*externalapi.DomainTransactionOutput, len(payments))
 	for i, payment := range payments {
-		scriptPublicKey, err := txscript.PayToAddrScript(payment.Address, payment.AssetType)
+		scriptPublicKey, err := txscript.PayToAddrScript(payment.Address)
 		if err != nil {
 			return nil, err
 		}
@@ -154,6 +156,7 @@ func createUnsignedTransaction(
 		SubnetworkID: subnetworks.SubnetworkIDNative,
 		Gas:          0,
 		Payload:      nil,
+		Type:         txType,
 	}
 
 	return &serialization.PartiallySignedTransaction{

@@ -64,7 +64,7 @@ func TestMultisig(t *testing.T) {
 				t.Fatalf("The address is of unexpected type")
 			}
 
-			scriptPublicKey, err := txscript.PayToAddrScript(address, externalapi.KSH)
+			scriptPublicKey, err := txscript.PayToAddrScript(address)
 			if err != nil {
 				t.Fatalf("PayToAddrScript: %+v", err)
 			}
@@ -97,7 +97,7 @@ func TestMultisig(t *testing.T) {
 						TransactionID: *consensushashing.TransactionID(block1.Transactions[0]),
 						Index:         0,
 					},
-					UTXOEntry:      utxo.NewUTXOEntry(block1TxOut.Value, block1TxOut.ScriptPublicKey, true, 0),
+					UTXOEntry:      utxo.NewUTXOEntry(block1TxOut.Value, block1Tx.OutputUTXOAssetType(), block1TxOut.ScriptPublicKey, true, 0),
 					DerivationPath: path,
 				},
 			}
@@ -106,7 +106,7 @@ func TestMultisig(t *testing.T) {
 				[]*libkashwallet.Payment{{
 					Address: address,
 					Amount:  10,
-				}}, selectedUTXOs)
+				}}, selectedUTXOs, externalapi.TransferKSH)
 			if err != nil {
 				t.Fatalf("CreateUnsignedTransactions: %+v", err)
 			}
@@ -225,7 +225,7 @@ func TestP2PK(t *testing.T) {
 				}
 			}
 
-			scriptPublicKey, err := txscript.PayToAddrScript(address, externalapi.KSH)
+			scriptPublicKey, err := txscript.PayToAddrScript(address)
 			if err != nil {
 				t.Fatalf("PayToAddrScript: %+v", err)
 			}
@@ -258,7 +258,7 @@ func TestP2PK(t *testing.T) {
 						TransactionID: *consensushashing.TransactionID(block1.Transactions[0]),
 						Index:         0,
 					},
-					UTXOEntry:      utxo.NewUTXOEntry(block1TxOut.Value, block1TxOut.ScriptPublicKey, true, 0),
+					UTXOEntry:      utxo.NewUTXOEntry(block1TxOut.Value, block1Tx.OutputUTXOAssetType(), block1TxOut.ScriptPublicKey, true, 0),
 					DerivationPath: path,
 				},
 			}
@@ -267,7 +267,7 @@ func TestP2PK(t *testing.T) {
 				[]*libkashwallet.Payment{{
 					Address: address,
 					Amount:  10,
-				}}, selectedUTXOs)
+				}}, selectedUTXOs, externalapi.TransferKSH)
 			if err != nil {
 				t.Fatalf("CreateUnsignedTransactions: %+v", err)
 			}
@@ -347,7 +347,7 @@ func TestMaxSompi(t *testing.T) {
 			t.Fatalf("Address: %+v", err)
 		}
 
-		scriptPublicKey, err := txscript.PayToAddrScript(address, externalapi.KSH)
+		scriptPublicKey, err := txscript.PayToAddrScript(address)
 		if err != nil {
 			t.Fatalf("PayToAddrScript: %+v", err)
 		}
@@ -412,7 +412,7 @@ func TestMaxSompi(t *testing.T) {
 					TransactionID: *consensushashing.TransactionID(fundingBlock2.Transactions[0]),
 					Index:         0,
 				},
-				UTXOEntry:      utxo.NewUTXOEntry(txOut1.Value, txOut1.ScriptPublicKey, true, 0),
+				UTXOEntry:      utxo.NewUTXOEntry(txOut1.Value, fundingBlock2.Transactions[0].OutputUTXOAssetType(), txOut1.ScriptPublicKey, true, 0),
 				DerivationPath: path,
 			},
 			{
@@ -420,7 +420,7 @@ func TestMaxSompi(t *testing.T) {
 					TransactionID: *consensushashing.TransactionID(fundingBlock3.Transactions[0]),
 					Index:         0,
 				},
-				UTXOEntry:      utxo.NewUTXOEntry(txOut2.Value, txOut2.ScriptPublicKey, true, 0),
+				UTXOEntry:      utxo.NewUTXOEntry(txOut2.Value, fundingBlock3.Transactions[0].OutputUTXOAssetType(), txOut2.ScriptPublicKey, true, 0),
 				DerivationPath: path,
 			},
 		}
@@ -429,7 +429,7 @@ func TestMaxSompi(t *testing.T) {
 			[]*libkashwallet.Payment{{
 				Address: address,
 				Amount:  10,
-			}}, selectedUTXOsForTxWithLargeInputAmount)
+			}}, selectedUTXOsForTxWithLargeInputAmount, externalapi.TransferKSH)
 		if err != nil {
 			t.Fatalf("CreateUnsignedTransactions: %+v", err)
 		}
@@ -463,7 +463,7 @@ func TestMaxSompi(t *testing.T) {
 					TransactionID: *consensushashing.TransactionID(fundingBlock4.Transactions[0]),
 					Index:         0,
 				},
-				UTXOEntry:      utxo.NewUTXOEntry(txOut3.Value, txOut3.ScriptPublicKey, true, 0),
+				UTXOEntry:      utxo.NewUTXOEntry(txOut3.Value, fundingBlock4.Transactions[0].OutputUTXOAssetType(), txOut3.ScriptPublicKey, true, 0),
 				DerivationPath: path,
 			},
 			{
@@ -471,7 +471,7 @@ func TestMaxSompi(t *testing.T) {
 					TransactionID: *consensushashing.TransactionID(block1.Transactions[0]),
 					Index:         0,
 				},
-				UTXOEntry:      utxo.NewUTXOEntry(txOut4.Value, txOut4.ScriptPublicKey, true, 0),
+				UTXOEntry:      utxo.NewUTXOEntry(txOut4.Value, block1.Transactions[0].OutputUTXOAssetType(), txOut4.ScriptPublicKey, true, 0),
 				DerivationPath: path,
 			},
 		}
@@ -480,7 +480,7 @@ func TestMaxSompi(t *testing.T) {
 			[]*libkashwallet.Payment{{
 				Address: address,
 				Amount:  22e6 * constants.SompiPerKash,
-			}}, selectedUTXOsForTxWithLargeInputAndOutputAmount)
+			}}, selectedUTXOsForTxWithLargeInputAndOutputAmount, externalapi.TransferKSH)
 		if err != nil {
 			t.Fatalf("CreateUnsignedTransactions: %+v", err)
 		}
