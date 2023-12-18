@@ -79,15 +79,11 @@ kashd
 
 ## Community and Support
 
-Join our Discord server for community discussions, support, and updates: https://discord.gg/yx46racf
+Join our Discord server for community discussions, support, and updates: https://discord.gg/qKT4dAtxEc
 
 ## Issue Tracker
 
-Report issues and track progress on our [GitHub issue tracker](https://github.com/Kash-Protocol/kashd/issues). View issue priorities at https://github.com/orgs/kaspanet/projects/4
-
-## Documentation
-
-Access our comprehensive [documentation](https://github.com/kaspanet/docs) for detailed information about Kashd. The documentation is continuously updated to reflect the latest developments.
+Report issues and track progress on our [GitHub issue tracker](https://github.com/Kash-Protocol/kashd/issues). View issue priorities at https://github.com/orgs/Kash-Protocol/projects/1
 
 ## License
 
