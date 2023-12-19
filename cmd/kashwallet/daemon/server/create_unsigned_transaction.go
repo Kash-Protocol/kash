@@ -23,8 +23,24 @@ func (s *server) CreateUnsignedTransactions(_ context.Context, request *pb.Creat
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
+	// TODO: This mapping of AssetType to DomainTransactionType is a temporary solution.
+	// It allows wallet usage of the 'send' command for transfers. Currently, AssetType
+	// directly corresponds to a specific Transfer TxType. This may evolve with more complex
+	// transaction types in the future.
+	var txType externalapi.DomainTransactionType
+	switch externalapi.AssetTypeFromUint32(request.AssetType) {
+	case externalapi.KSH:
+		txType = externalapi.TransferKSH
+	case externalapi.KUSD:
+		txType = externalapi.TransferKUSD
+	case externalapi.KRV:
+		txType = externalapi.TransferKRV
+	default:
+		return nil, errors.Errorf("Unknown asset type %d", request.AssetType)
+	}
+
 	unsignedTransactions, err := s.createUnsignedTransactions(request.Address,
-		externalapi.AssetTypeFromUint32(request.AssetType), request.Amount, request.IsSendAll,
+		txType, request.Amount, request.IsSendAll,
 		request.From, request.UseExistingChangeAddress)
 	if err != nil {
 		return nil, err
@@ -33,7 +49,7 @@ func (s *server) CreateUnsignedTransactions(_ context.Context, request *pb.Creat
 	return &pb.CreateUnsignedTransactionsResponse{UnsignedTransactions: unsignedTransactions}, nil
 }
 
-func (s *server) createUnsignedTransactions(address string, assetType externalapi.AssetType,
+func (s *server) createUnsignedTransactions(address string, txType externalapi.DomainTransactionType,
 	amount uint64, isSendAll bool, fromAddressesString []string, useExistingChangeAddress bool) ([][]byte, error) {
 	if !s.isSynced() {
 		return nil, errors.Errorf("wallet daemon is not synced yet, %s", s.formatSyncStateReport())
@@ -60,7 +76,9 @@ func (s *server) createUnsignedTransactions(address string, assetType externalap
 		fromAddresses = append(fromAddresses, fromAddress)
 	}
 
-	selectedUTXOs, spendValue, changeSompi, err := s.selectUTXOs(amount, isSendAll, feePerInput, fromAddresses, assetType)
+	fromAssetType, toAssetType := externalapi.GetAssetTypeFromDomainTransactionType(txType)
+
+	selectedUTXOs, spendValue, changeSompi, err := s.selectUTXOs(amount, isSendAll, feePerInput, fromAddresses, fromAssetType)
 	if err != nil {
 		return nil, err
 	}
@@ -76,33 +94,26 @@ func (s *server) createUnsignedTransactions(address string, assetType externalap
 
 	payments := []*libkashwallet.Payment{{
 		Address:   toAddress,
-		AssetType: assetType,
+		AssetType: toAssetType,
 		Amount:    spendValue,
 	}}
 	if changeSompi > 0 {
 		payments = append(payments, &libkashwallet.Payment{
 			Address:   changeAddress,
-			AssetType: assetType,
+			AssetType: toAssetType,
 			Amount:    changeSompi,
 		})
 	}
 
-	// TODO: Add support for MintKUSD, StakeKSH, RedeemKSH.
-	TxTypeMapping := map[externalapi.AssetType]externalapi.DomainTransactionType{
-		externalapi.KSH:  externalapi.TransferKSH,
-		externalapi.KUSD: externalapi.TransferKUSD,
-		externalapi.KRV:  externalapi.TransferKRV,
-	}
-
 	unsignedTransaction, err := libkashwallet.CreateUnsignedTransaction(s.keysFile.ExtendedPublicKeys,
 		s.keysFile.MinimumSignatures,
-		payments, selectedUTXOs, TxTypeMapping[assetType])
+		payments, selectedUTXOs, txType)
 	if err != nil {
 		return nil, err
 	}
 
 	unsignedTransactions, err := s.maybeAutoCompoundTransaction(unsignedTransaction, toAddress,
-		changeAddress, changeWalletAddress, assetType)
+		changeAddress, changeWalletAddress)
 	if err != nil {
 		return nil, err
 	}

@@ -97,3 +97,23 @@ func ConvertAssetTypeSliceToUint32Slice(assetTypes []AssetType) []uint32 {
 	}
 	return uint32Slice
 }
+
+// GetAssetTypeFromDomainTransactionType returns the asset type from a given DomainTransactionType.
+func GetAssetTypeFromDomainTransactionType(domainTransactionType DomainTransactionType) (AssetType, AssetType) {
+	switch domainTransactionType {
+	case TransferKSH:
+		return KSH, KSH
+	case TransferKUSD:
+		return KUSD, KUSD
+	case TransferKRV:
+		return KRV, KRV
+	case MintKUSD:
+		return KSH, KUSD
+	case StakeKSH:
+		return KSH, KRV
+	case RedeemKSH:
+		return KRV, KSH
+	default:
+		return UNKNOWN, UNKNOWN
+	}
+}

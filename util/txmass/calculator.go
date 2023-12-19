@@ -87,6 +87,8 @@ func transactionEstimatedSerializedSize(tx *externalapi.DomainTransaction) uint6
 	size += 8 // length of the payload (uint64)
 	size += uint64(len(tx.Payload))
 
+	size += 4 // length of the type (uint32)
+
 	return size
 }
 

@@ -73,7 +73,7 @@ func (v *transactionValidator) ValidateTransactionInContextAndPopulateFee(stagin
 		return err
 	}
 
-	totalSompiIn, err := v.checkTransactionInputAmounts(tx)
+	totalSompiIn, err := v.checkTransactionInput(tx)
 	if err != nil {
 		return err
 	}
@@ -135,15 +135,23 @@ func (v *transactionValidator) checkTransactionCoinbaseMaturity(stagingArea *mod
 	return nil
 }
 
-func (v *transactionValidator) checkTransactionInputAmounts(tx *externalapi.DomainTransaction) (totalSompiIn uint64, err error) {
+func (v *transactionValidator) checkTransactionInput(tx *externalapi.DomainTransaction) (totalSompiIn uint64, err error) {
 	totalSompiIn = 0
 
 	var missingOutpoints []*externalapi.DomainOutpoint
+	expectedAssetType := tx.InputUTXOAssetType() // Get the expected asset type according to the transaction type
+
 	for _, input := range tx.Inputs {
 		utxoEntry := input.UTXOEntry
 		if utxoEntry == nil {
 			missingOutpoints = append(missingOutpoints, &input.PreviousOutpoint)
 			continue
+		}
+
+		// Ensure the transaction is corresponding to the transaction type
+		if utxoEntry.AssetType() != expectedAssetType {
+			return 0, errors.Wrapf(ruleerrors.ErrUTXOAssetTypeMismatch,
+				"UTXO AssetType '%s' does not match transaction Type '%s'", utxoEntry.AssetType(), tx.Type)
 		}
 
 		// Ensure the transaction amounts are in range. Each of the

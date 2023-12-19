@@ -21,13 +21,13 @@ import (
 // An additional `mergeTransaction` is generated - which merges the outputs of the above splits into a single output
 // paying to the original transaction's payee.
 func (s *server) maybeAutoCompoundTransaction(transactionBytes []byte, toAddress util.Address,
-	changeAddress util.Address, changeWalletAddress *walletAddress, assetType externalapi.AssetType) ([][]byte, error) {
+	changeAddress util.Address, changeWalletAddress *walletAddress) ([][]byte, error) {
 	transaction, err := serialization.DeserializePartiallySignedTransaction(transactionBytes)
 	if err != nil {
 		return nil, err
 	}
 
-	splitTransactions, err := s.maybeSplitAndMergeTransaction(transaction, toAddress, changeAddress, changeWalletAddress, assetType)
+	splitTransactions, err := s.maybeSplitAndMergeTransaction(transaction, toAddress, changeAddress, changeWalletAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,6 @@ func (s *server) mergeTransaction(
 	toAddress util.Address,
 	changeAddress util.Address,
 	changeWalletAddress *walletAddress,
-	assetType externalapi.AssetType,
 ) (*serialization.PartiallySignedTransaction, error) {
 	numOutputs := len(originalTransaction.Tx.Outputs)
 	if numOutputs > 2 || numOutputs == 0 {
@@ -68,7 +67,7 @@ func (s *server) mergeTransaction(
 				TransactionID: *consensushashing.TransactionID(splitTransaction.Tx),
 				Index:         0,
 			},
-			UTXOEntry: utxo.NewUTXOEntry(output.Value, assetType, output.ScriptPublicKey,
+			UTXOEntry: utxo.NewUTXOEntry(output.Value, splitTransaction.Tx.InputUTXOAssetType(), output.ScriptPublicKey,
 				false, constants.UnacceptedDAAScore),
 			DerivationPath: s.walletAddressPath(changeWalletAddress),
 		}
@@ -89,13 +88,14 @@ func (s *server) mergeTransaction(
 
 	payments := []*libkashwallet.Payment{{
 		Address:   toAddress,
-		AssetType: assetType,
+		AssetType: originalTransaction.Tx.OutputUTXOAssetType(),
 		Amount:    sentValue,
 	}}
 	if totalValue > sentValue {
 		payments = append(payments, &libkashwallet.Payment{
-			Address: changeAddress,
-			Amount:  totalValue - sentValue,
+			Address:   changeAddress,
+			AssetType: originalTransaction.Tx.OutputUTXOAssetType(),
+			Amount:    totalValue - sentValue,
 		})
 	}
 
@@ -109,7 +109,7 @@ func (s *server) mergeTransaction(
 }
 
 func (s *server) maybeSplitAndMergeTransaction(transaction *serialization.PartiallySignedTransaction, toAddress util.Address,
-	changeAddress util.Address, changeWalletAddress *walletAddress, assetType externalapi.AssetType) ([]*serialization.PartiallySignedTransaction, error) {
+	changeAddress util.Address, changeWalletAddress *walletAddress) ([]*serialization.PartiallySignedTransaction, error) {
 
 	transactionMass, err := s.estimateMassAfterSignatures(transaction)
 	if err != nil {
@@ -121,7 +121,7 @@ func (s *server) maybeSplitAndMergeTransaction(transaction *serialization.Partia
 	}
 
 	splitCount, inputCountPerSplit, err := s.splitAndInputPerSplitCounts(transaction, transactionMass,
-		changeAddress, assetType)
+		changeAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func (s *server) maybeSplitAndMergeTransaction(transaction *serialization.Partia
 		endIndex := startIndex + inputCountPerSplit
 		var err error
 		splitTransactions[i], err = s.createSplitTransaction(transaction, changeAddress,
-			startIndex, endIndex, assetType, transaction.Tx.Type)
+			startIndex, endIndex)
 		if err != nil {
 			return nil, err
 		}
@@ -140,13 +140,13 @@ func (s *server) maybeSplitAndMergeTransaction(transaction *serialization.Partia
 
 	if len(splitTransactions) > 1 {
 		mergeTransaction, err := s.mergeTransaction(splitTransactions, transaction, toAddress,
-			changeAddress, changeWalletAddress, assetType)
+			changeAddress, changeWalletAddress)
 		if err != nil {
 			return nil, err
 		}
 		// Recursion will be 2-3 iterations deep even in the rarest` cases, so considered safe..
 		splitMergeTransaction, err := s.maybeSplitAndMergeTransaction(mergeTransaction, toAddress,
-			changeAddress, changeWalletAddress, assetType)
+			changeAddress, changeWalletAddress)
 		if err != nil {
 			return nil, err
 		}
@@ -158,7 +158,7 @@ func (s *server) maybeSplitAndMergeTransaction(transaction *serialization.Partia
 }
 
 func (s *server) splitAndInputPerSplitCounts(transaction *serialization.PartiallySignedTransaction, transactionMass uint64,
-	changeAddress util.Address, assetType externalapi.AssetType) (splitCount, inputsPerSplitCount int, err error) {
+	changeAddress util.Address) (splitCount, inputsPerSplitCount int, err error) {
 
 	// Create a dummy transaction which is a clone of the original transaction, but without inputs,
 	// to calculate how much mass do all the inputs have
@@ -179,7 +179,7 @@ func (s *server) splitAndInputPerSplitCounts(transaction *serialization.Partiall
 	// Create another dummy transaction, this time one similar to the split transactions we wish to generate,
 	// but with 0 inputs, to calculate how much mass for inputs do we have available in the split transactions
 	splitTransactionWithoutInputs, err := s.createSplitTransaction(transaction, changeAddress,
-		0, 0, assetType, transaction.Tx.Type) // Use the original transaction type
+		0, 0) // Use the original transaction type
 	if err != nil {
 		return 0, 0, err
 	}
@@ -197,7 +197,7 @@ func (s *server) splitAndInputPerSplitCounts(transaction *serialization.Partiall
 }
 
 func (s *server) createSplitTransaction(transaction *serialization.PartiallySignedTransaction,
-	changeAddress util.Address, startIndex int, endIndex int, assetType externalapi.AssetType, txType externalapi.DomainTransactionType) (*serialization.PartiallySignedTransaction, error) {
+	changeAddress util.Address, startIndex int, endIndex int) (*serialization.PartiallySignedTransaction, error) {
 
 	selectedUTXOs := make([]*libkashwallet.UTXO, 0, endIndex-startIndex)
 	totalSompi := uint64(0)
@@ -207,7 +207,7 @@ func (s *server) createSplitTransaction(transaction *serialization.PartiallySign
 		selectedUTXOs = append(selectedUTXOs, &libkashwallet.UTXO{
 			Outpoint: &transaction.Tx.Inputs[i].PreviousOutpoint,
 			UTXOEntry: utxo.NewUTXOEntry(
-				partiallySignedInput.PrevOutput.Value, assetType,
+				partiallySignedInput.PrevOutput.Value, transaction.Tx.InputUTXOAssetType(),
 				partiallySignedInput.PrevOutput.ScriptPublicKey,
 				false, constants.UnacceptedDAAScore),
 			DerivationPath: partiallySignedInput.DerivationPath,
@@ -220,9 +220,9 @@ func (s *server) createSplitTransaction(transaction *serialization.PartiallySign
 		s.keysFile.MinimumSignatures,
 		[]*libkashwallet.Payment{{
 			Address:   changeAddress,
-			AssetType: assetType,
+			AssetType: transaction.Tx.OutputUTXOAssetType(),
 			Amount:    totalSompi,
-		}}, selectedUTXOs, txType)
+		}}, selectedUTXOs, transaction.Tx.Type)
 	if err != nil {
 		return nil, err
 	}
@@ -274,6 +274,9 @@ func (s *server) moreUTXOsForMergeTransaction(alreadySelectedUTXOs []*libkashwal
 			continue
 		}
 		if !isUTXOSpendable(utxo, dagInfo.VirtualDAAScore, s.params.BlockCoinbaseMaturity) {
+			continue
+		}
+		if utxo.UTXOEntry.AssetType() != alreadySelectedUTXOs[0].UTXOEntry.AssetType() {
 			continue
 		}
 		additionalUTXOs = append(additionalUTXOs, &libkashwallet.UTXO{
