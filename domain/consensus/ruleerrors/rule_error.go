@@ -87,6 +87,10 @@ var (
 	// valid transaction must have at least one input.
 	ErrNoTxInputs = newRuleError("ErrNoTxInputs")
 
+	// ErrUTXOAssetTypeMismatch indicates that the asset type of a UTXO does not match
+	// the expected asset type for the transaction.
+	ErrUTXOAssetTypeMismatch = newRuleError("ErrUTXOAssetTypeMismatch")
+
 	// ErrBadTxOutValue indicates an output value for a transaction is
 	// invalid in some way such as being out of range.
 	ErrBadTxOutValue  = newRuleError("ErrBadTxOutValue")

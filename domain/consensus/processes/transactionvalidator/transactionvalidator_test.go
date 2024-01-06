@@ -154,6 +154,15 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			SubnetworkID: subnetworks.SubnetworkIDRegistry,
 			Gas:          0,
 			LockTime:     0}
+		txWithInvalidUTXOAssetType := externalapi.DomainTransaction{
+			Version:      constants.MaxTransactionVersion,
+			Inputs:       []*externalapi.DomainTransactionInput{&txInputWithLargeAmount}, // wrong UTXO asset type
+			Outputs:      []*externalapi.DomainTransactionOutput{&txOutput},
+			SubnetworkID: subnetworks.SubnetworkIDRegistry,
+			Gas:          0,
+			LockTime:     0,
+			Type:         externalapi.TransferKUSD,
+		}
 
 		txWithInvalidAmount := externalapi.DomainTransaction{
 			Version:      constants.MaxTransactionVersion,
@@ -225,14 +234,21 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 				expectedError: ruleerrors.ErrImmatureSpend,
 			},
 			{ // The total inputs amount is bigger than the allowed maximum before the HF (21e14)
-				name:          "checkTransactionInputAmounts - valid",
+				name:          "checkTransactionInput - valid",
 				tx:            &txWithLargeAmountBeforeHF,
 				povBlockHash:  povBlockHash,
 				isValid:       true,
 				expectedError: nil,
 			},
+			{
+				name:          "checkTransactionInput - invalid - wrong UTXO asset type",
+				tx:            &txWithInvalidUTXOAssetType,
+				povBlockHash:  povBlockHash,
+				isValid:       false,
+				expectedError: ruleerrors.ErrUTXOAssetTypeMismatch,
+			},
 			{ // The total inputs amount is bigger than the allowed maximum (constants.MaxSompi)
-				name:          "checkTransactionInputAmounts - invalid - after HF",
+				name:          "checkTransactionInput - invalid - after HF",
 				tx:            &txWithInvalidAmount,
 				povBlockHash:  povBlockHash,
 				isValid:       false,
