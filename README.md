@@ -6,6 +6,8 @@ Kashd
 
 ## Kash: Pioneering the Purest Form of Decentralized Stablecoin Payments
 
+🔄 **UPDATE: We are transitioning to a Rust version of Kash, based on Rusty Kaspa. For more, visit: [Here](https://github.com/Kash-Protocol/rusty-kash).**
+
 ⚠️ **IMPORTANT: This project is currently in heavy development and may be highly unstable. It is recommended to wait for the stable testing version release before engaging in mining.**
 
 Kashd is the reference full node implementation of Kash, a groundbreaking cryptocurrency that aims to establish the most pure form of decentralized stablecoin payments. Building upon the rapid and efficient Kaspa protocol, Kash integrates the Djed stablecoin protocol to create a robust and versatile digital currency ecosystem.
